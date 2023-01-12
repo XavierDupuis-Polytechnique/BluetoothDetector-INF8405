@@ -10,34 +10,32 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.unblockme.menu.view.Menu
 import com.example.unblockme.ui.theme.UnblockMeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            UnblockMeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+            MainContent()
         }
     }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun MainContent() {
+    UnblockMeTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            Menu()
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    UnblockMeTheme {
-        Greeting("Android")
-    }
+fun MainContentPreview() {
+    MainContent()
 }
