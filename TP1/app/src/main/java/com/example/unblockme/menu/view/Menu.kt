@@ -1,13 +1,11 @@
 package com.example.unblockme.menu.view
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.menu.viewmodel.MenuViewModel
@@ -17,21 +15,24 @@ import com.example.unblockme.ui.theme.Play
 
 @Composable
 fun Menu(viewModel: MenuViewModel = viewModel()) {
-    Column (modifier = Modifier.fillMaxWidth(1f)){
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(0.6f),
             onClick = { viewModel.navigateToGame() }
         ) {
             Text(Play)
         }
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(0.6f),
             onClick = { viewModel.navigateToAbout() }
         ) {
             Text(About)
         }
         Button(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(0.6f),
             onClick = { viewModel.navigateToExit() }
         ) {
             Text(Exit)
@@ -42,7 +43,5 @@ fun Menu(viewModel: MenuViewModel = viewModel()) {
 @Preview(showBackground = true)
 @Composable
 fun MenuPreview(viewModel: MenuViewModel = viewModel()) {
-    Surface {
-        Menu()
-    }
+    Menu()
 }

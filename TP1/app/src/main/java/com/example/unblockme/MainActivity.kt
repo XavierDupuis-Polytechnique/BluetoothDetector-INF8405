@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.unblockme.menu.view.Menu
 import com.example.unblockme.ui.theme.UnblockMeTheme
@@ -27,6 +28,7 @@ fun MainContent() {
     UnblockMeTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
+
             color = MaterialTheme.colors.background
         ) {
             Menu()
@@ -34,7 +36,7 @@ fun MainContent() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
 fun MainContentPreview() {
     MainContent()
