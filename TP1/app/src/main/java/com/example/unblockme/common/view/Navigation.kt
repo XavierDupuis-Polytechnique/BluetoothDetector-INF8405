@@ -5,6 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.unblockme.about.view.About
+import com.example.unblockme.game.view.Game
 import com.example.unblockme.menu.view.Menu
 
 @Composable
