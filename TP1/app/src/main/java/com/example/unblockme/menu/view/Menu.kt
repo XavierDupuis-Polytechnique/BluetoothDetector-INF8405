@@ -19,10 +19,7 @@ fun Menu(
     navigateTo: (Page) -> Unit,
     viewModel: MenuViewModel = viewModel(),
 ) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column {
         Button(
             modifier = Modifier.fillMaxWidth(0.6f),
             onClick = { viewModel.navigateToGame(navigateTo) }
