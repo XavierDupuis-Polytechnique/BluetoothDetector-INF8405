@@ -3,15 +3,15 @@ package com.example.unblockme.game.domain
 import com.example.unblockme.game.models.Block
 import com.example.unblockme.game.models.Blocks
 import com.example.unblockme.game.models.Direction
-import com.example.unblockme.game.models.Position
+import com.example.unblockme.game.models.Coordinates
 
 
 val Level1Layout: Blocks = listOf(
     Block(
         listOf(
-            Position(0, 0),
-            Position(1, 0),
-            Position(2, 0),
+            Coordinates(0, 0),
+            Coordinates(1, 0),
+            Coordinates(2, 0),
         ),
         Direction.Horizontal
     ),

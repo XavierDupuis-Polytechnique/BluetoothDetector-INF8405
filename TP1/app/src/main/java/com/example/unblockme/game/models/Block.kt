@@ -5,11 +5,11 @@ typealias Blocks = List<Block>
 enum class Direction { Vertical, Horizontal }
 
 data class Block(
-    val positions: List<Position>,
+    val coordinates: List<Coordinates>,
     val direction: Direction
 )
 
-data class Position(
+data class Coordinates(
     val x: Int,
     val y: Int,
 )
