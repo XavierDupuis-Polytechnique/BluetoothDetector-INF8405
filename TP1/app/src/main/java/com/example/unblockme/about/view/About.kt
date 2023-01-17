@@ -21,6 +21,7 @@ fun About(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(" - ABOUT PAGE - ")
+        // TODO : Project member names
         Button(
             modifier = Modifier.fillMaxWidth(0.6f),
             onClick = { viewModel.navigateToMenu(navigateTo) }
