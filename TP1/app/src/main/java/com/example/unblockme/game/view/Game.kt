@@ -28,6 +28,7 @@ fun Game(
         ) {
             Text("BACK TO MENU")
         }
+        Board()
     }
 }
 
