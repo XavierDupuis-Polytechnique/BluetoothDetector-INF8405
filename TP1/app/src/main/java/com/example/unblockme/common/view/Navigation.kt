@@ -18,15 +18,22 @@ fun Navigation(
 
     NavHost(navController, startDestination.name) {
         composable(Page.Menu.name) {
-            Menu(navigateTo)
+            Page {
+                Menu(navigateTo)
+            }
         }
 
         composable(Page.About.name) {
-            About(navigateTo)
+            Page {
+                About(navigateTo)
+            }
         }
 
         composable(Page.Game.name) {
-            Game(navigateTo)
+            Page {
+                Game(navigateTo)
+            }
         }
     }
 }
+
