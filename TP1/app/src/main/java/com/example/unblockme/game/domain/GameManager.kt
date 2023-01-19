@@ -7,15 +7,27 @@ import com.example.unblockme.game.models.GameState
 import java.util.*
 
 object GameManager {
-    val currentState: MutableState<GameState> = mutableStateOf(GameState(listOf()))
+    private val currentLevel: Int = 1
+
+    fun getLevelIndex(level: Int): Int {
+        return level - 1
+    }
+
+    val currentState: MutableState<GameState> = mutableStateOf(
+        GameState(
+            LevelLayouts[getLevelIndex(currentLevel)]
+        )
+    )
 
     private val gameStates = Stack<GameState>()
 
-    val level: Int = 1
-
     fun clear() {
         gameStates.clear()
-        gameStates.push(GameState(LevelLayouts[level+1]))
+        gameStates.push(
+            GameState(
+                LevelLayouts[getLevelIndex(currentLevel)]
+            )
+        )
         currentState.value = gameStates.peek()
     }
 
