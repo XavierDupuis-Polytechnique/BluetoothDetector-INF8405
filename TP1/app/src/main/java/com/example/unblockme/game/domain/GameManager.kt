@@ -21,7 +21,14 @@ object GameManager {
 
     private val gameStates = Stack<GameState>()
 
+    fun canClear(): Boolean {
+        return gameStates.size > 1
+    }
+
     fun clear() {
+        if (!canClear()) {
+            return
+        }
         gameStates.clear()
         gameStates.push(
             GameState(
@@ -31,13 +38,19 @@ object GameManager {
         currentState.value = gameStates.peek()
     }
 
+    fun canPop(): Boolean {
+        return gameStates.size > 1
+    }
+
     fun pop() {
-        if (gameStates.empty()) {
+        if (!canPop()) {
             return
         }
         gameStates.pop()
         currentState.value = gameStates.peek()
     }
+
+
 
     fun push(gameState: GameState) {
         gameStates.push(gameState)
