@@ -89,12 +89,10 @@ fun Board(
     }
 
     fun DrawScope.drawBlocks() {
-        viewModel.currentState.value?.blocks?.forEach { block ->
-            val max = block.coordinates.fold(Coordinates(Int.MIN_VALUE, Int.MIN_VALUE)) {
-                    currentMax, coordinates -> maxCoordinatesComparator(coordinates, currentMax)
+        viewModel.currentState.value.blocks.forEach { block ->
+            val max = block.coordinates.fold(Coordinates(Int.MIN_VALUE, Int.MIN_VALUE)) { currentMax, coordinates -> maxCoordinatesComparator(coordinates, currentMax)
             }
-            val min = block.coordinates.fold(Coordinates(Int.MAX_VALUE, Int.MAX_VALUE)) {
-                    currentMin, coordinates -> minCoordinatesComparator(coordinates, currentMin)
+            val min = block.coordinates.fold(Coordinates(Int.MAX_VALUE, Int.MAX_VALUE)) { currentMin, coordinates -> minCoordinatesComparator(coordinates, currentMin)
             }
             val startX = min.x * GridDivisionSize.toPx() + BlockPadding.toPx()
             val startY = min.y * GridDivisionSize.toPx() + BlockPadding.toPx()
