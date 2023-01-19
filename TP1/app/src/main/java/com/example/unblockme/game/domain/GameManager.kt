@@ -6,23 +6,30 @@ import com.example.unblockme.game.models.Blocks
 import com.example.unblockme.game.models.GameState
 import java.util.*
 
+const val FirstLevel = 1
+
 object GameManager {
-    private val currentLevel: Int = 1
+    private val currentLevel = mutableStateOf(FirstLevel)
 
     fun getLevelIndex(level: Int): Int {
         return level - 1
     }
 
+    val currentMoveCount = mutableStateOf(0)
     val currentState: MutableState<GameState> = mutableStateOf(
         GameState(
-            LevelLayouts[getLevelIndex(currentLevel)]
+            LevelLayouts[getLevelIndex(currentLevel.value)]
         )
     )
 
     private val gameStates = Stack<GameState>()
 
+    init {
+        gameStates.push(currentState.value)
+    }
+
     fun canClear(): Boolean {
-        return gameStates.size > 1
+        return currentMoveCount.value > 0
     }
 
     fun clear() {
@@ -32,14 +39,15 @@ object GameManager {
         gameStates.clear()
         gameStates.push(
             GameState(
-                LevelLayouts[getLevelIndex(currentLevel)]
+                LevelLayouts[getLevelIndex(currentLevel.value)]
             )
         )
         currentState.value = gameStates.peek()
+        currentMoveCount.value = 0
     }
 
     fun canPop(): Boolean {
-        return gameStates.size > 1
+        return currentMoveCount.value > 0
     }
 
     fun pop() {
@@ -48,19 +56,17 @@ object GameManager {
         }
         gameStates.pop()
         currentState.value = gameStates.peek()
+        currentMoveCount.value--
     }
-
-
 
     fun push(gameState: GameState) {
         gameStates.push(gameState)
         currentState.value = gameStates.peek()
+        currentMoveCount.value++
     }
 
     fun push(blocks: Blocks) {
-        val newMoveCount = currentState.value.currentMoveCount + 1
-        gameStates.push(GameState(blocks, newMoveCount))
-        currentState.value = gameStates.peek()
+        push(GameState(blocks))
     }
 
     fun canSelectNextLevel(): Boolean {
@@ -85,5 +91,10 @@ object GameManager {
             return
         }
         // TODO
+    }
+
+    // TODO : REMOVE
+    fun nextState() {
+        push(level1Progresses[currentMoveCount.value+1])
     }
 }

@@ -7,9 +7,11 @@ import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Undo
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.common.view.CenteredHorizontalContainer
 import com.example.unblockme.common.view.CenteredVerticalContainer
 import com.example.unblockme.common.view.Page
+import com.example.unblockme.game.domain.GameManager
 import com.example.unblockme.game.viewmodel.GameViewModel
 
 @Composable
@@ -63,6 +66,13 @@ fun Footer(
             { viewModel.canReset() }
         ) {
             viewModel.reset()
+        }
+        // TODO : REMOVE
+        GameButton(
+            Icons.Default.PlusOne,
+            { GameManager.currentMoveCount.value < 3 }
+        ) {
+            viewModel.addState()
         }
     }
 }

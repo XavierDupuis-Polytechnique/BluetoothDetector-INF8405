@@ -24,4 +24,9 @@ class GameViewModel: ViewModel() {
     fun reset() {
         GameManager.clear()
     }
+
+    // TODO : REMOVE
+    fun addState() {
+        GameManager.nextState()
+    }
 }

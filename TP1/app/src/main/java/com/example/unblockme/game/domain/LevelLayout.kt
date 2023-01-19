@@ -66,6 +66,12 @@ val Level1Layout: Blocks = listOf(
     )
 )
 
+// TODO REMOVE
+val Level1LayoutB: Blocks = Level1Layout.dropLast(1)
+val Level1LayoutC: Blocks = Level1LayoutB.dropLast(1)
+val Level1LayoutD: Blocks = Level1LayoutC.dropLast(1)
+val level1Progresses = listOf(Level1Layout, Level1LayoutB, Level1LayoutC, Level1LayoutD)
+
 val Level2Layout: Blocks = listOf(
     // TODO
 )
