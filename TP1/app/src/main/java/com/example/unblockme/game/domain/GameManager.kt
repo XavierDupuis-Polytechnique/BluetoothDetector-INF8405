@@ -11,6 +11,10 @@ const val FirstLevel = 1
 object GameManager {
     private val currentLevel = mutableStateOf(FirstLevel)
 
+    fun getCurrentLevel(): Int {
+        return currentLevel.value
+    }
+
     fun getLevelIndex(level: Int): Int {
         return level - 1
     }
