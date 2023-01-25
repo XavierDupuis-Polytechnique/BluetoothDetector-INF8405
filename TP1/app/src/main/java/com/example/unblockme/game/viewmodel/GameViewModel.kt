@@ -73,6 +73,10 @@ class GameViewModel: ViewModel() {
         val context = LocalContext.current
         val path = context.filesDir
         val file = File(path, filename)
+        if (!file.exists()) {
+            file.createNewFile()
+            file.writeText("--\n--\n--")
+        }
         val currentScores = file.readLines().toMutableList()
         bestScores = currentScores
 
