@@ -40,6 +40,7 @@ fun Game(
 fun Header(
     viewModel: GameViewModel = viewModel()
 ) {
+    // TODO
     CenteredHorizontalContainer {
         CenteredVerticalContainer() {
             Text("Moves: " + GameManager.currentMoveCount.value)
