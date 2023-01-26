@@ -74,10 +74,26 @@ val level1Progresses = listOf(Level1Layout, Level1LayoutB, Level1LayoutC, Level1
 
 val Level2Layout: Blocks = listOf(
     // TODO
+    OtherBlock(
+        listOf(
+            Coordinates(3, 0),
+            Coordinates(3, 1),
+            Coordinates(3, 2),
+        ),
+        Direction.Vertical
+    ),
 )
 
 val Level3Layout: Blocks = listOf(
     // TODO
+    OtherBlock(
+        listOf(
+            Coordinates(4, 0),
+            Coordinates(4, 1),
+            Coordinates(4, 2),
+        ),
+        Direction.Vertical
+    ),
 )
 
 val LevelLayouts = listOf(Level1Layout, Level2Layout, Level3Layout)
