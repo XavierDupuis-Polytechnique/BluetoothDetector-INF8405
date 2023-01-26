@@ -12,7 +12,6 @@ import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Undo
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +43,7 @@ fun Header(
     CenteredHorizontalContainer {
         CenteredVerticalContainer() {
             Text("Moves: " + GameManager.currentMoveCount.value)
-            Text("Record: " + viewModel.getCurrentRecord() + "/" + viewModel.getCurrentMin())
+            Text("Record: " + GameManager.getCurrentBestScore() + "/" + GameManager.getCurrentMin())
         }
 
     }
