@@ -1,7 +1,10 @@
 package com.example.unblockme.common.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,8 +18,8 @@ enum class Page {
 @Composable
 fun Page(content: @Composable () -> Unit) {
     Box(
-        Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.surface),
+        contentAlignment = Alignment.Center,
     ) {
         content()
     }

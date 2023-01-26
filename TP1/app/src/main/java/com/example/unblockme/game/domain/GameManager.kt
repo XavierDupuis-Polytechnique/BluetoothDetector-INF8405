@@ -7,20 +7,20 @@ import com.example.unblockme.game.models.GameState
 import java.util.*
 
 const val FirstLevel = 1
+const val LastLevel = 3
 
 object GameManager {
-    private val currentLevel = mutableStateOf(FirstLevel)
+    val currentLevel = mutableStateOf(FirstLevel)
+    val currentMoveCount = mutableStateOf(0)
+    val currentState: MutableState<GameState> = mutableStateOf(getLevelInitialState())
 
-    fun getLevelIndex(level: Int): Int {
+    private fun getLevelIndex(level: Int): Int {
         return level - 1
     }
 
-    val currentMoveCount = mutableStateOf(0)
-    val currentState: MutableState<GameState> = mutableStateOf(
-        GameState(
-            LevelLayouts[getLevelIndex(currentLevel.value)]
-        )
-    )
+    private fun getLevelInitialState(level: Int = currentLevel.value): GameState {
+        return GameState(LevelLayouts[getLevelIndex(level)])
+    }
 
     private val gameStates = Stack<GameState>()
 
@@ -37,11 +37,7 @@ object GameManager {
             return
         }
         gameStates.clear()
-        gameStates.push(
-            GameState(
-                LevelLayouts[getLevelIndex(currentLevel.value)]
-            )
-        )
+        gameStates.push(getLevelInitialState())
         currentState.value = gameStates.peek()
         currentMoveCount.value = 0
     }
@@ -70,27 +66,36 @@ object GameManager {
     }
 
     fun canSelectNextLevel(): Boolean {
-        // TODO
-        return false
+        return currentLevel.value < LastLevel
     }
 
     fun canSelectPreviousLevel(): Boolean {
-        // TODO
-        return false
+        return currentLevel.value > FirstLevel
     }
 
     fun selectNextLevel() {
         if(!canSelectNextLevel()) {
             return
         }
-        // TODO
+        currentLevel.value++
+        setCurrentLevel()
     }
 
     fun selectPreviousLevel() {
         if(!canSelectPreviousLevel()) {
             return
         }
-        // TODO
+        currentLevel.value--
+        setCurrentLevel()
+    }
+
+    private fun setCurrentLevel(level: Int = currentLevel.value) {
+        if (level !in FirstLevel..LastLevel) {
+            return
+        }
+        clear()
+        gameStates.push(getLevelInitialState())
+        currentState.value = gameStates.peek()
     }
 
     // TODO : REMOVE

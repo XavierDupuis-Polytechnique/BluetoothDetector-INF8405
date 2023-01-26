@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -25,6 +26,7 @@ val BoardPadding = 10.dp
 val BlockPadding = 4.dp
 val GridSize = BoardSize - BoardPadding.times(2)
 val GridDivisionSize = GridSize / BoardDimension
+const val RoundCorners = 20f
 
 @Composable
 fun Board(
@@ -34,11 +36,12 @@ fun Board(
     val onSurfaceColor = Color.Green
 
     fun DrawScope.drawBackground() {
-        drawRect(
+        drawRoundRect(
             color = surfaceColor,
             topLeft = Offset(0f, 0f),
             size = Size(GridSize.toPx(), GridSize.toPx()),
-            alpha = 0.9f
+            alpha = 0.9f,
+            cornerRadius = CornerRadius(RoundCorners)
         )
     }
 
@@ -99,11 +102,12 @@ fun Board(
             val width = (max.x - min.x + 1) * GridDivisionSize.toPx() - 2 * BlockPadding.toPx()
             val height = (max.y - min.y + 1) * GridDivisionSize.toPx() - 2 * BlockPadding.toPx()
 
-            drawRect(
+            drawRoundRect(
                 color = block.color,
                 topLeft = Offset(startX, startY),
                 size = Size(width, height),
-                alpha = 0.9f
+                alpha = 0.9f,
+                cornerRadius = CornerRadius(RoundCorners)
             )
         }
     }
