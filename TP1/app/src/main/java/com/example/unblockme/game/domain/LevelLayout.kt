@@ -27,6 +27,8 @@ val Level1Layout: Blocks = listOf(
         ),
         Direction.Horizontal
     ),
+    // TODO: remove comment for blocks of level
+    /*
     OtherBlock(
         listOf(
             Coordinates(0, 3),
@@ -63,7 +65,7 @@ val Level1Layout: Blocks = listOf(
             Coordinates(4, 5),
         ),
         Direction.Vertical
-    )
+    )*/
 )
 
 val Level2Layout: Blocks = listOf(

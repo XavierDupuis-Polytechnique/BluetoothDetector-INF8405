@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.game.models.Coordinates
 import com.example.unblockme.game.viewmodel.BoardViewModel
+import kotlinx.coroutines.DefaultExecutor.run
 
 const val BoardDimension = 6
 val BoardSize = 350.dp
@@ -111,6 +113,8 @@ fun Board(
     fun DrawScope.drawExit() {
         // TODO
     }
+
+
     
     Canvas(
         modifier = androidx.compose.ui.Modifier
@@ -123,14 +127,16 @@ fun Board(
             .pointerInput(Unit) {
                 detectDragGestures(
                     onDragStart = {
-                        // TODO
+                        BoardViewModel.run { dragStart(it) }
                     },
                     onDrag = { change, dragAmount ->
-                        // TODO
+                        //println(change.position.x)
+                        //println(change.position.y)
+                        // TODO: if position change to new square, call move from block
                         // change.consumeAllChanges()
                     },
                     onDragEnd = {
-                        // TODO
+                        // TODO:
                     },
                     onDragCancel = {
                         // TODO
@@ -140,7 +146,7 @@ fun Board(
     ) {
         drawBackground()
         // TODO : ONLY ENABLE DIVIDERS FOR DEBUG
-        // drawDividers()
+        drawDividers()
         drawExit()
         drawBlocks()
     }
