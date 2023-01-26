@@ -67,4 +67,7 @@ dependencies {
     // Lifecycle (ViewModel)
     def lifecycle_version = "2.5.1"
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+
+    // Icons
+    implementation ("androidx.compose.material:material-icons-extended:$compose_version")
 }
