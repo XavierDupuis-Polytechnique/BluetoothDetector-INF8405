@@ -1,9 +1,11 @@
 package com.example.unblockme.game.view
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -36,9 +38,17 @@ fun Header(
     viewModel: GameViewModel = viewModel()
 ) {
     CenteredHorizontalContainer {
-        LevelSelection(viewModel)
+        Card(
+            modifier = Modifier.fillMaxWidth(0.5f)
+        ) {
+            LevelSelection(viewModel)
+        }
         Spacer(modifier = Modifier.padding(10.dp))
-        Statistics(viewModel)
+        Card(
+            modifier = Modifier.fillMaxWidth(0.5f)
+        ) {
+            Statistics(viewModel)
+        }
     }
 }
 
