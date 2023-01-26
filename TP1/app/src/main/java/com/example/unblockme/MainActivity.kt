@@ -7,10 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.unblockme.common.view.Navigation
+import com.example.unblockme.game.domain.GameManager
 import com.example.unblockme.ui.theme.UnblockMeTheme
+import kotlin.concurrent.thread
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        thread {
+            GameManager.readCache()
+        }
         super.onCreate(savedInstanceState)
         setContent {
             MainContent()

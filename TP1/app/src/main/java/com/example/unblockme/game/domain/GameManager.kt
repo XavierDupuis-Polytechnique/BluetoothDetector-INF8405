@@ -1,8 +1,10 @@
 package com.example.unblockme.game.domain
 
 import android.annotation.SuppressLint
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import com.example.unblockme.game.models.Blocks
 import com.example.unblockme.game.models.GameState
 import java.io.File
@@ -11,7 +13,7 @@ import java.util.*
 const val FirstLevel = 1
 const val defaultCacheValue = "--\n--\n--"
 @SuppressLint("SdCardPath")
-const val defaultPath = "/data/user/0/com.example.unblockme/files"
+const val defaultPath = "/data/user/0/com.example.unblockme/files/cache"
 
 object GameManager {
     private val currentLevel = mutableStateOf(FirstLevel)
@@ -30,7 +32,6 @@ object GameManager {
     private val gameStates = Stack<GameState>()
 
     init {
-        readCache()
         gameStates.push(currentState.value)
     }
 
@@ -117,8 +118,7 @@ object GameManager {
 
     fun saveToCache(level: Int,  score: Int) {
         // TODO Call on game win
-        val filename = "cache"
-        val file = File(defaultPath, filename)
+        val file = File(defaultPath)
         if (!file.exists()) {
             file.createNewFile()
             file.writeText(defaultCacheValue)
@@ -130,11 +130,11 @@ object GameManager {
             newScores += score + "\n"
         }
         file.writeText(newScores)
+        readCache()
     }
 
     fun readCache() {
-        val filename = "cache"
-        val file = File(defaultPath, filename)
+        val file = File(defaultPath)
         if (!file.exists()) {
             file.createNewFile()
             file.writeText(defaultCacheValue)
