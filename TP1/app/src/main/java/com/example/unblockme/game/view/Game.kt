@@ -6,12 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Pause
-import androidx.compose.material.icons.filled.PlusOne
-import androidx.compose.material.icons.filled.Sync
-import androidx.compose.material.icons.filled.Undo
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +35,11 @@ fun Game(
 fun Header(
     viewModel: GameViewModel = viewModel()
 ) {
-    // TODO
+    CenteredHorizontalContainer {
+        LevelSelection(viewModel)
+        Spacer(modifier = Modifier.padding(10.dp))
+        Statistics(viewModel)
+    }
 }
 
 @Composable

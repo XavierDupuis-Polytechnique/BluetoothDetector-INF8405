@@ -9,7 +9,7 @@ import java.util.*
 const val FirstLevel = 1
 
 object GameManager {
-    private val currentLevel = mutableStateOf(FirstLevel)
+    val currentLevel = mutableStateOf(FirstLevel)
 
     fun getLevelIndex(level: Int): Int {
         return level - 1
