@@ -3,22 +3,43 @@ package com.example.unblockme.game.viewmodel
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import com.example.unblockme.game.domain.GameManager
+import com.example.unblockme.game.models.Coordinates
+import com.example.unblockme.game.view.BoardPadding
+import androidx.compose.ui.unit.dp
 
 class BoardViewModel: ViewModel() {
-    val currentState = GameManager.currentState
+    val currentState = GameManager.currentState.value
+    lateinit var coordinateInitial: Coordinates
 
-    fun findIndex(): Int {
-        return 0
+    private fun findIndex(): Int {
+        for (i in 0 until currentState!!.size){
+           if(currentState[i].containsCoordinate(coordinateInitial)) return i
+        }
+        return -1
     }
 
-    fun dragStart(position: Offset){
-        var index : Int = findIndex();
-        currentState.value.blocks[index].move(true)
-        var a = currentState.value
-        println(currentState.value.blocks[index].coordinates)
-        currentState.value = a
-        println(position.x);
-        println(position.y);
+    fun dragStart(coordinate: Coordinates){
+        coordinateInitial = coordinate
+
+        var index : Int = findIndex()
+        //a.blocks[index].move(true)
+        println(index)
+        if(index<0) return
+        println("avant:")
+        println(currentState?.get(index)?.coordinates)
+        val block = GameManager.remove(index)   //currentState.removeAt(index)
+        block.move(true)
+        GameManager.add(index, block)
+        println("apres:")
+        println(currentState?.get(index)?.coordinates)
+
+        //println(a.blocks[index]
         // TODO: get position, identify coordinate, find box index,
     }
+
+    fun drag(){}
+
+    fun dragEnd(){}
 }
+
+

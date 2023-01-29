@@ -5,7 +5,6 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -19,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.game.models.Coordinates
 import com.example.unblockme.game.viewmodel.BoardViewModel
-import kotlinx.coroutines.DefaultExecutor.run
+import kotlin.properties.Delegates
 
 const val BoardDimension = 6
 val BoardSize = 350.dp
@@ -91,7 +90,7 @@ fun Board(
     }
 
     fun DrawScope.drawBlocks() {
-        viewModel.currentState.value.blocks.forEach { block ->
+        viewModel.currentState?.forEach { block ->
             val max = block.coordinates.fold(Coordinates(Int.MIN_VALUE, Int.MIN_VALUE)) { currentMax, coordinates -> maxCoordinatesComparator(coordinates, currentMax)
             }
             val min = block.coordinates.fold(Coordinates(Int.MAX_VALUE, Int.MAX_VALUE)) { currentMin, coordinates -> minCoordinatesComparator(coordinates, currentMin)
@@ -114,6 +113,14 @@ fun Board(
         // TODO
     }
 
+    var boardPadding by Delegates.notNull<Float>()
+    var gridDivisionSize by Delegates.notNull<Float>()
+
+    fun findCoordinate(position: Offset): Coordinates {
+
+        return Coordinates(((position.x - boardPadding) / gridDivisionSize).toInt(), ((position.y - boardPadding) / gridDivisionSize).toInt())
+    }
+
 
     
     Canvas(
@@ -127,7 +134,10 @@ fun Board(
             .pointerInput(Unit) {
                 detectDragGestures(
                     onDragStart = {
-                        BoardViewModel.run { dragStart(it) }
+                        val coordinate = findCoordinate(it)
+                        println("coord calcule par canvas:")
+                        println(coordinate)
+                        viewModel.dragStart(coordinate)
                     },
                     onDrag = { change, dragAmount ->
                         //println(change.position.x)
@@ -144,6 +154,8 @@ fun Board(
                 )
             }
     ) {
+        boardPadding = BoardPadding.toPx()
+        gridDivisionSize = GridDivisionSize.toPx()
         drawBackground()
         // TODO : ONLY ENABLE DIVIDERS FOR DEBUG
         drawDividers()

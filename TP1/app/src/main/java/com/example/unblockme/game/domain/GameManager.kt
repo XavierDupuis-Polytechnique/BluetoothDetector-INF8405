@@ -2,8 +2,8 @@ package com.example.unblockme.game.domain
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.example.unblockme.game.models.Blocks
-import com.example.unblockme.game.models.GameState
+import androidx.lifecycle.MutableLiveData
+import com.example.unblockme.game.models.Block
 import java.util.*
 
 const val FirstLevel = 1
@@ -16,15 +16,13 @@ object GameManager {
     }
 
     val currentMoveCount = mutableStateOf(0)
-    val currentState: MutableState<GameState> = mutableStateOf(
-        GameState(
-            LevelLayouts[getLevelIndex(currentLevel.value)]
-        )
-    )
+    var currentState: MutableLiveData<MutableList<Block>> = MutableLiveData<MutableList<Block>>()
 
-    private val gameStates = Stack<GameState>()
+
+    private val gameStates = Stack<List<Block>>()
 
     init {
+        currentState.value = LevelLayouts[getLevelIndex(currentLevel.value)].toMutableList()
         gameStates.push(currentState.value)
     }
 
@@ -38,11 +36,9 @@ object GameManager {
         }
         gameStates.clear()
         gameStates.push(
-            GameState(
                 LevelLayouts[getLevelIndex(currentLevel.value)]
-            )
         )
-        currentState.value = gameStates.peek()
+        currentState.value = gameStates.peek() as MutableList<Block>
         currentMoveCount.value = 0
     }
 
@@ -50,23 +46,28 @@ object GameManager {
         return currentMoveCount.value > 0
     }
 
+    fun remove(index: Int): Block{
+        return currentState.value!!.removeAt(index)
+    }
+
+    fun add(index: Int, block: Block){
+        currentState.value?.add(index, block)
+        currentState.value = currentState.value
+    }
+
     fun pop() {
         if (!canPop()) {
             return
         }
         gameStates.pop()
-        currentState.value = gameStates.peek()
+        currentState.value = gameStates.peek() as MutableList<Block>
         currentMoveCount.value--
     }
 
-    fun push(gameState: GameState) {
+    fun push(gameState: List<Block>) {
         gameStates.push(gameState)
-        currentState.value = gameStates.peek()
+        currentState.value = gameStates.peek() as MutableList<Block>
         currentMoveCount.value++
-    }
-
-    fun push(blocks: Blocks) {
-        push(GameState(blocks))
     }
 
     fun canSelectNextLevel(): Boolean {

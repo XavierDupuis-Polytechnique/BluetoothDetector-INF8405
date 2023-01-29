@@ -2,8 +2,6 @@ package com.example.unblockme.game.models
 
 import androidx.compose.ui.graphics.Color
 
-typealias Blocks = List<Block>
-
 enum class Direction { Vertical, Horizontal }
 
 sealed class Block(
@@ -21,6 +19,7 @@ sealed class Block(
                 it.x = if(isIncreasing) it.x + 1 else it.x - 1
             }
     }
+
 
     fun containsCoordinate(coordinate: Coordinates): Boolean{
         for(coord in coordinates){if(coordinate == coord) return true}
@@ -54,6 +53,7 @@ sealed class Block(
     ): Coordinates {
         return if (coordinates.x > currentMax.x || coordinates.y > currentMax.y) coordinates else currentMax
     }
+
 }
 
 

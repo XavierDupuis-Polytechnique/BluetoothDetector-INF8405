@@ -3,7 +3,7 @@ package com.example.unblockme.game.domain
 import com.example.unblockme.game.models.*
 
 
-val Level1Layout: Blocks = listOf(
+val Level1Layout: MutableList<Block> = mutableListOf(
     OtherBlock(
         listOf(
             Coordinates(0, 0),
@@ -27,8 +27,6 @@ val Level1Layout: Blocks = listOf(
         ),
         Direction.Horizontal
     ),
-    // TODO: remove comment for blocks of level
-    /*
     OtherBlock(
         listOf(
             Coordinates(0, 3),
@@ -65,20 +63,20 @@ val Level1Layout: Blocks = listOf(
             Coordinates(4, 5),
         ),
         Direction.Vertical
-    )*/
+    )
 )
 
 // TODO REMOVE
-val Level1LayoutB: Blocks = Level1Layout.dropLast(1)
-val Level1LayoutC: Blocks = Level1LayoutB.dropLast(1)
-val Level1LayoutD: Blocks = Level1LayoutC.dropLast(1)
+val Level1LayoutB: MutableList<Block> = Level1Layout.dropLast(1) as MutableList<Block>
+val Level1LayoutC: MutableList<Block> = Level1LayoutB.dropLast(1) as MutableList<Block>
+val Level1LayoutD: MutableList<Block> = Level1LayoutC.dropLast(1) as MutableList<Block>
 val level1Progresses = listOf(Level1Layout, Level1LayoutB, Level1LayoutC, Level1LayoutD)
 
-val Level2Layout: Blocks = listOf(
+val Level2Layout: List<Block> = listOf(
     // TODO
 )
 
-val Level3Layout: Blocks = listOf(
+val Level3Layout: List<Block> = listOf(
     // TODO
 )
 
