@@ -19,7 +19,7 @@ object GameManager {
     }
 
     private fun getLevelInitialState(level: Int = currentLevel.value): GameState {
-        return GameState(LevelLayouts[getLevelIndex(level)])
+        return LevelLayouts[getLevelIndex(level)]
     }
 
     private val gameStates = Stack<GameState>()
@@ -61,9 +61,9 @@ object GameManager {
         currentMoveCount.value++
     }
 
-    fun push(blocks: Blocks) {
-        push(GameState(blocks))
-    }
+//    fun push(blocks: Blocks) {
+//        push(GameState(blocks))
+//    }
 
     fun canSelectNextLevel(): Boolean {
         return currentLevel.value < LastLevel
