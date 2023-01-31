@@ -50,10 +50,12 @@ class GameViewModel: ViewModel() {
     }
 
     fun getLevelMinimalMove(): String {
+        // TODO Remove or paste code here
         return ""
     }
 
     fun getLevelBestScore(): String {
+        // TODO Remove or paste code here
         return ""
     }
 
