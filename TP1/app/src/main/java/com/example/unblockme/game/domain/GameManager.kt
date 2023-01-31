@@ -123,11 +123,7 @@ object GameManager {
 
     fun saveToCache(level: Int,  score: Int) {
         // TODO Call on game win
-        val file = File(defaultPath)
-        if (!file.exists()) {
-            file.createNewFile()
-            file.writeText(defaultCacheValue)
-        }
+        var file = getCache()
         var oldScores = file.readLines().toMutableList()
         oldScores[level] = score.toString()
         var newScores: String = ""
@@ -139,12 +135,29 @@ object GameManager {
     }
 
     fun readCache() {
+        var file = getCache()
+        val currentScores = file.readLines().toMutableList()
+        bestScores = currentScores
+    }
+
+    fun resetCache() {
+        var file = getCache()
+        file.writeText(defaultCacheValue)
+        readCache()
+    }
+
+    fun setBestCache() {
+        var file = getCache()
+        file.writeText("15\n17\n15")
+        readCache()
+    }
+
+    fun getCache(): File {
         val file = File(defaultPath)
         if (!file.exists()) {
             file.createNewFile()
             file.writeText(defaultCacheValue)
         }
-        val currentScores = file.readLines().toMutableList()
-        bestScores = currentScores
+        return file
     }
 }
