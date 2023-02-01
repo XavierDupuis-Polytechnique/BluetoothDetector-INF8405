@@ -147,6 +147,10 @@ fun Board(
     var draggedBlock: Block? by remember {
         mutableStateOf(null)
     }
+
+    var initialCoordinates: Coordinates? by remember{
+        mutableStateOf(null)
+    }
     
     Canvas(
         modifier = androidx.compose.ui.Modifier
@@ -159,7 +163,9 @@ fun Board(
             .pointerInput(Unit) {
                 detectDragGestures(
                     onDragStart = {
-                        draggedBlock = viewModel.getBlock(findCoordinates(it))
+                        initialCoordinates = findCoordinates(it)
+                        draggedBlock = viewModel.getBlock(initialCoordinates!!)
+                        draggedBlockInitialMinCoord = draggedBlock.get
                     },
                     onDrag = { change, dragAmount ->
                         change.consumeAllChanges()
@@ -168,9 +174,11 @@ fun Board(
                     onDragEnd = {
                         draggedBlock?.let { viewModel.release(it) }
                         draggedBlock = null
+                        initialCoordinates = null
                     },
                     onDragCancel = {
                         draggedBlock = null
+                        initialCoordinates = null
                     },
                 )
             }

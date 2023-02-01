@@ -21,6 +21,7 @@ sealed class Block(
             y = if (direction === Direction.Vertical) it.y + steps else it.y,
         )}
     }
+
 }
 
 data class OtherBlock(
