@@ -45,19 +45,24 @@ class BoardViewModel: ViewModel() {
         return currentState.value.find { it.containsCoordinate(position) }
     }
 
-    fun release(block: Block) {
-        val newState = stickBlockOnGrid(block)
+    fun release(block: Block, gridDivisionSize: Float) {
+        val newState = stickBlockOnGrid(block, gridDivisionSize)
         if (newState !== null) {
             GameManager.push(newState)
         }
     }
 
-    private fun stickBlockOnGrid(block: Block): Blocks? {
+    private fun stickBlockOnGrid(block: Block, gridDivisionSize: Float ): Blocks? {
         // TODO : Find closest column/row to fit with movement
-        val steps = +2
 
+        //blockMovements float de combien le offset du block vs sa position initial
+        //
+
+        val steps = (Math.floor((blockMovements[block]?.value!!/gridDivisionSize+0.4).toDouble())).toInt()
+        println("steps: $steps")
         // if steps == 0 -> block did not move
         if (steps == 0) {
+            blockMovements[block]?.value = 0f
             return null
         }
 

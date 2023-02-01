@@ -176,7 +176,7 @@ fun Board(
                         draggedBlock?.let { viewModel.move(it, dragAmount) }
                     },
                     onDragEnd = {
-                        draggedBlock?.let { viewModel.release(it) }
+                        draggedBlock?.let { viewModel.release(it, gridDivisionSize) }
                         draggedBlock = null
                         initialCoordinates = null
                         draggedBlockInitialMinCoord = null
