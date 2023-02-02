@@ -173,7 +173,7 @@ fun Board(
                     },
                     onDrag = { change, dragAmount ->
                         change.consumeAllChanges()
-                        draggedBlock?.let { viewModel.move(it, dragAmount) }
+                        draggedBlock?.let { viewModel.move(it, dragAmount, gridDivisionSize) }
                     },
                     onDragEnd = {
                         draggedBlock?.let { viewModel.release(it, gridDivisionSize) }

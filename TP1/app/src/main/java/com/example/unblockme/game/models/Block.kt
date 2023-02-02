@@ -79,4 +79,13 @@ data class MainBlock (
 data class Coordinates(
     val x: Int,
     val y: Int,
-)
+){
+    fun next(value: Int, direction: Direction): Coordinates{
+        return if(direction == Direction.Horizontal) Coordinates(x+value,y) else Coordinates(x,y+value)
+    }
+
+    fun previous(value: Int, direction: Direction): Coordinates{
+        return if(direction == Direction.Horizontal) Coordinates(x-value,y) else Coordinates(x,y-value)
+
+    }
+}

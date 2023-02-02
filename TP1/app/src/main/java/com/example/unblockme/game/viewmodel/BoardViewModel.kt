@@ -9,6 +9,8 @@ import com.example.unblockme.game.models.Block
 import com.example.unblockme.game.models.Blocks
 import com.example.unblockme.game.models.Coordinates
 import com.example.unblockme.game.models.Direction
+import com.example.unblockme.game.view.BoardDimension
+import kotlin.math.floor
 
 class BoardViewModel: ViewModel() {
     val currentState = GameManager.currentState
@@ -22,8 +24,35 @@ class BoardViewModel: ViewModel() {
         return blockMovements[block]!!
     }
 
-    fun move(block: Block, dragAmount: Offset) {
+    private fun isInBoard(targetCoordinates: Coordinates): Boolean{
+        return targetCoordinates.x in 0 until BoardDimension && targetCoordinates.y in 0 until BoardDimension
+    }
+
+    private fun isSquareEmpty(movingBlock: Block, targetCoordinates: Coordinates): Boolean{
+        currentState.value.forEach{ block->
+            //TODO: modifier pour si le block contient la coordonnee mais qu'il
+            // TODO: s'agit du même block l'espace est dispo!!!!
+
+                if( block.containsCoordinate(targetCoordinates) && block != movingBlock) return false}
+        return true
+
+    }
+
+    fun canMove(block: Block, dragAmount: Offset, gridDivisionSize: Float):Boolean{
+        var targetCoordinates: Coordinates
+        val dragValue = if(block.direction == Direction.Horizontal) dragAmount.x else dragAmount.y
+        targetCoordinates = if(dragValue > 0){
+            block.getMaxCoordinate().next((floor((-1* dragValue/gridDivisionSize).toDouble())*-1).toInt(),block.direction)
+        } else{
+            block.getMinCoordinate().previous((floor((dragValue/gridDivisionSize).toDouble())).toInt(),block.direction)
+        }
+        println("target: $targetCoordinates")
+        return isInBoard(targetCoordinates) && isSquareEmpty(block, targetCoordinates)
+    }
+
+    fun move(block: Block, dragAmount: Offset, gridDivisionSize: Float) {
         // TODO : Wall/OtherBlocks detection (before updating block's offset)
+        if(!canMove(block, dragAmount, gridDivisionSize)) return
 
         if (blockMovements[block] === null) {
             blockMovements[block] = mutableStateOf(0f)
@@ -55,12 +84,9 @@ class BoardViewModel: ViewModel() {
     private fun stickBlockOnGrid(block: Block, gridDivisionSize: Float ): Blocks? {
         // TODO : Find closest column/row to fit with movement
 
-        //blockMovements float de combien le offset du block vs sa position initial
-        //
-
-        val steps = (Math.floor((blockMovements[block]?.value!!/gridDivisionSize+0.4).toDouble())).toInt()
+        val steps = (floor((blockMovements[block]?.value!!/gridDivisionSize+0.4).toDouble())).toInt()
         println("steps: $steps")
-        // if steps == 0 -> block did not move
+        // if steps == 0 -> block did not move but is returned to fixed position in board
         if (steps == 0) {
             blockMovements[block]?.value = 0f
             return null
