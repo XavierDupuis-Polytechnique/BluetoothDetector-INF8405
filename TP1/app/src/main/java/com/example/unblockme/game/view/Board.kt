@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.game.models.Coordinates
-import com.example.unblockme.game.viewmodel.BoardViewModel
+import com.example.unblockme.menu.viewmodel.BoardViewModel
 
 const val BoardDimension = 6
 val BoardSize = 350.dp

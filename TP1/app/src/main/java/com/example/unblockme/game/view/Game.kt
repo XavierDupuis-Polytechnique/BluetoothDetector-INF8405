@@ -20,7 +20,7 @@ import com.example.unblockme.common.view.CenteredHorizontalContainer
 import com.example.unblockme.common.view.CenteredVerticalContainer
 import com.example.unblockme.common.view.Page
 import com.example.unblockme.game.domain.GameManager
-import com.example.unblockme.game.viewmodel.GameViewModel
+import com.example.unblockme.menu.viewmodel.GameViewModel
 
 @Composable
 fun Game(
