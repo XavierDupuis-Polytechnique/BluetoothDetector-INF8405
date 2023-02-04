@@ -30,35 +30,26 @@ class BoardViewModel: ViewModel() {
 
     private fun isSquareEmpty(movingBlock: Block, targetCoordinates: Coordinates): Boolean{
         currentState.value.forEach{ block->
-            //TODO: modifier pour si le block contient la coordonnee mais qu'il
-            // TODO: s'agit du même block l'espace est dispo!!!!
-
-                if( block.containsCoordinate(targetCoordinates) && block != movingBlock) return false}
+            if( block.containsCoordinate(targetCoordinates) && block != movingBlock) return false}
         return true
-
     }
 
-    fun canMove(block: Block, dragAmount: Offset, gridDivisionSize: Float):Boolean{
+    private fun canMove(block: Block, dragAmount: Offset, gridDivisionSize: Float):Boolean{
         var targetCoordinates: Coordinates
         val dragValue = if(block.direction == Direction.Horizontal) dragAmount.x else dragAmount.y
-        //TODO: le problème vient que si la personne drag et sur un dx elle n'avance pas,
-        // targetCoordinates ne se calcul pas pcq il n'y a pas eu de déplacement
         if (dragValue.equals(0.0) ) return false
         targetCoordinates = if((dragValue > 0 )){
             block.getMaxCoordinate().next((floor((-1* (dragValue + blockMovements[block]!!.value)/gridDivisionSize).toDouble())*-1).toInt(),block.direction)
         } else{
             val floor =(floor(((dragValue + blockMovements[block]!!.value)/gridDivisionSize).toDouble()))
             val min = block.getMinCoordinate()
-            println("floor: $floor")
-            println("min.coord: $min")
             min.previous(floor.toInt(),block.direction)
         }
-        println("target: $targetCoordinates")
         return isInBoard(targetCoordinates) && isSquareEmpty(block, targetCoordinates)
     }
 
     fun move(block: Block, dragAmount: Offset, gridDivisionSize: Float) {
-        // TODO : Wall/OtherBlocks detection (before updating block's offset)
+
         if(!canMove(block, dragAmount, gridDivisionSize)) return
 
         if (blockMovements[block] === null) {
@@ -72,8 +63,6 @@ class BoardViewModel: ViewModel() {
                     dragAmount.y
         blockMovements[block]?.let {
             it.value = newOffset
-            // TODO : REMOVE (DEBUG)
-            println("move ${it.value}")
         }
     }
 
@@ -89,10 +78,8 @@ class BoardViewModel: ViewModel() {
     }
 
     private fun stickBlockOnGrid(block: Block, gridDivisionSize: Float ): Blocks? {
-        // TODO : Find closest column/row to fit with movement
-
+        // steps: number of squares the block moves across
         val steps = (floor((blockMovements[block]?.value!!/gridDivisionSize+0.4).toDouble())).toInt()
-        println("steps: $steps")
         // if steps == 0 -> block did not move but is returned to fixed position in board
         if (steps == 0) {
             blockMovements[block]?.value = 0f

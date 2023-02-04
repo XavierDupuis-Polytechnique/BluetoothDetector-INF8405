@@ -172,8 +172,6 @@ fun Board(
                         draggedBlockInitialMinCoord = draggedBlock?.getMinCoordinate()
                     },
                     onDrag = { change, dragAmount ->
-                        println("position: ${change.position}")
-                        println("previous position: ${change.previousPosition}")
                         change.consumeAllChanges()
                         draggedBlock?.let { viewModel.move(it, dragAmount, gridDivisionSize) }
                     },
