@@ -41,10 +41,17 @@ class BoardViewModel: ViewModel() {
     fun canMove(block: Block, dragAmount: Offset, gridDivisionSize: Float):Boolean{
         var targetCoordinates: Coordinates
         val dragValue = if(block.direction == Direction.Horizontal) dragAmount.x else dragAmount.y
-        targetCoordinates = if(dragValue > 0){
-            block.getMaxCoordinate().next((floor((-1* dragValue/gridDivisionSize).toDouble())*-1).toInt(),block.direction)
+        //TODO: le problème vient que si la personne drag et sur un dx elle n'avance pas,
+        // targetCoordinates ne se calcul pas pcq il n'y a pas eu de déplacement
+        if (dragValue.equals(0.0) ) return false
+        targetCoordinates = if((dragValue > 0 )){
+            block.getMaxCoordinate().next((floor((-1* (dragValue + blockMovements[block]!!.value)/gridDivisionSize).toDouble())*-1).toInt(),block.direction)
         } else{
-            block.getMinCoordinate().previous((floor((dragValue/gridDivisionSize).toDouble())).toInt(),block.direction)
+            val floor =(floor(((dragValue + blockMovements[block]!!.value)/gridDivisionSize).toDouble()))
+            val min = block.getMinCoordinate()
+            println("floor: $floor")
+            println("min.coord: $min")
+            min.previous(floor.toInt(),block.direction)
         }
         println("target: $targetCoordinates")
         return isInBoard(targetCoordinates) && isSquareEmpty(block, targetCoordinates)

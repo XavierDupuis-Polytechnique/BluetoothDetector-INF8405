@@ -85,7 +85,7 @@ data class Coordinates(
     }
 
     fun previous(value: Int, direction: Direction): Coordinates{
-        return if(direction == Direction.Horizontal) Coordinates(x-value,y) else Coordinates(x,y-value)
+        return if(direction == Direction.Horizontal) Coordinates(x+value,y) else Coordinates(x,y+value)
 
     }
 }
