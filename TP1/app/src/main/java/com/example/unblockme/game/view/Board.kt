@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.tooling.preview.Devices
@@ -37,12 +38,20 @@ fun Board(
     viewModel: BoardViewModel = viewModel()
 ) {
     val surfaceColor = Color.Blue
-    val onSurfaceColor = Color.Green
+    val onSurfaceColor = Color.DarkGray
     val exitColor = Color.Green
     val infiniteTransition = rememberInfiniteTransition()
     val animatedAlpha by infiniteTransition.animateFloat(
         initialValue = 0.3f,
         targetValue = 0.7f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+    val animatedOffset by infiniteTransition.animateFloat(
+        initialValue = -1f,
+        targetValue = 1f,
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
@@ -87,6 +96,14 @@ fun Board(
         for (gridDivisionIndex in 0..BoardDimension) {
             val currentDivisionOffset = gridDivisionIndex * GridDivisionSize.toPx()
             drawColumnDivider(currentDivisionOffset, Stroke.DefaultMiter)
+            drawRowDivider(currentDivisionOffset, Stroke.DefaultMiter)
+        }
+    }
+
+    fun DrawScope.drawBorder() {
+        for (gridDivisionIndex in listOf(0, BoardDimension)) {
+            val currentDivisionOffset = gridDivisionIndex * GridDivisionSize.toPx()
+            drawColumnDivider(currentDivisionOffset, 4f)
             drawRowDivider(currentDivisionOffset, Stroke.DefaultMiter)
         }
     }
@@ -136,17 +153,17 @@ fun Board(
         val trianglePath = Path().apply {
             // Rightmost point
             moveTo(
-                exit.x + GridDivisionSize.toPx() * 0.20f,
+                exit.x + GridDivisionSize.toPx() * 0.20f + animatedOffset * 15,
                 exit.y + GridDivisionSize.toPx() * 0f
             )
             // Bottom Left point
             lineTo(
-                exit.x - GridDivisionSize.toPx() * 0.15f,
+                exit.x - GridDivisionSize.toPx() * 0.15f + animatedOffset * 15,
                 exit.y - GridDivisionSize.toPx() * 0.25f
             )
             // Top Left point
             lineTo(
-                exit.x - GridDivisionSize.toPx() * 0.15f,
+                exit.x - GridDivisionSize.toPx() * 0.15f + animatedOffset * 15,
                 exit.y + GridDivisionSize.toPx() * 0.25f
             )
         }
