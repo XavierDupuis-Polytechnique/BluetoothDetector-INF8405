@@ -6,6 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import com.example.unblockme.game.models.Blocks
+import com.example.unblockme.game.models.Coordinates
 import com.example.unblockme.game.models.GameState
 import com.example.unblockme.game.models.MainBlock
 import java.io.File
@@ -70,7 +71,7 @@ object GameManager {
 
         // Check if the red block has escaped / win condition check
         val redBlock = currentState.value.filterIsInstance<MainBlock>()
-        if (redBlock.isNotEmpty() && redBlock[0].coordinates[1].x == 5) {
+        if (redBlock.isNotEmpty() && redBlock[0].containsCoordinate(Coordinates(5,2))) {
             saveToCache(getLevelIndex(currentLevel.value), currentMoveCount.value)
 
             // TODO Open win screen here
