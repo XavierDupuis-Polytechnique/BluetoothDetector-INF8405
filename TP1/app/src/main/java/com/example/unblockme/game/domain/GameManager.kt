@@ -6,7 +6,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import com.example.unblockme.game.models.Blocks
+import com.example.unblockme.game.models.Coordinates
 import com.example.unblockme.game.models.GameState
+import com.example.unblockme.game.models.MainBlock
 import java.io.File
 import java.util.*
 
@@ -66,6 +68,14 @@ object GameManager {
         gameStates.push(blocks)
         currentState.value = gameStates.peek()
         currentMoveCount.value++
+
+        // Check if the red block has escaped / win condition check
+        val redBlock = currentState.value.filterIsInstance<MainBlock>()
+        if (redBlock.isNotEmpty() && redBlock[0].containsCoordinate(Coordinates(5,2))) {
+            saveToCache(getLevelIndex(currentLevel.value), currentMoveCount.value)
+
+            // TODO Open win screen here
+        }
     }
 
     fun canSelectNextLevel(): Boolean {
@@ -118,16 +128,18 @@ object GameManager {
     }
 
     fun saveToCache(level: Int,  score: Int) {
-        // TODO Call on game win
         var file = getCache()
         var oldScores = file.readLines().toMutableList()
-        oldScores[level] = score.toString()
-        var newScores: String = ""
-        for (score in oldScores) {
-            newScores += score + "\n"
+        // Only save if new score is better
+        if (oldScores[level] == "--" || oldScores[level].toInt() > score) {
+            oldScores[level] = score.toString()
+            var newScores: String = ""
+            for (score in oldScores) {
+                newScores += score + "\n"
+            }
+            file.writeText(newScores)
+            readCache()
         }
-        file.writeText(newScores)
-        readCache()
     }
 
     fun readCache() {
