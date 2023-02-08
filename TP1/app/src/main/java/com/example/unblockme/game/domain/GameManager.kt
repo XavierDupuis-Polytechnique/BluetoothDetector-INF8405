@@ -19,17 +19,17 @@ const val LastLevel = 3
 object GameManager {
     val currentLevel = mutableStateOf(FirstLevel)
     val currentMoveCount = mutableStateOf(0)
-    val currentState: MutableState<GameState> = mutableStateOf(getLevelInitialState())
+    val currentState: MutableState<Blocks> = mutableStateOf(getLevelInitialState())
 
     private fun getLevelIndex(level: Int): Int {
         return level - 1
     }
 
-    private fun getLevelInitialState(level: Int = currentLevel.value): GameState {
-        return GameState(LevelLayouts[getLevelIndex(level)])
+    private fun getLevelInitialState(level: Int = currentLevel.value): Blocks {
+        return LevelLayouts[getLevelIndex(level)]
     }
 
-    private val gameStates = Stack<GameState>()
+    private val gameStates = Stack<Blocks>()
 
     init {
         gameStates.push(currentState.value)
@@ -62,14 +62,10 @@ object GameManager {
         currentMoveCount.value--
     }
 
-    fun push(gameState: GameState) {
-        gameStates.push(gameState)
+    fun push(blocks: Blocks) {
+        gameStates.push(blocks)
         currentState.value = gameStates.peek()
         currentMoveCount.value++
-    }
-
-    fun push(blocks: Blocks) {
-        push(GameState(blocks))
     }
 
     fun canSelectNextLevel(): Boolean {
