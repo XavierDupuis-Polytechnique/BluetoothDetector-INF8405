@@ -14,7 +14,7 @@ import kotlin.concurrent.thread
 
 class MainActivity : ComponentActivity() {
 
-    //private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<MainViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MainContent()
-            //MainScreen(viewModel = viewModel)
+            MainScreen(viewModel = viewModel)
         }
     }
 }

@@ -23,7 +23,7 @@ import org.w3c.dom.Text
 fun MainScreen(
     viewModel: MainViewModel
 ){
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter){
         Button(
             onClick = {
                 viewModel.onBuyClick()
@@ -38,14 +38,24 @@ fun MainScreen(
             shape = CircleShape
         ) {
            Text(
-               text = "Alert",
-               style = MaterialTheme.typography.h6,
+               text = "Success",
+               style = MaterialTheme.typography.h5,
                fontWeight = FontWeight.Bold,
                textAlign = TextAlign.Center
            )
         }
     }
     if (viewModel.isDialogShown){
+        CustomDialog(onDismiss = {
+            viewModel.onDismissDialog()
+        },
+            onConfim = {
+                // next stage
+            }
+
+
+            )
+
 
     }
 }
