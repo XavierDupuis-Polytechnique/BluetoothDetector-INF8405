@@ -20,9 +20,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.game.models.Block
 import com.example.unblockme.game.models.Coordinates
+
+import com.example.unblockme.menu.viewmodel.BoardViewModel
+
 import com.example.unblockme.game.models.Direction
-import com.example.unblockme.game.viewmodel.BoardViewModel
+
 import kotlin.properties.Delegates
+
 
 const val BoardDimension = 6
 val BoardSize = 350.dp

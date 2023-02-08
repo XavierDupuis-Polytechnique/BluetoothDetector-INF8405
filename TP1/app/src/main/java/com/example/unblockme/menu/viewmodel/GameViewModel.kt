@@ -1,4 +1,4 @@
-package com.example.unblockme.game.viewmodel
+package com.example.unblockme.menu.viewmodel
 
 import android.os.Environment
 import androidx.compose.runtime.Composable

@@ -1,4 +1,4 @@
-package com.example.unblockme.game.viewmodel
+package com.example.unblockme.menu.viewmodel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.common.view.CenteredHorizontalContainer
 import com.example.unblockme.common.view.CenteredVerticalContainer
-import com.example.unblockme.game.viewmodel.GameViewModel
+import com.example.unblockme.menu.viewmodel.GameViewModel
 import com.example.unblockme.ui.theme.Puzzle
 
 @Composable
