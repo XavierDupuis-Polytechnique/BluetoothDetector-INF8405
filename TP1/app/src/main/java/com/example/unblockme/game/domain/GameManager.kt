@@ -111,11 +111,6 @@ object GameManager {
         currentState.value = gameStates.peek()
     }
 
-    // TODO : REMOVE
-    fun nextState() {
-        push(level1Progresses[currentMoveCount.value+1])
-    }
-
     var bestScores = mutableListOf("--", "--", "--")
 
     fun getCurrentBestScore(): String {

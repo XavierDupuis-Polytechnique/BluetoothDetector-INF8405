@@ -80,13 +80,6 @@ fun Footer(
         ) {
             viewModel.reset()
         }
-        // TODO : REMOVE
-        GameButton(
-            Icons.Default.PlusOne,
-            { GameManager.currentMoveCount.value < 3 }
-        ) {
-            viewModel.addState()
-        }
     }
 }
 

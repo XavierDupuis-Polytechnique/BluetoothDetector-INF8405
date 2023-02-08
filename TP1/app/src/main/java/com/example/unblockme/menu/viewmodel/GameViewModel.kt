@@ -59,9 +59,4 @@ class GameViewModel: ViewModel() {
         // TODO Remove or paste code here
         return ""
     }
-
-    // TODO : REMOVE
-    fun addState() {
-        GameManager.nextState()
-    }
 }
