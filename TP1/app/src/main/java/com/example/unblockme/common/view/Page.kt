@@ -14,6 +14,7 @@ enum class Page {
     About,
 }
 
+// Full page component for main views
 @Composable
 fun Page(content: @Composable () -> Unit) {
     Box(

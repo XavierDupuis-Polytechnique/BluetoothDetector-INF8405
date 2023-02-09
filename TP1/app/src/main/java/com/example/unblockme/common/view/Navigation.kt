@@ -14,6 +14,7 @@ fun Navigation(
     startDestination: Page = Page.Menu,
     navController: NavHostController = rememberNavController()
 ) {
+    // function used to allow composable to navigate to other pages
     val navigateTo = { page: Page -> navController.navigate(page.name) }
 
     NavHost(navController, startDestination.name) {

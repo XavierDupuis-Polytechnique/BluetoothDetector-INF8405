@@ -1,46 +1,54 @@
 package com.example.unblockme.game.domain
 
 import android.annotation.SuppressLint
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
 import com.example.unblockme.game.models.Blocks
 import com.example.unblockme.game.models.Coordinates
-import com.example.unblockme.game.models.GameState
 import com.example.unblockme.game.models.MainBlock
 import java.io.File
 import java.util.*
 
 const val FirstLevel = 1
+const val LastLevel = 3
 const val defaultCacheValue = "--\n--\n--"
 @SuppressLint("SdCardPath")
 const val defaultPath = "/data/user/0/com.example.unblockme/files/cache"
-const val LastLevel = 3
 
+// Manages games states, moves and levels
 object GameManager {
+    // Holds the current level id
     val currentLevel = mutableStateOf(FirstLevel)
+    // Holds the current move count
     val currentMoveCount = mutableStateOf(0)
+    // Holds the current game state (blocks coordinates)
     val currentState: MutableState<Blocks> = mutableStateOf(getLevelInitialState())
+    // Holds the level current states (for undo and reset)
+    private val gameStates = Stack<Blocks>()
 
+
+    // Converts the a level id to a level index
     private fun getLevelIndex(level: Int): Int {
         return level - 1
     }
 
+    // Gets the current level layout from the level id
     private fun getLevelInitialState(level: Int = currentLevel.value): Blocks {
         return LevelLayouts[getLevelIndex(level)]
     }
 
-    private val gameStates = Stack<Blocks>()
-
+    // Push the first level layout as the first state
     init {
         gameStates.push(currentState.value)
     }
 
+    // Guard for the reset button
     fun canClear(): Boolean {
         return currentMoveCount.value > 0
     }
 
+    // Clears the current level stored game states
+    // Resets the move counter to 0
     fun clear() {
         if (!canClear()) {
             return
@@ -51,10 +59,13 @@ object GameManager {
         currentMoveCount.value = 0
     }
 
+    // Guard for the undo button
     fun canPop(): Boolean {
         return currentMoveCount.value > 0
     }
 
+    // Retrieves the previous state
+    // Decrements the move counter
     fun pop() {
         if (!canPop()) {
             return
@@ -64,6 +75,8 @@ object GameManager {
         currentMoveCount.value--
     }
 
+    // Adds a new state
+    // Increments the move counter
     fun push(blocks: Blocks) {
         gameStates.push(blocks)
         currentState.value = gameStates.peek()
@@ -78,14 +91,18 @@ object GameManager {
         }
     }
 
+    // Guard for the next level selection
     fun canSelectNextLevel(): Boolean {
         return currentLevel.value < LastLevel
     }
 
+    // Guard for the previous level selection
     fun canSelectPreviousLevel(): Boolean {
         return currentLevel.value > FirstLevel
     }
 
+    // Increments the level id
+    // Setup the next level
     fun selectNextLevel() {
         if(!canSelectNextLevel()) {
             return
@@ -94,6 +111,8 @@ object GameManager {
         setCurrentLevel()
     }
 
+    // Decrements the level id
+    // Setup the previous level
     fun selectPreviousLevel() {
         if(!canSelectPreviousLevel()) {
             return
@@ -102,6 +121,8 @@ object GameManager {
         setCurrentLevel()
     }
 
+    // Clears the previous level stored states
+    // Loads the current level initial state
     private fun setCurrentLevel(level: Int = currentLevel.value) {
         if (level !in FirstLevel..LastLevel) {
             return
@@ -109,11 +130,6 @@ object GameManager {
         clear()
         gameStates.push(getLevelInitialState())
         currentState.value = gameStates.peek()
-    }
-
-    // TODO : REMOVE
-    fun nextState() {
-        push(level1Progresses[currentMoveCount.value+1])
     }
 
     var bestScores = mutableListOf("--", "--", "--")
