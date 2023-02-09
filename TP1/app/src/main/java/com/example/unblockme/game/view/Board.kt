@@ -164,10 +164,6 @@ fun Board(
         modifier = androidx.compose.ui.Modifier
             .size(BoardSize)
             .padding(BoardPadding)
-            .onGloballyPositioned {
-                // TODO
-                // currentPosition = it.localToWindow(Offset.Zero)
-            }
             .pointerInput(Unit) {
                 detectDragGestures(
                     onDragStart = {

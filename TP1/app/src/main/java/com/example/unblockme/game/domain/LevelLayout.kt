@@ -2,7 +2,7 @@ package com.example.unblockme.game.domain
 
 import com.example.unblockme.game.models.*
 
-
+// Level layout for level 1
 val Level1Layout: Blocks = listOf(
     OtherBlock(
         listOf(
@@ -66,6 +66,7 @@ val Level1Layout: Blocks = listOf(
     )
 )
 
+// Level layout for level 2
 val Level2Layout: Blocks = listOf(
     MainBlock(
         listOf(
@@ -120,6 +121,7 @@ val Level2Layout: Blocks = listOf(
     ),
 )
 
+// Level layout for level 3
 val Level3Layout: Blocks = listOf(
     MainBlock(
         listOf(
@@ -182,4 +184,5 @@ val Level3Layout: Blocks = listOf(
     ),
 )
 
+// All level layouts
 val LevelLayouts = listOf(Level1Layout, Level2Layout, Level3Layout)

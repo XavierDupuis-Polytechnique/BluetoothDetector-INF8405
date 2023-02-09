@@ -24,6 +24,7 @@ import com.example.unblockme.common.view.Page
 import com.example.unblockme.game.domain.GameManager
 import com.example.unblockme.menu.viewmodel.GameViewModel
 
+// Game page
 @Composable
 fun Game(
     navigateTo: (Page) -> Unit,
@@ -36,6 +37,7 @@ fun Game(
     }
 }
 
+// Game header informations/buttons
 @Composable
 fun Header(
     viewModel: GameViewModel = viewModel()
@@ -55,6 +57,7 @@ fun Header(
     }
 }
 
+// Game footer buttons
 @Composable
 fun Footer(
     navigateTo: (Page) -> Unit,
@@ -83,6 +86,7 @@ fun Footer(
     }
 }
 
+// Generic game icon button (text-less)
 @Composable
 fun GameButton(
     icon: ImageVector,

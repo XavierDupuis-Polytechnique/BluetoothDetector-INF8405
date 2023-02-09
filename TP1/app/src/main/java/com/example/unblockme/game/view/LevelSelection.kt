@@ -15,6 +15,7 @@ import com.example.unblockme.common.view.CenteredVerticalContainer
 import com.example.unblockme.menu.viewmodel.GameViewModel
 import com.example.unblockme.ui.theme.Puzzle
 
+// Left header informations (level selection)
 @Composable
 fun LevelSelection(
     viewModel: GameViewModel = viewModel()
