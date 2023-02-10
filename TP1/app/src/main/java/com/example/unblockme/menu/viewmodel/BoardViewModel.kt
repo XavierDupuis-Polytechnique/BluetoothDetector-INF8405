@@ -34,10 +34,22 @@ class BoardViewModel: ViewModel() {
         return true
     }
 
+    private fun areSquaresEmpty(movingBlock: Block, targetCoordinates: Coordinates, dragValue: Float): Boolean{
+        var temporaryCoordinate = if(dragValue>0) movingBlock.getMaxCoordinate() else movingBlock.getMinCoordinate()
+        do{
+            if(!isSquareEmpty(movingBlock, temporaryCoordinate))return false
+            temporaryCoordinate = if(dragValue > 0) temporaryCoordinate.next(1, movingBlock.direction)
+            else temporaryCoordinate.previous(-1, movingBlock.direction)
+            println("tempo: $temporaryCoordinate")
+        }while(targetCoordinates != temporaryCoordinate && isInBoard(temporaryCoordinate))
+        return isSquareEmpty(movingBlock,targetCoordinates)
+    }
+
     private fun canMove(block: Block, dragAmount: Offset, gridDivisionSize: Float):Boolean{
         var targetCoordinates: Coordinates
         val dragValue = if(block.direction == Direction.Horizontal) dragAmount.x else dragAmount.y
         if (dragValue.equals(0.0) ) return false
+
         targetCoordinates = if((dragValue > 0 )){
             block.getMaxCoordinate().next((floor((-1* (dragValue + blockMovements[block]!!.value)/gridDivisionSize).toDouble())*-1).toInt(),block.direction)
         } else{
@@ -45,7 +57,9 @@ class BoardViewModel: ViewModel() {
             val min = block.getMinCoordinate()
             min.previous(floor.toInt(),block.direction)
         }
-        return isInBoard(targetCoordinates) && isSquareEmpty(block, targetCoordinates)
+        println("dragAmount: $dragAmount")
+        println("target $targetCoordinates")
+        return isInBoard(targetCoordinates) && areSquaresEmpty(block, targetCoordinates, dragValue)
     }
 
     fun move(block: Block, dragAmount: Offset, gridDivisionSize: Float) {
