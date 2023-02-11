@@ -35,19 +35,14 @@ class BoardViewModel: ViewModel() {
     }
 
     private fun areSquaresEmpty(movingBlock: Block, targetCoordinates: Coordinates, dragValue: Float, gridDivisionSize: Float): Boolean{
-        //TODO: le min ou max n'a pas bougé avec le block
-        //TODO: so getMin prend l'ancien min du block avant qu'il ne commence à bouger
         var temporaryCoordinate = if(dragValue>0) movingBlock.getMaxCoordinate() else movingBlock.getMinCoordinate()
         val conv = convertPixelsToCoordinate(
             if(dragValue>0)blockMovements[movingBlock]!!.value - gridDivisionSize else blockMovements[movingBlock]!!.value + gridDivisionSize, gridDivisionSize)
-        println("conv: $conv")
         temporaryCoordinate = temporaryCoordinate.next(conv , movingBlock.direction)
-        println("tempo apres le get minMax: $temporaryCoordinate")
         do{
             if(!isSquareEmpty(movingBlock, temporaryCoordinate))return false
             temporaryCoordinate = if(dragValue > 0) temporaryCoordinate.next(1, movingBlock.direction)
             else temporaryCoordinate.previous(-1, movingBlock.direction)
-            println("tempo: $temporaryCoordinate")
         }while(targetCoordinates != temporaryCoordinate && isInBoard(temporaryCoordinate))
         return isSquareEmpty(movingBlock,targetCoordinates)
     }
@@ -69,17 +64,11 @@ class BoardViewModel: ViewModel() {
             val min = block.getMinCoordinate()
             min.previous(convertPixelsToCoordinate((dragValue + blockMovements[block]!!.value), gridDivisionSize),block.direction)
         }
-        println("dragAmount: $dragAmount")
-        println("target $targetCoordinates")
         return isInBoard(targetCoordinates) && areSquaresEmpty(block, targetCoordinates, dragValue, gridDivisionSize)
     }
 
     fun move(block: Block, dragAmount: Offset, gridDivisionSize: Float) {
-        val mvt = blockMovements[block]
-        println("block mvt: $mvt")
-        val canMove = canMove(block, dragAmount, gridDivisionSize)
-        println("canmove: $canMove")
-        if(!canMove) return
+        if(!canMove(block, dragAmount, gridDivisionSize)) return
 
         if (blockMovements[block] === null) {
             blockMovements[block] = mutableStateOf(0f)
