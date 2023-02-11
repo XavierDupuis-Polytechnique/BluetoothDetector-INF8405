@@ -34,8 +34,15 @@ class BoardViewModel: ViewModel() {
         return true
     }
 
-    private fun areSquaresEmpty(movingBlock: Block, targetCoordinates: Coordinates, dragValue: Float): Boolean{
+    private fun areSquaresEmpty(movingBlock: Block, targetCoordinates: Coordinates, dragValue: Float, gridDivisionSize: Float): Boolean{
+        //TODO: le min ou max n'a pas bougé avec le block
+        //TODO: so getMin prend l'ancien min du block avant qu'il ne commence à bouger
         var temporaryCoordinate = if(dragValue>0) movingBlock.getMaxCoordinate() else movingBlock.getMinCoordinate()
+        val conv = convertPixelsToCoordinate(
+            if(dragValue>0)blockMovements[movingBlock]!!.value - gridDivisionSize else blockMovements[movingBlock]!!.value + gridDivisionSize, gridDivisionSize)
+        println("conv: $conv")
+        temporaryCoordinate = temporaryCoordinate.next(conv , movingBlock.direction)
+        println("tempo apres le get minMax: $temporaryCoordinate")
         do{
             if(!isSquareEmpty(movingBlock, temporaryCoordinate))return false
             temporaryCoordinate = if(dragValue > 0) temporaryCoordinate.next(1, movingBlock.direction)
@@ -45,26 +52,34 @@ class BoardViewModel: ViewModel() {
         return isSquareEmpty(movingBlock,targetCoordinates)
     }
 
+    private fun convertPixelsToCoordinate(pixel: Float, gridDivisionSize: Float): Int{
+        return if(pixel>0)(floor((-1* (pixel)/gridDivisionSize).toDouble())*-1).toInt()
+        else (floor(((pixel)/gridDivisionSize).toDouble())).toInt()
+
+    }
+
     private fun canMove(block: Block, dragAmount: Offset, gridDivisionSize: Float):Boolean{
         var targetCoordinates: Coordinates
         val dragValue = if(block.direction == Direction.Horizontal) dragAmount.x else dragAmount.y
         if (dragValue.equals(0.0) ) return false
 
         targetCoordinates = if((dragValue > 0 )){
-            block.getMaxCoordinate().next((floor((-1* (dragValue + blockMovements[block]!!.value)/gridDivisionSize).toDouble())*-1).toInt(),block.direction)
+            block.getMaxCoordinate().next(convertPixelsToCoordinate((dragValue + blockMovements[block]!!.value),gridDivisionSize),block.direction)
         } else{
-            val floor =(floor(((dragValue + blockMovements[block]!!.value)/gridDivisionSize).toDouble()))
             val min = block.getMinCoordinate()
-            min.previous(floor.toInt(),block.direction)
+            min.previous(convertPixelsToCoordinate((dragValue + blockMovements[block]!!.value), gridDivisionSize),block.direction)
         }
         println("dragAmount: $dragAmount")
         println("target $targetCoordinates")
-        return isInBoard(targetCoordinates) && areSquaresEmpty(block, targetCoordinates, dragValue)
+        return isInBoard(targetCoordinates) && areSquaresEmpty(block, targetCoordinates, dragValue, gridDivisionSize)
     }
 
     fun move(block: Block, dragAmount: Offset, gridDivisionSize: Float) {
-
-        if(!canMove(block, dragAmount, gridDivisionSize)) return
+        val mvt = blockMovements[block]
+        println("block mvt: $mvt")
+        val canMove = canMove(block, dragAmount, gridDivisionSize)
+        println("canmove: $canMove")
+        if(!canMove) return
 
         if (blockMovements[block] === null) {
             blockMovements[block] = mutableStateOf(0f)
