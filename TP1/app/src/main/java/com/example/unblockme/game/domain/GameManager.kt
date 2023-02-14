@@ -1,10 +1,12 @@
 package com.example.unblockme.game.domain
 
 import android.annotation.SuppressLint
+import android.os.Handler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.game.models.Blocks
 import com.example.unblockme.game.models.Coordinates
 import com.example.unblockme.game.models.GameState
@@ -19,6 +21,7 @@ const val defaultPath = "/data/user/0/com.example.unblockme/files/cache"
 const val LastLevel = 3
 
 object GameManager {
+    val isSuccessShown = mutableStateOf(false)
     val currentLevel = mutableStateOf(FirstLevel)
     val currentMoveCount = mutableStateOf(0)
     val currentState: MutableState<Blocks> = mutableStateOf(getLevelInitialState())
@@ -101,7 +104,9 @@ object GameManager {
         setCurrentLevel()
     }
 
-    private fun setCurrentLevel(level: Int = currentLevel.value) {
+    // Clears the previous level stored states
+    // Loads the current level initial state
+    fun setCurrentLevel(level: Int = currentLevel.value) {
         if (level !in FirstLevel..LastLevel) {
             return
         }
@@ -126,7 +131,7 @@ object GameManager {
         return minScores[currentLevel.value - 1]
     }
 
-    fun saveToCache(level: Int,  score: Int) {
+    fun saveToCache(level: Int, score: Int) {
         var file = getCache()
         var oldScores = file.readLines().toMutableList()
         // Only save if new score is better
@@ -168,10 +173,14 @@ object GameManager {
         return file
     }
 
-    val isSuccessShown = mutableStateOf(false)
 
-    private fun openSuccessDialog() {
-        isSuccessShown.value = true
+    fun openSuccessDialog() {
+        isSuccessShown.value = false
+        val handler = Handler()
+        handler.postDelayed({
+            currentLevel.value++
+            GameManager.setCurrentLevel()
+        }, 1000)
         // TODO : Delay / Asynchronous function with callback `isSuccessShown.value = false`
     }
 }

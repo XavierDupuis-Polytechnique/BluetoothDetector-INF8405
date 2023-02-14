@@ -81,6 +81,22 @@ fun CustomDialog(
                                     textAlign = TextAlign.Center)
 
                     }
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(15.dp),
+                        verticalArrangement = Arrangement.spacedBy(15.dp)
+                    ) {
+                        Row (
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(20.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ){
+                            Text(text = "You solved the puzzle!",
+                                fontWeight = FontWeight.Bold,
+                                style = MaterialTheme.typography.h5,
+                                textAlign = TextAlign.Center)
+
+                        }
                     Row (
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -134,7 +150,7 @@ fun CustomDialog(
                         shape = CircleShape
                     ) {
                         Text(
-                            text = "Confirm",
+                            text = "Next",
                             style = MaterialTheme.typography.h6,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
@@ -148,4 +164,4 @@ fun CustomDialog(
 
     }
 
-}
+    }}

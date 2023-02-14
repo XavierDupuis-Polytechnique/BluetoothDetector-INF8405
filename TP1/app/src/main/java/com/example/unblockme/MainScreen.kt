@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.unblockme.game.domain.GameManager
 import com.example.unblockme.ui.theme.Purple700
 import com.example.unblockme.ui.theme.Teal200
 
@@ -49,7 +50,13 @@ fun MainScreen(
             viewModel.onDismissDialog()
         },
             onConfim = {
+
                 viewModel.selectNextLevel()
+//                GameManager.currentLevel.value++
+//                GameManager.setCurrentLevel()
+                viewModel.onDismissDialog()
+
+
             }
 
 
