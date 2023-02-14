@@ -53,9 +53,9 @@ fun MainScreen(
 
                 viewModel.selectNextLevel()
 //                GameManager.currentLevel.value++
-//                GameManager.setCurrentLevel()
-                viewModel.onDismissDialog()
 
+                viewModel.onDismissDialog()
+                viewModel.selectNextLevel()
 
             }
 

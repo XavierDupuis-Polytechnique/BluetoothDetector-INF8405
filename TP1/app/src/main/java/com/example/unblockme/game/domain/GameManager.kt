@@ -77,6 +77,7 @@ object GameManager {
         if (redBlock.isNotEmpty() && redBlock[0].containsCoordinate(Coordinates(5,2))) {
             saveToCache(getLevelIndex(currentLevel.value), currentMoveCount.value)
             openSuccessDialog()
+            selectNextLevel()
         }
     }
 
@@ -175,11 +176,10 @@ object GameManager {
 
 
     fun openSuccessDialog() {
-        isSuccessShown.value = false
+        isSuccessShown.value = true
         val handler = Handler()
         handler.postDelayed({
-            currentLevel.value++
-            GameManager.setCurrentLevel()
+            isSuccessShown.value = false
         }, 1000)
         // TODO : Delay / Asynchronous function with callback `isSuccessShown.value = false`
     }
