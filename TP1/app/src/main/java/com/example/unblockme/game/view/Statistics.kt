@@ -9,6 +9,7 @@ import com.example.unblockme.menu.viewmodel.GameViewModel
 import com.example.unblockme.ui.theme.Moves
 import com.example.unblockme.ui.theme.Record
 
+// Right header informations (mmoves and best score)
 @Composable
 fun Statistics(
     viewModel: GameViewModel = viewModel()
