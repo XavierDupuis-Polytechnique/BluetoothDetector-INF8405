@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.unblockme.ui.theme.Purple700
 import com.example.unblockme.ui.theme.Teal200
-import org.w3c.dom.Text
 
 @Composable
 fun MainScreen(
@@ -45,12 +44,12 @@ fun MainScreen(
            )
         }
     }
-    if (viewModel.isDialogShown){
+    if (viewModel.isSuccessShown.value){
         CustomDialog(onDismiss = {
             viewModel.onDismissDialog()
         },
             onConfim = {
-                // next stage
+                viewModel.selectNextLevel()
             }
 
 

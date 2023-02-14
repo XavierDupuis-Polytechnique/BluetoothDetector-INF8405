@@ -73,8 +73,7 @@ object GameManager {
         val redBlock = currentState.value.filterIsInstance<MainBlock>()
         if (redBlock.isNotEmpty() && redBlock[0].containsCoordinate(Coordinates(5,2))) {
             saveToCache(getLevelIndex(currentLevel.value), currentMoveCount.value)
-
-            // TODO Open win screen here
+            openSuccessDialog()
         }
     }
 
@@ -167,5 +166,12 @@ object GameManager {
             file.writeText(defaultCacheValue)
         }
         return file
+    }
+
+    val isSuccessShown = mutableStateOf(false)
+
+    private fun openSuccessDialog() {
+        isSuccessShown.value = true
+        // TODO : Delay / Asynchronous function with callback `isSuccessShown.value = false`
     }
 }
