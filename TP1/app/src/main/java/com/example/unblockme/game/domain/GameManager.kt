@@ -210,6 +210,6 @@ object GameManager {
 
 
 
-        }, 2000)
+        }, 3000)
     }
 }
