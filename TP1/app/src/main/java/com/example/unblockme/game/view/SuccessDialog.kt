@@ -13,6 +13,7 @@ fun SuccessDialog(
     viewModel: SuccessViewModel = viewModel()
 ) {
     if (viewModel.isSuccessShown.value) {
+        //The success window will appear with sound
         val context = LocalContext.current
         val mediaPlayer: MediaPlayer = MediaPlayer.create(context, R.raw.audio)
         mediaPlayer.start()

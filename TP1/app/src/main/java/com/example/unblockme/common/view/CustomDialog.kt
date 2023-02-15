@@ -31,6 +31,7 @@ fun CustomDialog(
             usePlatformDefaultWidth = false
         )
     ) {
+        // //The success window design
         Card(
             elevation = 5.dp,
             shape = RoundedCornerShape(15.dp),

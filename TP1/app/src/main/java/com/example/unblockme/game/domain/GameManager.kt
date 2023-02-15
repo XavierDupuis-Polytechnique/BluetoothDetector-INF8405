@@ -195,7 +195,7 @@ object GameManager {
 
     fun openSuccessDialog() {
         isSuccessShown.value = true
-
+        //The success window will disappear using a fade-out animation after 3 seconds and go to next level
         val handler = Handler()
         handler.postDelayed({
 

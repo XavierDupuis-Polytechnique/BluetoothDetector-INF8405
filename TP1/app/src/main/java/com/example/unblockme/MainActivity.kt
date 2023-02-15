@@ -18,6 +18,7 @@ class MainActivity : ComponentActivity() {
             GameManager.readCache()
         }
         super.onCreate(savedInstanceState)
+        //Create a success window
         setContent {
             MainContent()
             SuccessDialog()
