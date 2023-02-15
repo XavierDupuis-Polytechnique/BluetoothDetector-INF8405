@@ -40,7 +40,6 @@ fun Board(
     viewModel: BoardViewModel = viewModel()
 ) {
     val surfaceColor = Color.Blue
-    val onSurfaceColor = Color.DarkGray
     val exitColor = Color.Green
     val infiniteTransition = rememberInfiniteTransition()
     val animatedAlpha by infiniteTransition.animateFloat(
@@ -68,46 +67,6 @@ fun Board(
             alpha = 0.9f,
             cornerRadius = CornerRadius(RoundCorners)
         )
-    }
-
-    fun DrawScope.drawColumnDivider(
-        currentDivisionOffset: Float,
-        strokeWidth: Float
-    ) {
-        drawLine(
-            color = onSurfaceColor,
-            start = Offset(currentDivisionOffset, 0f),
-            end = Offset(currentDivisionOffset, GridSize.toPx()),
-            strokeWidth = strokeWidth
-        )
-    }
-
-    fun DrawScope.drawRowDivider(
-        currentDivisionOffset: Float,
-        strokeWidth: Float
-    ) {
-        drawLine(
-            color = onSurfaceColor,
-            start = Offset(0f, currentDivisionOffset),
-            end = Offset(GridSize.toPx(), currentDivisionOffset),
-            strokeWidth = strokeWidth
-        )
-    }
-
-    fun DrawScope.drawDividers() {
-        for (gridDivisionIndex in 0..BoardDimension) {
-            val currentDivisionOffset = gridDivisionIndex * GridDivisionSize.toPx()
-            drawColumnDivider(currentDivisionOffset, Stroke.DefaultMiter)
-            drawRowDivider(currentDivisionOffset, Stroke.DefaultMiter)
-        }
-    }
-
-    fun DrawScope.drawBorder() {
-        for (gridDivisionIndex in listOf(0, BoardDimension)) {
-            val currentDivisionOffset = gridDivisionIndex * GridDivisionSize.toPx()
-            drawColumnDivider(currentDivisionOffset, 4f)
-            drawRowDivider(currentDivisionOffset, Stroke.DefaultMiter)
-        }
     }
 
     fun minCoordinatesComparator(
@@ -252,8 +211,6 @@ fun Board(
         boardPadding = BoardPadding.toPx()
         gridDivisionSize = GridDivisionSize.toPx()
         drawBackground()
-        // TODO : ONLY ENABLE DIVIDERS FOR DEBUG
-        // drawDividers()
         drawBlocks()
         drawExit()
     }
