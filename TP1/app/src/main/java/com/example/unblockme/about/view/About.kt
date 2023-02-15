@@ -27,7 +27,7 @@ fun About(
     CenteredVerticalContainer {
         Text(" - ABOUT PAGE - ", color = Color.White)
         // TODO : Project member names
-        Text("Xavier Dupuis\nWilliam Lévesque\nMarie Noël\nMohammed Imade", color = Color.White, textAlign = TextAlign.Center)
+        Text("Xavier Dupuis\nWilliam Lévesque\nMarie Noël\nMohammed Imade MEDDANE", color = Color.White, textAlign = TextAlign.Center)
 
         // TODO Testing feat. to remove maybe
         CenteredHorizontalContainer(Modifier.fillMaxWidth(0.6f)) {

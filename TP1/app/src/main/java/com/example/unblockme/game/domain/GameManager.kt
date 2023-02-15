@@ -1,13 +1,18 @@
 package com.example.unblockme.game.domain
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.media.MediaPlayer
 import android.os.Handler
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import com.example.unblockme.R
 import com.example.unblockme.game.models.Blocks
 import com.example.unblockme.game.models.Coordinates
 import com.example.unblockme.game.models.MainBlock
@@ -192,12 +197,19 @@ object GameManager {
     }
 
 
+
+
     fun openSuccessDialog() {
         isSuccessShown.value = true
+
         val handler = Handler()
         handler.postDelayed({
+
             isSuccessShown.value = false
-        }, 1000)
-        // TODO : Delay / Asynchronous function with callback `isSuccessShown.value = false`
+
+
+
+
+        }, 2000)
     }
 }

@@ -10,9 +10,7 @@ import com.example.unblockme.game.domain.GameManager
 class MainViewModel:ViewModel() {
     val isSuccessShown = GameManager.isSuccessShown
 
-    fun onBuyClick() {
-        isSuccessShown.value = true
-    }
+
 
     fun onDismissDialog() {
         isSuccessShown.value = false
@@ -21,4 +19,5 @@ class MainViewModel:ViewModel() {
     fun selectNextLevel() {
         GameManager.selectNextLevel()
     }
+
 }

@@ -116,46 +116,8 @@ fun CustomDialog(
                     horizontalArrangement = Arrangement.spacedBy(30.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Button(
-                        onClick = {
-                            onDismiss()
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Teal200,
-                            contentColor = Purple700
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        shape = CircleShape
-                    ) {
-                        Text(
-                            text = "Cancel",
-                            style = MaterialTheme.typography.h6,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
-                            )
-                    }
-                    Button(
-                        onClick = {
-                            onConfim()
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Teal200,
-                            contentColor = Purple700
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        shape = CircleShape
-                    ) {
-                        Text(
-                            text = "Next",
-                            style = MaterialTheme.typography.h6,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
-                        )
-                    }
+
+
                 }
                 
             }
