@@ -19,6 +19,7 @@ const val defaultPath = "/data/user/0/com.example.unblockme/files/cache"
 
 // Manages games states, moves and levels
 object GameManager {
+    // Holds the current displayed state of the success dialog
     val isSuccessShown = mutableStateOf(false)
 
     // Holds the current level id
