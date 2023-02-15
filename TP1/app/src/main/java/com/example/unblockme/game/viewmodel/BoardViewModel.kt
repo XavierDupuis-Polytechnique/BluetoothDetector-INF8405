@@ -1,15 +1,14 @@
-package com.example.unblockme.menu.viewmodel
-// TODO Move back to com.example.unblockme.game.viewmodel
+package com.example.unblockme.game.viewmodel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import com.example.unblockme.game.domain.GameManager
-import com.example.unblockme.game.models.Block
-import com.example.unblockme.game.models.Blocks
-import com.example.unblockme.game.models.Coordinates
-import com.example.unblockme.game.models.Direction
+import com.example.unblockme.game.model.Block
+import com.example.unblockme.game.model.Blocks
+import com.example.unblockme.game.model.Coordinates
+import com.example.unblockme.game.model.Direction
 import com.example.unblockme.game.view.BoardDimension
 import kotlin.math.floor
 

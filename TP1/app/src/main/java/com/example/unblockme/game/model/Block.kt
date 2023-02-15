@@ -1,4 +1,4 @@
-package com.example.unblockme.game.models
+package com.example.unblockme.game.model
 
 import androidx.compose.ui.graphics.Color
 

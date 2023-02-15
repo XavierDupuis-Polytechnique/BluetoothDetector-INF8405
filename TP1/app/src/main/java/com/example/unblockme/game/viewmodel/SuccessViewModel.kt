@@ -1,13 +1,9 @@
-package com.example.unblockme
+package com.example.unblockme.game.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.unblockme.game.domain.GameManager
 
-class MainViewModel:ViewModel() {
+class SuccessViewModel:ViewModel() {
     val isSuccessShown = GameManager.isSuccessShown
 
 

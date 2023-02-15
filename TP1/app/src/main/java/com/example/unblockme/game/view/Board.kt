@@ -5,8 +5,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -15,18 +13,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.unblockme.game.models.Block
-import com.example.unblockme.game.models.Coordinates
-import com.example.unblockme.menu.viewmodel.BoardViewModel
-import com.example.unblockme.game.models.Direction
+import com.example.unblockme.game.model.Block
+import com.example.unblockme.game.model.Coordinates
+import com.example.unblockme.game.model.Direction
+import com.example.unblockme.game.viewmodel.BoardViewModel
 import kotlin.properties.Delegates
 
 
