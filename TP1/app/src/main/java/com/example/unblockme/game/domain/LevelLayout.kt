@@ -105,17 +105,24 @@ val Level2Layout: Blocks = listOf(
     ),
     OtherBlock(
         listOf(
+            Coordinates(3, 1),
             Coordinates(3, 2),
             Coordinates(3, 3),
-            Coordinates(3, 4),
         ),
         Direction.Vertical
     ),
     OtherBlock(
         listOf(
+            Coordinates(4, 1),
             Coordinates(4, 2),
             Coordinates(4, 3),
-            Coordinates(4, 4),
+        ),
+        Direction.Vertical
+    ),
+    OtherBlock(
+        listOf(
+            Coordinates(1, 4),
+            Coordinates(1, 5),
         ),
         Direction.Vertical
     ),
