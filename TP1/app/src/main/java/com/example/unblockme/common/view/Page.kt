@@ -18,7 +18,9 @@ enum class Page {
 @Composable
 fun Page(content: @Composable () -> Unit) {
     Box(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.surface),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.surface),
         contentAlignment = Alignment.Center,
     ) {
         content()

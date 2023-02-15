@@ -12,24 +12,12 @@ import com.example.unblockme.game.viewmodel.SuccessViewModel
 fun SuccessDialog(
     viewModel: SuccessViewModel = viewModel()
 ) {
-
-    if (viewModel.isSuccessShown.value){
+    if (viewModel.isSuccessShown.value) {
         val context = LocalContext.current
         val mediaPlayer: MediaPlayer = MediaPlayer.create(context, R.raw.audio)
         mediaPlayer.start()
-        CustomDialog(onDismiss = {
-            viewModel.onDismissDialog()
-        },
-            onConfim = {
-
-                viewModel.onDismissDialog()
-                viewModel.selectNextLevel()
-
-            }
-
-
-            )
-
-
+        CustomDialog(
+            onDismiss = { viewModel.onDismissDialog() }
+        )
     }
 }

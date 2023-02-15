@@ -21,18 +21,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             MainContent()
             SuccessDialog()
+        }
+    }
+
+    @Composable
+    fun MainContent() {
+        UnblockMeTheme {
+            Navigation()
+        }
+    }
+
+    @Preview(showBackground = true, device = Devices.PIXEL_4)
+    @Composable
+    fun MainContentPreview() {
+        MainContent()
     }
 }
-
-@Composable
-fun MainContent() {
-    UnblockMeTheme { 
-        Navigation()
-    }
-}
-
-@Preview(showBackground = true, device = Devices.PIXEL_4)
-@Composable
-fun MainContentPreview() {
-    MainContent()
-}}

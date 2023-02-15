@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.unblockme.common.view.Page
 import com.example.unblockme.game.domain.GameManager
 
-class GameViewModel: ViewModel() {
+class GameViewModel : ViewModel() {
     val currentLevel = GameManager.currentLevel
     val currentMoveCount = GameManager.currentMoveCount
 

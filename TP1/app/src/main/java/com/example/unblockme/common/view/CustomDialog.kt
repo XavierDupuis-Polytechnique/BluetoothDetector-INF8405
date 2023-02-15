@@ -20,8 +20,8 @@ import com.example.unblockme.ui.theme.SkyBlue
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CustomDialog(
-    onDismiss:()->Unit,
-){
+    onDismiss: () -> Unit,
+) {
 
     Dialog(
         onDismissRequest = {
@@ -37,87 +37,95 @@ fun CustomDialog(
             modifier = Modifier
                 .fillMaxWidth(0.95f)
                 .border(1.dp, color = SkyBlue, shape = RoundedCornerShape(15.dp))
-        ){
-            Column (
+        ) {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(15.dp),
                 verticalArrangement = Arrangement.spacedBy(15.dp)
-            ){
-                Row (
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 93.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text(
-                    text = "Puzzle Solved",
-                    style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 93.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Puzzle Solved",
+                        style = MaterialTheme.typography.h5,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
 
-            }
+                }
 
 
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(15.dp),
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
-                    Row (
-                        modifier = Modifier.fillMaxWidth()
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(70.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
-                            ){
-                                Text(text = "Cleared",
-                                    fontWeight = FontWeight.Bold,
-                                    style = MaterialTheme.typography.h3,
-                                    textAlign = TextAlign.Center)
+                    ) {
+                        Text(
+                            text = "Cleared",
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.h3,
+                            textAlign = TextAlign.Center
+                        )
 
                     }
                     Column(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(15.dp),
                         verticalArrangement = Arrangement.spacedBy(15.dp)
                     ) {
-                        Row (
-                            modifier = Modifier.fillMaxWidth()
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(20.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
-                        ){
-                            Text(text = "You solved the puzzle!",
+                        ) {
+                            Text(
+                                text = "You solved the puzzle!",
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.h5,
-                                textAlign = TextAlign.Center)
+                                textAlign = TextAlign.Center
+                            )
 
                         }
-                    Row (
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ){
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceAround
+                        ) {
+
+                        }
+
 
                     }
 
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(30.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
 
 
-
-                }
-
-                Row (
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(30.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-
+                    }
 
                 }
-                
             }
+
+
         }
 
-
     }
-
-    }}
+}

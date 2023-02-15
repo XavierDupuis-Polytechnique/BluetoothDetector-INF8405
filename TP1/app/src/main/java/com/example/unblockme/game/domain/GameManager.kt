@@ -13,18 +13,23 @@ import java.util.*
 const val FirstLevel = 1
 const val LastLevel = 3
 const val defaultCacheValue = "--\n--\n--"
+
 @SuppressLint("SdCardPath")
 const val defaultPath = "/data/user/0/com.example.unblockme/files/cache"
 
 // Manages games states, moves and levels
 object GameManager {
     val isSuccessShown = mutableStateOf(false)
+
     // Holds the current level id
     val currentLevel = mutableStateOf(FirstLevel)
+
     // Holds the current move count
     val currentMoveCount = mutableStateOf(0)
+
     // Holds the current game state (blocks coordinates)
     val currentState: MutableState<Blocks> = mutableStateOf(getLevelInitialState())
+
     // Holds the level current states (for undo and reset)
     private val gameStates = Stack<Blocks>()
 
@@ -86,7 +91,7 @@ object GameManager {
 
         // Check if the red block has escaped / win condition check
         val redBlock = currentState.value.filterIsInstance<MainBlock>()
-        if (redBlock.isNotEmpty() && redBlock[0].containsCoordinate(Coordinates(5,2))) {
+        if (redBlock.isNotEmpty() && redBlock[0].containsCoordinate(Coordinates(5, 2))) {
             saveToCache(getLevelIndex(currentLevel.value), currentMoveCount.value)
             openSuccessDialog()
             selectNextLevel()
@@ -106,7 +111,7 @@ object GameManager {
     // Increments the level id
     // Setup the next level
     fun selectNextLevel() {
-        if(!canSelectNextLevel()) {
+        if (!canSelectNextLevel()) {
             return
         }
         currentLevel.value++
@@ -116,7 +121,7 @@ object GameManager {
     // Decrements the level id
     // Setup the previous level
     fun selectPreviousLevel() {
-        if(!canSelectPreviousLevel()) {
+        if (!canSelectPreviousLevel()) {
             return
         }
         currentLevel.value--
@@ -188,8 +193,6 @@ object GameManager {
     }
 
 
-
-
     fun openSuccessDialog() {
         isSuccessShown.value = true
 
@@ -197,8 +200,6 @@ object GameManager {
         handler.postDelayed({
 
             isSuccessShown.value = false
-
-
 
 
         }, 3000)

@@ -19,9 +19,9 @@ fun Menu(
     navigateTo: (Page) -> Unit,
     viewModel: MenuViewModel = viewModel(),
 ) {
-    CenteredVerticalContainer (
+    CenteredVerticalContainer(
         modifier = Modifier.fillMaxWidth(0.6f),
-    ){
+    ) {
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = { viewModel.navigateToGame(navigateTo) }

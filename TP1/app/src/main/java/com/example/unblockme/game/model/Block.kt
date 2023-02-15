@@ -20,28 +20,31 @@ sealed class Block(
     fun containsCoordinate(coordinate: Coordinates): Boolean {
         return coordinates.contains(coordinate)
     }
+
     // Abstract method to update a block coordinates
     // Defined in subclasses
     abstract fun move(steps: Int): Block
 
     // Returns an updated coordinates list from a positive/negative "steps" value
     protected fun updateCoordinates(steps: Int): List<Coordinates> {
-        return coordinates.map { it.copy(
-            x = if (direction === Direction.Horizontal) it.x + steps else it.x,
-            y = if (direction === Direction.Vertical) it.y + steps else it.y,
-        )}
+        return coordinates.map {
+            it.copy(
+                x = if (direction === Direction.Horizontal) it.x + steps else it.x,
+                y = if (direction === Direction.Vertical) it.y + steps else it.y,
+            )
+        }
     }
 
     fun getMaxCoordinate(): Coordinates {
-        var max: Coordinates = coordinates.fold(coordinates[0]) {
-                max, coordinates -> maxCoordinatesComparator(coordinates, max)
+        var max: Coordinates = coordinates.fold(coordinates[0]) { max, coordinates ->
+            maxCoordinatesComparator(coordinates, max)
         }
         return max
     }
 
     fun getMinCoordinate(): Coordinates {
-        var min: Coordinates = coordinates.fold(coordinates[0]) {
-                min, coordinates -> minCoordinatesComparator(coordinates, min)
+        var min: Coordinates = coordinates.fold(coordinates[0]) { min, coordinates ->
+            minCoordinatesComparator(coordinates, min)
         }
         return min
     }
@@ -70,7 +73,7 @@ sealed class Block(
 data class OtherBlock(
     override val coordinates: List<Coordinates>,
     override val direction: Direction
-): Block(coordinates, direction, Color.Gray) {
+) : Block(coordinates, direction, Color.Gray) {
     // Updates coordinates and return an updated OtherBlock
     override fun move(steps: Int): OtherBlock {
         return OtherBlock(
@@ -81,10 +84,10 @@ data class OtherBlock(
 }
 
 // Subclass of from Block to represent the main block (red)
-data class MainBlock (
+data class MainBlock(
     override val coordinates: List<Coordinates>,
     override val direction: Direction
-): Block(coordinates, direction, Color.Red) {
+) : Block(coordinates, direction, Color.Red) {
     // Updates coordinates and return an updated MainBlock
     override fun move(steps: Int): MainBlock {
         return MainBlock(
@@ -97,13 +100,19 @@ data class MainBlock (
 data class Coordinates(
     val x: Int,
     val y: Int,
-){
-    fun next(value: Int, direction: Direction): Coordinates{
-        return if(direction == Direction.Horizontal) Coordinates(x+value,y) else Coordinates(x,y+value)
+) {
+    fun next(value: Int, direction: Direction): Coordinates {
+        return if (direction == Direction.Horizontal) Coordinates(x + value, y) else Coordinates(
+            x,
+            y + value
+        )
     }
 
-    fun previous(value: Int, direction: Direction): Coordinates{
-        return if(direction == Direction.Horizontal) Coordinates(x+value,y) else Coordinates(x,y+value)
+    fun previous(value: Int, direction: Direction): Coordinates {
+        return if (direction == Direction.Horizontal) Coordinates(x + value, y) else Coordinates(
+            x,
+            y + value
+        )
 
     }
 }

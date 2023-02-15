@@ -138,11 +138,21 @@ fun Board(
 
     fun DrawScope.drawBlocks() {
         viewModel.currentState.value.forEach { block ->
-            val max = block.coordinates.fold(Coordinates(Int.MIN_VALUE, Int.MIN_VALUE)) {
-                    currentMax, coordinates -> maxCoordinatesComparator(coordinates, currentMax)
+            val max = block.coordinates.fold(
+                Coordinates(
+                    Int.MIN_VALUE,
+                    Int.MIN_VALUE
+                )
+            ) { currentMax, coordinates ->
+                maxCoordinatesComparator(coordinates, currentMax)
             }
-            val min = block.coordinates.fold(Coordinates(Int.MAX_VALUE, Int.MAX_VALUE)) {
-                    currentMin, coordinates -> minCoordinatesComparator(coordinates, currentMin)
+            val min = block.coordinates.fold(
+                Coordinates(
+                    Int.MAX_VALUE,
+                    Int.MAX_VALUE
+                )
+            ) { currentMin, coordinates ->
+                minCoordinatesComparator(coordinates, currentMin)
             }
             val (startX, startY) = getStartPoint(min, block)
             val width = (max.x - min.x + 1) * GridDivisionSize.toPx() - 2 * BlockPadding.toPx()
@@ -202,14 +212,14 @@ fun Board(
         mutableStateOf(null)
     }
 
-    var initialCoordinates: Coordinates? by remember{
+    var initialCoordinates: Coordinates? by remember {
         mutableStateOf(null)
     }
 
-    var draggedBlockInitialMinCoord: Coordinates? by remember{
+    var draggedBlockInitialMinCoord: Coordinates? by remember {
         mutableStateOf(null)
     }
-    
+
     Canvas(
         modifier = androidx.compose.ui.Modifier
             .size(BoardSize)
