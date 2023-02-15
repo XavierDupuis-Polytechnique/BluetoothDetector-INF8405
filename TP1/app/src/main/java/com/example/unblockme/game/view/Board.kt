@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -15,14 +16,19 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.unblockme.game.models.Block
 import com.example.unblockme.game.models.Coordinates
-import com.example.unblockme.game.viewmodel.BoardViewModel
+import com.example.unblockme.menu.viewmodel.BoardViewModel
+import com.example.unblockme.game.models.Direction
+import kotlin.properties.Delegates
+
 
 const val BoardDimension = 6
 val BoardSize = 350.dp
@@ -122,18 +128,30 @@ fun Board(
         return if (coordinates.x > currentMax.x || coordinates.y > currentMax.y) coordinates else currentMax
     }
 
+    fun DrawScope.getStartPoint(min: Coordinates, block: Block): Pair<Float, Float> {
+        var startX = min.x * GridDivisionSize.toPx() + BlockPadding.toPx()
+        var startY = min.y * GridDivisionSize.toPx() + BlockPadding.toPx()
+        val offset = viewModel.getMovement(block)
+        if (block.direction == Direction.Horizontal) {
+            startX += offset.value
+        } else {
+            startY += offset.value
+        }
+        return Pair(startX, startY)
+    }
+
     fun DrawScope.drawBlocks() {
-        viewModel.currentState.value.blocks.forEach { block ->
+        viewModel.currentState.value.forEach { block ->
             val max = block.coordinates.fold(Coordinates(Int.MIN_VALUE, Int.MIN_VALUE)) {
                     currentMax, coordinates -> maxCoordinatesComparator(coordinates, currentMax)
             }
             val min = block.coordinates.fold(Coordinates(Int.MAX_VALUE, Int.MAX_VALUE)) {
                     currentMin, coordinates -> minCoordinatesComparator(coordinates, currentMin)
             }
-            val startX = min.x * GridDivisionSize.toPx() + BlockPadding.toPx()
-            val startY = min.y * GridDivisionSize.toPx() + BlockPadding.toPx()
+            val (startX, startY) = getStartPoint(min, block)
             val width = (max.x - min.x + 1) * GridDivisionSize.toPx() - 2 * BlockPadding.toPx()
             val height = (max.y - min.y + 1) * GridDivisionSize.toPx() - 2 * BlockPadding.toPx()
+
 
             drawRoundRect(
                 color = block.color,
@@ -173,33 +191,60 @@ fun Board(
             alpha = animatedAlpha
         )
     }
+
+    var boardPadding by Delegates.notNull<Float>()
+    var gridDivisionSize by Delegates.notNull<Float>()
+
+    fun findCoordinates(position: Offset): Coordinates {
+        return Coordinates(
+            ((position.x - boardPadding) / gridDivisionSize).toInt(),
+            ((position.y - boardPadding) / gridDivisionSize).toInt()
+        )
+    }
+
+    var draggedBlock: Block? by remember {
+        mutableStateOf(null)
+    }
+
+    var initialCoordinates: Coordinates? by remember{
+        mutableStateOf(null)
+    }
+
+    var draggedBlockInitialMinCoord: Coordinates? by remember{
+        mutableStateOf(null)
+    }
     
     Canvas(
         modifier = androidx.compose.ui.Modifier
             .size(BoardSize)
             .padding(BoardPadding)
-            .onGloballyPositioned {
-                // TODO
-                // currentPosition = it.localToWindow(Offset.Zero)
-            }
             .pointerInput(Unit) {
                 detectDragGestures(
                     onDragStart = {
-                        // TODO
+                        initialCoordinates = findCoordinates(it)
+                        draggedBlock = viewModel.getBlock(initialCoordinates!!)
+                        draggedBlockInitialMinCoord = draggedBlock?.getMinCoordinate()
                     },
                     onDrag = { change, dragAmount ->
-                        // TODO
-                        // change.consumeAllChanges()
+                        change.consumeAllChanges()
+                        draggedBlock?.let { viewModel.move(it, dragAmount, gridDivisionSize) }
                     },
                     onDragEnd = {
-                        // TODO
+                        draggedBlock?.let { viewModel.release(it, gridDivisionSize) }
+                        draggedBlock = null
+                        initialCoordinates = null
+                        draggedBlockInitialMinCoord = null
                     },
                     onDragCancel = {
-                        // TODO
+                        draggedBlock = null
+                        initialCoordinates = null
+                        draggedBlockInitialMinCoord = null
                     },
                 )
             }
     ) {
+        boardPadding = BoardPadding.toPx()
+        gridDivisionSize = GridDivisionSize.toPx()
         drawBackground()
         // TODO : ONLY ENABLE DIVIDERS FOR DEBUG
         // drawDividers()

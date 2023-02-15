@@ -1,4 +1,5 @@
-package com.example.unblockme.game.viewmodel
+package com.example.unblockme.menu.viewmodel
+// TODO Move back to com.example.unblockme.game.viewmodel
 
 import android.os.Environment
 import androidx.compose.runtime.Composable
@@ -57,10 +58,5 @@ class GameViewModel: ViewModel() {
     fun getLevelBestScore(): String {
         // TODO Remove or paste code here
         return ""
-    }
-
-    // TODO : REMOVE
-    fun addState() {
-        GameManager.nextState()
     }
 }

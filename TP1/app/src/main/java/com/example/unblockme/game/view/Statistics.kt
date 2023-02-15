@@ -5,10 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.common.view.CenteredVerticalContainer
 import com.example.unblockme.game.domain.GameManager
-import com.example.unblockme.game.viewmodel.GameViewModel
+import com.example.unblockme.menu.viewmodel.GameViewModel
 import com.example.unblockme.ui.theme.Moves
 import com.example.unblockme.ui.theme.Record
 
+// Right header informations (mmoves and best score)
 @Composable
 fun Statistics(
     viewModel: GameViewModel = viewModel()

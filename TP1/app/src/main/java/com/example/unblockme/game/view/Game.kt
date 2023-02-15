@@ -1,6 +1,5 @@
 package com.example.unblockme.game.view
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,7 +8,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlusOne
+import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.Undo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -20,8 +22,9 @@ import com.example.unblockme.common.view.CenteredHorizontalContainer
 import com.example.unblockme.common.view.CenteredVerticalContainer
 import com.example.unblockme.common.view.Page
 import com.example.unblockme.game.domain.GameManager
-import com.example.unblockme.game.viewmodel.GameViewModel
+import com.example.unblockme.menu.viewmodel.GameViewModel
 
+// Game page
 @Composable
 fun Game(
     navigateTo: (Page) -> Unit,
@@ -34,6 +37,7 @@ fun Game(
     }
 }
 
+// Game header informations/buttons
 @Composable
 fun Header(
     viewModel: GameViewModel = viewModel()
@@ -53,6 +57,7 @@ fun Header(
     }
 }
 
+// Game footer buttons
 @Composable
 fun Footer(
     navigateTo: (Page) -> Unit,
@@ -78,16 +83,10 @@ fun Footer(
         ) {
             viewModel.reset()
         }
-        // TODO : REMOVE
-        GameButton(
-            Icons.Default.PlusOne,
-            { GameManager.currentMoveCount.value < 3 }
-        ) {
-            viewModel.addState()
-        }
     }
 }
 
+// Generic game icon button (text-less)
 @Composable
 fun GameButton(
     icon: ImageVector,
