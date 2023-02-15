@@ -1,16 +1,21 @@
 package com.example.unblockme.game.view
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -20,11 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.game.models.Block
 import com.example.unblockme.game.models.Coordinates
-
 import com.example.unblockme.menu.viewmodel.BoardViewModel
-
 import com.example.unblockme.game.models.Direction
-
 import kotlin.properties.Delegates
 
 
@@ -35,13 +37,32 @@ val BlockPadding = 4.dp
 val GridSize = BoardSize - BoardPadding.times(2)
 val GridDivisionSize = GridSize / BoardDimension
 const val RoundCorners = 20f
+val ExitLocation = Coordinates(5, 2)
 
 @Composable
 fun Board(
     viewModel: BoardViewModel = viewModel()
 ) {
     val surfaceColor = Color.Blue
-    val onSurfaceColor = Color.Green
+    val onSurfaceColor = Color.DarkGray
+    val exitColor = Color.Green
+    val infiniteTransition = rememberInfiniteTransition()
+    val animatedAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 0.7f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+    val animatedOffset by infiniteTransition.animateFloat(
+        initialValue = -1f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
 
     fun DrawScope.drawBackground() {
         drawRoundRect(
@@ -81,6 +102,14 @@ fun Board(
         for (gridDivisionIndex in 0..BoardDimension) {
             val currentDivisionOffset = gridDivisionIndex * GridDivisionSize.toPx()
             drawColumnDivider(currentDivisionOffset, Stroke.DefaultMiter)
+            drawRowDivider(currentDivisionOffset, Stroke.DefaultMiter)
+        }
+    }
+
+    fun DrawScope.drawBorder() {
+        for (gridDivisionIndex in listOf(0, BoardDimension)) {
+            val currentDivisionOffset = gridDivisionIndex * GridDivisionSize.toPx()
+            drawColumnDivider(currentDivisionOffset, 4f)
             drawRowDivider(currentDivisionOffset, Stroke.DefaultMiter)
         }
     }
@@ -135,7 +164,32 @@ fun Board(
     }
 
     fun DrawScope.drawExit() {
-        // TODO
+        val exit = Offset(
+            ((ExitLocation.x + 0.5f) * GridDivisionSize.toPx()),
+            ((ExitLocation.y + 0.5f) * GridDivisionSize.toPx())
+        )
+        val trianglePath = Path().apply {
+            // Rightmost point
+            moveTo(
+                exit.x + GridDivisionSize.toPx() * 0.20f + animatedOffset * 15,
+                exit.y + GridDivisionSize.toPx() * 0f
+            )
+            // Bottom Left point
+            lineTo(
+                exit.x - GridDivisionSize.toPx() * 0.15f + animatedOffset * 15,
+                exit.y - GridDivisionSize.toPx() * 0.25f
+            )
+            // Top Left point
+            lineTo(
+                exit.x - GridDivisionSize.toPx() * 0.15f + animatedOffset * 15,
+                exit.y + GridDivisionSize.toPx() * 0.25f
+            )
+        }
+        drawPath(
+            color = exitColor,
+            path = trianglePath,
+            alpha = animatedAlpha
+        )
     }
 
     var boardPadding by Delegates.notNull<Float>()
@@ -194,8 +248,8 @@ fun Board(
         drawBackground()
         // TODO : ONLY ENABLE DIVIDERS FOR DEBUG
         // drawDividers()
-        drawExit()
         drawBlocks()
+        drawExit()
     }
 }
 
