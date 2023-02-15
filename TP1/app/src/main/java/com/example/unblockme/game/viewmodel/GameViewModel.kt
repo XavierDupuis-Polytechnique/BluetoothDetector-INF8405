@@ -1,16 +1,10 @@
-package com.example.unblockme.menu.viewmodel
-// TODO Move back to com.example.unblockme.game.viewmodel
+package com.example.unblockme.game.viewmodel
 
-import android.os.Environment
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import com.example.unblockme.common.view.Page
 import com.example.unblockme.game.domain.GameManager
-import java.io.File
 
-class GameViewModel: ViewModel() {
+class GameViewModel : ViewModel() {
     val currentLevel = GameManager.currentLevel
     val currentMoveCount = GameManager.currentMoveCount
 

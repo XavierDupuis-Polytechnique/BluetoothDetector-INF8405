@@ -6,10 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
-import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Undo
 import androidx.compose.runtime.Composable
@@ -21,8 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unblockme.common.view.CenteredHorizontalContainer
 import com.example.unblockme.common.view.CenteredVerticalContainer
 import com.example.unblockme.common.view.Page
-import com.example.unblockme.game.domain.GameManager
-import com.example.unblockme.menu.viewmodel.GameViewModel
+import com.example.unblockme.game.viewmodel.GameViewModel
 
 // Game page
 @Composable

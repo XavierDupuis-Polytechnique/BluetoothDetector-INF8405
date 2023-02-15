@@ -1,28 +1,35 @@
 package com.example.unblockme.game.domain
 
 import android.annotation.SuppressLint
+import android.os.Handler
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.example.unblockme.game.models.Blocks
-import com.example.unblockme.game.models.Coordinates
-import com.example.unblockme.game.models.MainBlock
+import com.example.unblockme.game.model.Blocks
+import com.example.unblockme.game.model.Coordinates
+import com.example.unblockme.game.model.MainBlock
 import java.io.File
 import java.util.*
 
 const val FirstLevel = 1
 const val LastLevel = 3
 const val defaultCacheValue = "--\n--\n--"
+
 @SuppressLint("SdCardPath")
 const val defaultPath = "/data/user/0/com.example.unblockme/files/cache"
 
 // Manages games states, moves and levels
 object GameManager {
+    val isSuccessShown = mutableStateOf(false)
+
     // Holds the current level id
     val currentLevel = mutableStateOf(FirstLevel)
+
     // Holds the current move count
     val currentMoveCount = mutableStateOf(0)
+
     // Holds the current game state (blocks coordinates)
     val currentState: MutableState<Blocks> = mutableStateOf(getLevelInitialState())
+
     // Holds the level current states (for undo and reset)
     private val gameStates = Stack<Blocks>()
 
@@ -84,10 +91,10 @@ object GameManager {
 
         // Check if the red block has escaped / win condition check
         val redBlock = currentState.value.filterIsInstance<MainBlock>()
-        if (redBlock.isNotEmpty() && redBlock[0].containsCoordinate(Coordinates(5,2))) {
+        if (redBlock.isNotEmpty() && redBlock[0].containsCoordinate(Coordinates(5, 2))) {
             saveToCache(getLevelIndex(currentLevel.value), currentMoveCount.value)
-
-            // TODO Open win screen here
+            openSuccessDialog()
+            selectNextLevel()
         }
     }
 
@@ -104,7 +111,7 @@ object GameManager {
     // Increments the level id
     // Setup the next level
     fun selectNextLevel() {
-        if(!canSelectNextLevel()) {
+        if (!canSelectNextLevel()) {
             return
         }
         currentLevel.value++
@@ -114,7 +121,7 @@ object GameManager {
     // Decrements the level id
     // Setup the previous level
     fun selectPreviousLevel() {
-        if(!canSelectPreviousLevel()) {
+        if (!canSelectPreviousLevel()) {
             return
         }
         currentLevel.value--
@@ -143,7 +150,7 @@ object GameManager {
         return minScores[currentLevel.value - 1]
     }
 
-    fun saveToCache(level: Int,  score: Int) {
+    fun saveToCache(level: Int, score: Int) {
         var file = getCache()
         var oldScores = file.readLines().toMutableList()
         // Only save if new score is better
@@ -183,5 +190,18 @@ object GameManager {
             file.writeText(defaultCacheValue)
         }
         return file
+    }
+
+
+    fun openSuccessDialog() {
+        isSuccessShown.value = true
+
+        val handler = Handler()
+        handler.postDelayed({
+
+            isSuccessShown.value = false
+
+
+        }, 3000)
     }
 }
