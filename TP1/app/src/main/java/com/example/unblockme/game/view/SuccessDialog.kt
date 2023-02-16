@@ -2,6 +2,7 @@ package com.example.unblockme.game.view
 
 import android.media.MediaPlayer
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import com.example.unblockme.R
 import com.example.unblockme.common.view.CustomDialog
 import com.example.unblockme.game.viewmodel.SuccessViewModel
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SuccessDialog(
     viewModel: SuccessViewModel = viewModel()
