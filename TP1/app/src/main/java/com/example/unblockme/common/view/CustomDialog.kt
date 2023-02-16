@@ -12,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.unblockme.game.viewmodel.SuccessViewModel
 import com.example.unblockme.ui.theme.SkyBlue
 
 @Composable
@@ -21,7 +19,7 @@ fun CustomDialog() {
     CenteredHorizontalContainer(
         modifier = Modifier.fillMaxSize()
     ) {
-        // //The success window design
+        // The success window design
         Card(
             elevation = 5.dp,
             shape = RoundedCornerShape(15.dp),
