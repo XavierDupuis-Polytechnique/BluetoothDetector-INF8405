@@ -188,7 +188,6 @@ fun Board(
                     onDragStart = {
                         initialCoordinates = findCoordinates(it)
                         draggedBlock = viewModel.getBlock(initialCoordinates!!)
-                        draggedBlockInitialMinCoord = draggedBlock?.getMinCoordinate()
                     },
                     onDrag = { change, dragAmount ->
                         change.consumeAllChanges()
@@ -198,12 +197,10 @@ fun Board(
                         draggedBlock?.let { viewModel.release(it, gridDivisionSize) }
                         draggedBlock = null
                         initialCoordinates = null
-                        draggedBlockInitialMinCoord = null
                     },
                     onDragCancel = {
                         draggedBlock = null
                         initialCoordinates = null
-                        draggedBlockInitialMinCoord = null
                     },
                 )
             }

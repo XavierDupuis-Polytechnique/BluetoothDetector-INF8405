@@ -35,6 +35,7 @@ sealed class Block(
         }
     }
 
+    //Returns the coordinate the most to the bottom or right for the block
     fun getMaxCoordinate(): Coordinates {
         var max: Coordinates = coordinates.fold(coordinates[0]) { max, coordinates ->
             maxCoordinatesComparator(coordinates, max)
@@ -42,6 +43,7 @@ sealed class Block(
         return max
     }
 
+    //Returns the coordinate the most to the top or left for the block
     fun getMinCoordinate(): Coordinates {
         var min: Coordinates = coordinates.fold(coordinates[0]) { min, coordinates ->
             minCoordinatesComparator(coordinates, min)
