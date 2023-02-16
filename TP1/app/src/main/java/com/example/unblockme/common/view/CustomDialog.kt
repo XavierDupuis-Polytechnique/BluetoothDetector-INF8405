@@ -51,7 +51,7 @@ fun CustomDialog() {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(15.dp),
+                        .padding(horizontal = 15.dp, vertical = 30.dp),
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
                     Row(
