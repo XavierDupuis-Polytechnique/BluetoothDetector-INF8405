@@ -12,8 +12,11 @@ import java.util.*
 
 const val FirstLevel = 1
 const val LastLevel = 3
+
+// Default best user scores
 const val defaultCacheValue = "--\n--\n--"
 
+// Storage path to the cache save location
 @SuppressLint("SdCardPath")
 const val defaultPath = "/data/user/0/com.example.unblockme/files/cache"
 
@@ -155,7 +158,7 @@ object GameManager {
     }
 
     // Save the new best score when user beats his previous best
-    fun saveToCache(level: Int, score: Int) {
+    private fun saveToCache(level: Int, score: Int) {
         var file = getCache()
         var oldScores = file.readLines().toMutableList()
         // Only save if new score is better
@@ -184,15 +187,8 @@ object GameManager {
         readCache()
     }
 
-    // Set the local cache to the best possible scores
-    fun setBestCache() {
-        var file = getCache()
-        file.writeText("15\n17\n15")
-        readCache()
-    }
-
     // Loads the user best scores from local cache
-    fun getCache(): File {
+    private fun getCache(): File {
         val file = File(defaultPath)
         if (!file.exists()) {
             file.createNewFile()
