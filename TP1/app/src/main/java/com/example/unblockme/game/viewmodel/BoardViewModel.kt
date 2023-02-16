@@ -24,10 +24,12 @@ class BoardViewModel : ViewModel() {
         return blockMovements[block]!!
     }
 
+    //Returns true if targetCoordinates is in the range of the board dimensions
     private fun isInBoard(targetCoordinates: Coordinates): Boolean {
         return targetCoordinates.x in 0 until BoardDimension && targetCoordinates.y in 0 until BoardDimension
     }
 
+    //Returns true if the square is empty or occupied by the moving block
     private fun isSquareEmpty(movingBlock: Block, targetCoordinates: Coordinates): Boolean {
         currentState.value.forEach { block ->
             if (block.containsCoordinate(targetCoordinates) && block != movingBlock) return false
@@ -35,6 +37,7 @@ class BoardViewModel : ViewModel() {
         return true
     }
 
+    //Verify that every square on the path of the dragged bock is empty
     private fun areSquaresEmpty(
         movingBlock: Block,
         targetCoordinates: Coordinates,
@@ -43,7 +46,7 @@ class BoardViewModel : ViewModel() {
     ): Boolean {
         var temporaryCoordinate =
             if (dragValue > 0) movingBlock.getMaxCoordinate() else movingBlock.getMinCoordinate()
-        val conv = convertPixelsToCoordinate(
+        val conv = convertPixelsToSquares(
             if (dragValue > 0) blockMovements[movingBlock]!!.value - gridDivisionSize else blockMovements[movingBlock]!!.value + gridDivisionSize,
             gridDivisionSize
         )
@@ -57,12 +60,14 @@ class BoardViewModel : ViewModel() {
         return isSquareEmpty(movingBlock, targetCoordinates)
     }
 
-    private fun convertPixelsToCoordinate(pixel: Float, gridDivisionSize: Float): Int {
+    //Returns the number of squares equivalent to the number of pixels
+    private fun convertPixelsToSquares(pixel: Float, gridDivisionSize: Float): Int {
         return if (pixel > 0) (floor((-1 * (pixel) / gridDivisionSize).toDouble()) * -1).toInt()
         else (floor(((pixel) / gridDivisionSize).toDouble())).toInt()
 
     }
 
+    //Verify if moving conditions are respected
     private fun canMove(block: Block, dragAmount: Offset, gridDivisionSize: Float): Boolean {
         var targetCoordinates: Coordinates
         val dragValue = if (block.direction == Direction.Horizontal) dragAmount.x else dragAmount.y
@@ -70,7 +75,7 @@ class BoardViewModel : ViewModel() {
 
         targetCoordinates = if ((dragValue > 0)) {
             block.getMaxCoordinate().next(
-                convertPixelsToCoordinate(
+                convertPixelsToSquares(
                     (dragValue + blockMovements[block]!!.value),
                     gridDivisionSize
                 ), block.direction
@@ -78,7 +83,7 @@ class BoardViewModel : ViewModel() {
         } else {
             val min = block.getMinCoordinate()
             min.previous(
-                convertPixelsToCoordinate(
+                convertPixelsToSquares(
                     (dragValue + blockMovements[block]!!.value),
                     gridDivisionSize
                 ), block.direction
@@ -92,6 +97,7 @@ class BoardViewModel : ViewModel() {
         )
     }
 
+    //function verify if movement is allowed and moves the block accordingly
     fun move(block: Block, dragAmount: Offset, gridDivisionSize: Float) {
         if (!canMove(block, dragAmount, gridDivisionSize)) return
 
