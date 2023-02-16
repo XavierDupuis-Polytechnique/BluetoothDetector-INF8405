@@ -26,7 +26,6 @@ fun About(
 ) {
     CenteredVerticalContainer {
         Text(" - ABOUT PAGE - ", color = Color.White)
-        // TODO : Project member names
         Text(
             "Xavier Dupuis\nWilliam Lévesque\nMarie Noël\nMohammed Imade MEDDANE",
             color = Color.White,
