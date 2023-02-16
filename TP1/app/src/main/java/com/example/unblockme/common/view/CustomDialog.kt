@@ -8,28 +8,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.unblockme.game.viewmodel.SuccessViewModel
 import com.example.unblockme.ui.theme.SkyBlue
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CustomDialog(
-    onDismiss: () -> Unit,
-) {
-
-    Dialog(
-        onDismissRequest = {
-            onDismiss()
-        },
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false
-        )
+fun CustomDialog() {
+    CenteredHorizontalContainer(
+        modifier = Modifier.fillMaxSize()
     ) {
         Card(
             elevation = 5.dp,
@@ -56,9 +46,7 @@ fun CustomDialog(
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
-
                 }
-
 
                 Column(
                     modifier = Modifier
@@ -98,17 +86,13 @@ fun CustomDialog(
                                 style = MaterialTheme.typography.h5,
                                 textAlign = TextAlign.Center
                             )
-
                         }
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceAround
                         ) {
-
                         }
-
-
                     }
 
                     Row(
@@ -116,16 +100,9 @@ fun CustomDialog(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(30.dp),
                         verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-
-                    }
-
+                    ) {}
                 }
             }
-
-
         }
-
     }
 }

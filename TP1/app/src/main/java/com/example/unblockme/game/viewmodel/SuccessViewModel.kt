@@ -5,8 +5,4 @@ import com.example.unblockme.game.domain.GameManager
 
 class SuccessViewModel : ViewModel() {
     val isSuccessShown = GameManager.isSuccessShown
-
-    fun onDismissDialog() {
-        isSuccessShown.value = false
-    }
 }
