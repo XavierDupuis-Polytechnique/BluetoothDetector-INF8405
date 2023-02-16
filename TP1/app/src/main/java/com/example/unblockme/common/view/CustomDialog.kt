@@ -21,6 +21,7 @@ fun CustomDialog() {
     CenteredHorizontalContainer(
         modifier = Modifier.fillMaxSize()
     ) {
+        // //The success window design
         Card(
             elevation = 5.dp,
             shape = RoundedCornerShape(15.dp),

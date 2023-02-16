@@ -2,7 +2,6 @@ package com.example.unblockme.game.domain
 
 import com.example.unblockme.game.model.*
 
-
 // Level layout for level 1
 val Level1Layout: Blocks = listOf(
     MainBlock(
