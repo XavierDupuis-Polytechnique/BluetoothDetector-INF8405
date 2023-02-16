@@ -43,14 +43,4 @@ class GameViewModel : ViewModel() {
     fun selectNextLevel() {
         GameManager.selectNextLevel()
     }
-
-    fun getLevelMinimalMove(): String {
-        // TODO Remove or paste code here
-        return ""
-    }
-
-    fun getLevelBestScore(): String {
-        // TODO Remove or paste code here
-        return ""
-    }
 }

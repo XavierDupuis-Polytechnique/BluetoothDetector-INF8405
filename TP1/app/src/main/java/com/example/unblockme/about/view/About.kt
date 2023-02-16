@@ -19,38 +19,33 @@ import com.example.unblockme.common.view.Page
 import com.example.unblockme.game.domain.GameManager
 import com.example.unblockme.ui.theme.SkyBlue
 
+// About page
 @Composable
 fun About(
     navigateTo: (Page) -> Unit,
     viewModel: AboutViewModel = viewModel(),
 ) {
     CenteredVerticalContainer {
-        Text(" - ABOUT PAGE - ", color = Color.White)
+        // Names of the developers
+        Text(" - App developed by - \n", color = Color.White)
         Text(
-            "Xavier Dupuis\nWilliam Lévesque\nMarie Noël\nMohammed Imade MEDDANE",
+            "Xavier Dupuis\nWilliam Lévesque\nMarie Noël\nMohammed Imade MEDDANE\n",
             color = Color.White,
             textAlign = TextAlign.Center
         )
 
-        // TODO Testing feat. to remove maybe
-        CenteredHorizontalContainer(Modifier.fillMaxWidth(0.6f)) {
+        // Button that makes it easy to reset the user best scores cache
+        CenteredHorizontalContainer(Modifier.fillMaxWidth(0.8f)) {
             Button(
                 colors = buttonColors(backgroundColor = SkyBlue),
                 modifier = Modifier.padding(start = 1.dp),
                 onClick = { GameManager.resetCache() }
 
             ) {
-                Text("Reset scores")
-            }
-
-            Button(
-                colors = buttonColors(backgroundColor = SkyBlue),
-                modifier = Modifier.padding(start = 1.dp),
-                onClick = { GameManager.setBestCache() }
-            ) {
-                Text("Set scores")
+                Text("Reset best scores cache")
             }
         }
+        // Button that returns to the main menu
         Button(
             modifier = Modifier.fillMaxWidth(0.6f),
             onClick = { viewModel.navigateToMenu(navigateTo) }
