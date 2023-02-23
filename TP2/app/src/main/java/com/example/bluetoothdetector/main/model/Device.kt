@@ -11,9 +11,13 @@ val addresses = listOf(
 data class Device(
     val name: String = generateDeviceName(),
     val macAddress: String = addresses[0],
-    val date: Date = Date()
-    // TODO : add other infos
+    val date: Date = Date(),
+    // TODO : add others
+    //    val location: Location
+    //    val classType: ClassType
+    //    val otherInfo: OtherInfo
 ) {
+
     companion object {
         private const val devicePrefix = "Device"
         private var currentDeviceId = 0

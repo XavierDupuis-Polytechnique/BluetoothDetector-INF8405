@@ -14,27 +14,24 @@ import com.example.bluetoothdetector.main.viewmodel.DevicesListViewModel
 fun DevicesListView(
     viewModel: DevicesListViewModel = viewModel()
 ) {
+    // TODO : SORT BY FAVORITES
+    // val sortedDevices = remember(viewModel.devices.value) {
+    //     viewModel.devices.value.sortedBy { !viewModel.isFavorite(it) }
+    // }
     LazyColumn {
-        items(viewModel.devices) {
+        items(viewModel.devices.value) {
             var isExpanded by remember {
                 mutableStateOf(true)
             }
             val toggleExpanded = { isExpanded = !isExpanded }
-            var isFavorite by remember {
-                mutableStateOf(true)
-            }
-            val toggleFavorite = { isFavorite = !isFavorite }
             Card(modifier = Modifier.clickable { toggleExpanded() }) {
                 DeviceView(
                     it,
                     isExpanded,
-                    isFavorite,
+                    viewModel.isFavorite(it),
                     deviceActions = DeviceActions(
                         share = { viewModel.share(it) },
-                        toggleFavorite = {
-                            toggleFavorite()
-                            viewModel.toggleFavorite(it)
-                        },
+                        toggleFavorite = { viewModel.toggleFavorite(it) },
                         getItinerary = { viewModel.getItinerary(it) },
                     )
                 )
