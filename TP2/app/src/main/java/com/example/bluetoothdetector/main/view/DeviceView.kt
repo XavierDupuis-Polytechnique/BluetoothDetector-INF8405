@@ -1,5 +1,6 @@
 package com.example.bluetoothdetector.main.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -14,6 +15,7 @@ import com.example.bluetoothdetector.common.view.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.domain.ActionButton
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.model.Device
+import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 
 @Composable
 fun DeviceView(
@@ -25,7 +27,10 @@ fun DeviceView(
         mutableStateOf(true)
     }
     val toggleExpanded = { isExpanded = !isExpanded }
-    Card(modifier = Modifier.clickable { toggleExpanded() }) {
+    Card(
+        modifier = Modifier
+            .clickable { toggleExpanded() }
+    ) {
         CenteredVerticalContainer {
             DeviceInfo(device)
             if (isExpanded) {
@@ -89,4 +94,24 @@ fun DevicePreview() {
             getItinerary = {}
         )
     )
+}
+
+@SuppressLint("UnrememberedMutableState")
+@Preview(showBackground = true)
+@Composable
+fun DeviceDarkPreview() {
+    var isFavorite by remember {
+        mutableStateOf(false)
+    }
+    BluetoothDetectorTheme(mutableStateOf(true)) {
+        DeviceView(
+            device = Device(),
+            isFavorite = isFavorite,
+            DeviceActions(
+                share = {},
+                toggleFavorite = { isFavorite = !isFavorite },
+                getItinerary = {}
+            )
+        )
+    }
 }
