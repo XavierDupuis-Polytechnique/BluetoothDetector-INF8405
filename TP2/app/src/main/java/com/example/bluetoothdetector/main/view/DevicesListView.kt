@@ -1,6 +1,8 @@
 package com.example.bluetoothdetector.main.view
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
@@ -18,24 +20,19 @@ fun DevicesListView(
     // val sortedDevices = remember(viewModel.devices.value) {
     //     viewModel.devices.value.sortedBy { !viewModel.isFavorite(it) }
     // }
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.fillMaxHeight(0.5f)
+    ) {
         items(viewModel.devices.value) {
-            var isExpanded by remember {
-                mutableStateOf(true)
-            }
-            val toggleExpanded = { isExpanded = !isExpanded }
-            Card(modifier = Modifier.clickable { toggleExpanded() }) {
-                DeviceView(
-                    it,
-                    isExpanded,
-                    viewModel.isFavorite(it),
-                    deviceActions = DeviceActions(
-                        share = { viewModel.share(it) },
-                        toggleFavorite = { viewModel.toggleFavorite(it) },
-                        getItinerary = { viewModel.getItinerary(it) },
-                    )
+            DeviceView(
+                it,
+                viewModel.isFavorite(it),
+                deviceActions = DeviceActions(
+                    share = { viewModel.share(it) },
+                    toggleFavorite = { viewModel.toggleFavorite(it) },
+                    getItinerary = { viewModel.getItinerary(it) },
                 )
-            }
+            )
         }
     }
 }
