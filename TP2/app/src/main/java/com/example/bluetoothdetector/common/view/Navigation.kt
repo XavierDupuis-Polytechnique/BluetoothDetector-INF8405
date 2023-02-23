@@ -1,42 +1,32 @@
 package com.example.bluetoothdetector.common.view
 
-import androidx.compose.material.Card
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.bluetoothdetector.main.view.MainScreen
+import com.example.bluetoothdetector.splash.view.SplashScreen
 
 
 @Composable
 fun Navigation(
-    startDestination: Page = Page.Menu,
+    startDestination: Page = Page.Splash,
     navController: NavHostController = rememberNavController()
 ) {
     // function used to allow composable to navigate to other pages
     val navigateTo = { page: Page -> navController.navigate(page.name) }
 
     NavHost(navController, startDestination.name) {
-        composable(Page.Menu.name) {
+        composable(Page.Splash.name) {
             Page {
-                // TODO : Remove me
-                Card {
-                    Text("Bluetooth Detector!")
-                }
-                //Menu(navigateTo)
+                SplashScreen(navigateTo)
             }
         }
 
-        composable(Page.About.name) {
+        composable(Page.Main.name) {
             Page {
-                //About(navigateTo)
-            }
-        }
-
-        composable(Page.Game.name) {
-            Page {
-                //Game(navigateTo)
+                MainScreen(navigateTo)
             }
         }
     }

@@ -5,6 +5,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -29,10 +31,10 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun BluetoothDetectorTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    isDarkTheme: MutableState<Boolean> = mutableStateOf(isSystemInDarkTheme()),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
+    val colors = if (isDarkTheme.value) {
         DarkColorPalette
     } else {
         LightColorPalette
