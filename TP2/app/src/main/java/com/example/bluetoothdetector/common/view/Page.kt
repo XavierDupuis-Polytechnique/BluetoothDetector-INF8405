@@ -9,9 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 enum class Page {
-    Game,
-    Menu,
-    About,
+    Splash,
+    Main,
 }
 
 // Full page component for main views
