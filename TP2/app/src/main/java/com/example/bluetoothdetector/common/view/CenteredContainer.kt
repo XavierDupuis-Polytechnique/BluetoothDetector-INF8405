@@ -10,7 +10,10 @@ import androidx.compose.ui.Modifier
 // Helper container where all content is centered
 // horizontally and vertically in a Column (vertical)
 @Composable
-fun CenteredVerticalContainer(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+fun CenteredVerticalContainer(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
@@ -23,7 +26,10 @@ fun CenteredVerticalContainer(modifier: Modifier = Modifier, content: @Composabl
 // Helper container where all content is centered
 // horizontally and vertically in a Row (horizontal)
 @Composable
-fun CenteredHorizontalContainer(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+fun CenteredHorizontalContainer(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
