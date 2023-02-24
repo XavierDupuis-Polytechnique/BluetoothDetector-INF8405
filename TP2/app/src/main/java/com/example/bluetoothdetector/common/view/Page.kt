@@ -35,12 +35,14 @@ fun PageWithThemeSelector(
     themeSelectorViewModel: ThemeSelectorViewModel,
     content: @Composable () -> Unit
 ) {
-    CenteredVerticalContainer {
-        Card(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            ThemeSelector(themeSelectorViewModel)
+    Page {
+        CenteredVerticalContainer {
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                ThemeSelector(themeSelectorViewModel)
+            }
+            content()
         }
-        Page(content)
     }
 }

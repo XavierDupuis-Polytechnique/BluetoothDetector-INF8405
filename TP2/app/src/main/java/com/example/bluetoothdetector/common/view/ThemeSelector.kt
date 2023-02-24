@@ -1,7 +1,5 @@
 package com.example.bluetoothdetector.common.view
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Switch
 import androidx.compose.material.icons.Icons
@@ -17,7 +15,7 @@ import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 fun ThemeSelector(
     viewModel: ThemeSelectorViewModel = viewModel()
 ) {
-    CenteredHorizontalContainer{
+    CenteredHorizontalContainer {
         Icon(Icons.Filled.LightMode, "Light Mode")
         Switch(
             checked = viewModel.isDarkTheme.value,
