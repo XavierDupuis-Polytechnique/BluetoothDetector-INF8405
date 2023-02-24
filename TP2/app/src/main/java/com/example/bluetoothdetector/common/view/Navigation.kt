@@ -5,12 +5,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 import com.example.bluetoothdetector.main.view.MainScreen
 import com.example.bluetoothdetector.splash.view.SplashScreen
 
 
 @Composable
 fun Navigation(
+    themeSelectorViewModel: ThemeSelectorViewModel,
     startDestination: Page = Page.Splash,
     navController: NavHostController = rememberNavController()
 ) {
@@ -25,7 +27,7 @@ fun Navigation(
         }
 
         composable(Page.Main.name) {
-            Page {
+            PageWithThemeSelector(themeSelectorViewModel) {
                 MainScreen(navigateTo)
             }
         }

@@ -1,11 +1,9 @@
 package com.example.bluetoothdetector.main.viewmodel
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bluetoothdetector.main.model.Device
 import java.util.*
-import kotlin.Comparator
 import kotlin.concurrent.schedule
 
 class DevicesListViewModel : ViewModel() {
