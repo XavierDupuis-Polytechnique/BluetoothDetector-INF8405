@@ -14,6 +14,7 @@ import com.example.bluetoothdetector.common.view.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.domain.ActionButton
 import com.example.bluetoothdetector.main.domain.DeviceActions
+import com.example.bluetoothdetector.main.domain.Severity
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 
@@ -76,6 +77,15 @@ private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
                 icon = { Icons.Default.Map }
             )
         )
+        DeviceButton(
+            button = ActionButton(
+                action = deviceActions.forget,
+                label = { "" },
+                canAction = { true },
+                icon = { Icons.Default.Delete },
+                severity = Severity.Danger
+            )
+        )
     }
 }
 
@@ -91,7 +101,8 @@ fun DevicePreview() {
         DeviceActions(
             share = {},
             toggleFavorite = { isFavorite = !isFavorite },
-            getItinerary = {}
+            getItinerary = {},
+            forget = {}
         )
     )
 }
@@ -110,7 +121,8 @@ fun DeviceDarkPreview() {
             DeviceActions(
                 share = {},
                 toggleFavorite = { isFavorite = !isFavorite },
-                getItinerary = {}
+                getItinerary = {},
+                forget = {}
             )
         )
     }

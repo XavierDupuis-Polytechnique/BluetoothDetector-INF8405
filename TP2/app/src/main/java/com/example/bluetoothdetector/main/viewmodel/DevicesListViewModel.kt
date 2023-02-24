@@ -29,14 +29,18 @@ class DevicesListViewModel : ViewModel() {
         } else {
             favoriteDevices.value = favoriteDevices.value.plus(device)
         }
-        println("${favoriteDevices.value.size} of ${devices.value.size}")
         // TODO : REMOVE
+        println("${favoriteDevices.value.size} of ${devices.value.size}")
         Timer().schedule(500L) {
             devices.value = devices.value.plus(Device())
         }
     }
 
     fun getItinerary(device: Device) {
+        // TODO
+    }
+
+    fun forget(device: Device) {
         // TODO
     }
 }

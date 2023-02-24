@@ -31,6 +31,7 @@ fun DevicesListView(
                     share = { viewModel.share(it) },
                     toggleFavorite = { viewModel.toggleFavorite(it) },
                     getItinerary = { viewModel.getItinerary(it) },
+                    forget = { viewModel.forget(it) },
                 )
             )
         }
