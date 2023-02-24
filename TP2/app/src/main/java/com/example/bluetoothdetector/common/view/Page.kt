@@ -31,7 +31,7 @@ fun Page(content: @Composable () -> Unit) {
 
 // Full page component for main views with theme selection
 @Composable
-fun PageWithThemeSelector(
+fun PageWithHeader(
     themeSelectorViewModel: ThemeSelectorViewModel,
     content: @Composable () -> Unit
 ) {

@@ -27,7 +27,7 @@ fun Navigation(
         }
 
         composable(Page.Main.name) {
-            PageWithThemeSelector(themeSelectorViewModel) {
+            PageWithHeader(themeSelectorViewModel) {
                 MainScreen(navigateTo)
             }
         }
