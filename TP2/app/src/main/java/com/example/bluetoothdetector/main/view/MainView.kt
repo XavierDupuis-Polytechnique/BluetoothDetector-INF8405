@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bluetoothdetector.common.view.CardContainer
 import com.example.bluetoothdetector.common.view.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.Page
 import com.example.bluetoothdetector.main.viewmodel.MainViewModel
@@ -23,9 +24,10 @@ fun MainScreen(
     viewModel: MainViewModel = viewModel(),
 ) {
     CenteredHorizontalContainer(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
     ) {
-        Card(
+        CardContainer(
             // TODO : PROBABLY UPDATE WITH
             // modifier = Modifier
             //     .wrapContentWidth()
@@ -36,7 +38,7 @@ fun MainScreen(
         ) {
             MapView()
         }
-        Card(
+        CardContainer(
             modifier = Modifier
                 .wrapContentWidth()
         ) {

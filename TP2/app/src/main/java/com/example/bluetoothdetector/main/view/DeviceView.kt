@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.bluetoothdetector.common.view.CardContainer
 import com.example.bluetoothdetector.common.view.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.domain.ActionButton
@@ -29,12 +30,8 @@ fun DeviceView(
         mutableStateOf(false)
     }
     val toggleExpanded = { isExpanded = !isExpanded }
-    Card(
+    CardContainer(
         modifier = Modifier
-            .padding(
-                horizontal = 4.dp,
-                vertical = 8.dp
-            )
             .clickable { toggleExpanded() }
     ) {
         CenteredVerticalContainer(
