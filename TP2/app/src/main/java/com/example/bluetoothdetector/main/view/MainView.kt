@@ -1,9 +1,11 @@
 package com.example.bluetoothdetector.main.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
@@ -23,15 +25,18 @@ fun MainScreen(
     CenteredHorizontalContainer(
         modifier = Modifier.fillMaxSize()
     ) {
-        CenteredHorizontalContainer(
-            // TODO : UPDATE WITH
+        Card(
+            // TODO : PROBABLY UPDATE WITH
             // modifier = Modifier
             //     .wrapContentWidth()
-            modifier = Modifier.fillMaxWidth(0.45f)
+            //     .wrapContentHeight()
+            modifier = Modifier
+                .fillMaxWidth(0.65f)
+                .fillMaxHeight(1f)
         ) {
             MapView()
         }
-        CenteredHorizontalContainer(
+        Card(
             modifier = Modifier
                 .wrapContentWidth()
         ) {
