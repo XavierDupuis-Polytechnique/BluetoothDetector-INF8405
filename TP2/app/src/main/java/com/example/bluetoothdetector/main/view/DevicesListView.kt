@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -20,24 +21,28 @@ import com.example.bluetoothdetector.ui.theme.RECORDED_DEVICES
 fun DevicesListView(
     viewModel: DevicesListViewModel = viewModel()
 ) {
-    // TODO : SORT BY FAVORITES
-    // val sortedDevices = remember(viewModel.devices.value) {
-    //     viewModel.devices.value.sortedBy { !viewModel.isFavorite(it) }
-    // }
+    val sortedDevices = remember(
+        viewModel.devices.value,
+        viewModel.favoriteDevices.value
+    ) {
+        viewModel.devices.value.sortedBy { !viewModel.isFavorite(it) }
+    }
     CenteredVerticalContainer {
         Text("${viewModel.devices.value.size} $RECORDED_DEVICES")
         LazyColumn(
             modifier = Modifier.fillMaxHeight()
         ) {
-            items(viewModel.devices.value) {
+            items(sortedDevices) {
                 DeviceView(
-                    it,
-                    viewModel.isFavorite(it),
+                    device = it,
+                    isFavorite = viewModel.isFavorite(it),
+                    isExpanded = viewModel.isExpanded(it),
                     deviceActions = DeviceActions(
                         share = { viewModel.share(it) },
                         toggleFavorite = { viewModel.toggleFavorite(it) },
                         getItinerary = { viewModel.getItinerary(it) },
                         forget = { viewModel.forget(it) },
+                        expand = { viewModel.toggleExpanded(it) },
                     )
                 )
             }

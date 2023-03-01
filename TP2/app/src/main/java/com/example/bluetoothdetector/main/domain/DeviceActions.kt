@@ -5,4 +5,5 @@ data class DeviceActions(
     val toggleFavorite: () -> Unit,
     val getItinerary: () -> Unit,
     val forget: () -> Unit,
+    val expand: () -> Unit,
 )

@@ -3,6 +3,7 @@ package com.example.bluetoothdetector.main.view
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -23,15 +24,16 @@ import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 fun DeviceView(
     device: Device,
     isFavorite: Boolean,
+    isExpanded: Boolean,
     deviceActions: DeviceActions,
 ) {
-    var isExpanded by remember {
-        mutableStateOf(false)
-    }
-    val toggleExpanded = { isExpanded = !isExpanded }
     CardContainer(
         modifier = Modifier
-            .clickable { toggleExpanded() }
+            .clickable { deviceActions.expand() },
+        borderColor = if (isFavorite)
+            MaterialTheme.colors.secondary
+        else
+            MaterialTheme.colors.primary
     ) {
         CenteredVerticalContainer(
             modifier = Modifier
@@ -97,16 +99,21 @@ private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
 @Composable
 fun DevicePreview() {
     var isFavorite by remember {
-        mutableStateOf(false)
+        mutableStateOf(true)
+    }
+    var isExpanded by remember {
+        mutableStateOf(true)
     }
     DeviceView(
         device = Device(),
         isFavorite = isFavorite,
+        isExpanded = isExpanded,
         DeviceActions(
             share = {},
             toggleFavorite = { isFavorite = !isFavorite },
             getItinerary = {},
-            forget = {}
+            forget = {},
+            expand = { isExpanded = !isExpanded }
         )
     )
 }
@@ -115,19 +122,7 @@ fun DevicePreview() {
 @Preview(showBackground = true)
 @Composable
 fun DeviceDarkPreview() {
-    var isFavorite by remember {
-        mutableStateOf(false)
-    }
     BluetoothDetectorTheme(mutableStateOf(true)) {
-        DeviceView(
-            device = Device(),
-            isFavorite = isFavorite,
-            DeviceActions(
-                share = {},
-                toggleFavorite = { isFavorite = !isFavorite },
-                getItinerary = {},
-                forget = {}
-            )
-        )
+        DevicePreview()
     }
 }

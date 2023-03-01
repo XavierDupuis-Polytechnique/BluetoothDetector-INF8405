@@ -7,11 +7,10 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 class DevicesListViewModel : ViewModel() {
-//    val favoriteComparator = Comparator<Device> { return favoriteDevices.contains(it) }
-
     // TODO : REDIRECT
     val devices = mutableStateOf(listOf(Device(), Device()))
-    private val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
+    val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
+    var expandedDevice = mutableStateOf<Device?>(null)
 
     fun share(device: Device) {
         // TODO
@@ -28,11 +27,22 @@ class DevicesListViewModel : ViewModel() {
             favoriteDevices.value = favoriteDevices.value.plus(device)
         }
         // TODO : REMOVE
-        println("${favoriteDevices.value.size} of ${devices.value.size}")
         Timer().schedule(500L) {
             devices.value = devices.value.plus(Device())
         }
     }
+
+    fun isExpanded(device: Device): Boolean {
+        return expandedDevice.value === device
+    }
+
+    fun toggleExpanded(device: Device) {
+        if (isExpanded(device))
+            expandedDevice.value = null
+        else
+            expandedDevice.value = device
+    }
+
 
     fun getItinerary(device: Device) {
         // TODO
