@@ -11,7 +11,7 @@ class DevicesListViewModel : ViewModel() {
 
     // TODO : REDIRECT
     val devices = mutableStateOf(listOf(Device(), Device()))
-    private val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
+    val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
 
     fun share(device: Device) {
         // TODO
@@ -28,7 +28,6 @@ class DevicesListViewModel : ViewModel() {
             favoriteDevices.value = favoriteDevices.value.plus(device)
         }
         // TODO : REMOVE
-        println("${favoriteDevices.value.size} of ${devices.value.size}")
         Timer().schedule(500L) {
             devices.value = devices.value.plus(Device())
         }
