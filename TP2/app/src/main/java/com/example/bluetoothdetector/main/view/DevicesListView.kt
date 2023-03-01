@@ -34,13 +34,15 @@ fun DevicesListView(
         ) {
             items(sortedDevices) {
                 DeviceView(
-                    it,
-                    viewModel.isFavorite(it),
+                    device = it,
+                    isFavorite = viewModel.isFavorite(it),
+                    isExpanded = viewModel.isExpanded(it),
                     deviceActions = DeviceActions(
                         share = { viewModel.share(it) },
                         toggleFavorite = { viewModel.toggleFavorite(it) },
                         getItinerary = { viewModel.getItinerary(it) },
                         forget = { viewModel.forget(it) },
+                        expand = { viewModel.toggleExpanded(it) },
                     )
                 )
             }
