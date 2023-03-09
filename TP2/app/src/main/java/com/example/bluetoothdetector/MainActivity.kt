@@ -22,8 +22,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainContent() {
     val themeSelectorViewModel = ThemeSelectorViewModel(isSystemInDarkTheme())
+    val permissionsViewModel = PermissionsViewModel()
     BluetoothDetectorTheme(themeSelectorViewModel.isDarkTheme) {
-        Navigation(themeSelectorViewModel)
+        Navigation(themeSelectorViewModel, permissionsViewModel)
     }
 }
 
