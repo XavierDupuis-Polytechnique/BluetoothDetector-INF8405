@@ -69,4 +69,11 @@ dependencies {
 
     // Icons
     implementation ("androidx.compose.material:material-icons-extended:$compose_version")
+
+    // Permissions
+    def accompanist_version = '0.24.9-beta'
+    implementation ("com.google.accompanist:accompanist-permissions:$accompanist_version")
+
+    // Location
+    implementation ('com.google.android.gms:play-services-location:19.0.1')
 }
