@@ -2,12 +2,13 @@ package com.example.bluetoothdetector.common.view.permissions
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import com.example.bluetoothdetector.common.view.typography.Title
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
+import com.example.bluetoothdetector.ui.theme.CLOSE
+import com.example.bluetoothdetector.ui.theme.GRANT_PERMISSIONS
+import com.example.bluetoothdetector.ui.theme.PERMISSIONS_STATUS
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 
@@ -28,19 +29,10 @@ fun PermissionLauncher(
     if (viewModel.isRationaleShown.value) {
         AlertDialog(
             onDismissRequest = {},
-            title = {
-                Text(
-                    text = "Permission Request",
-                    style = TextStyle(
-                        fontSize = MaterialTheme.typography.h6.fontSize,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            },
+            title = { Title(PERMISSIONS_STATUS) },
             text = {
                 PermissionStatus(
                     permissionsState,
-//                    permissionsRationales
                 )
             },
             confirmButton = {
@@ -48,14 +40,14 @@ fun PermissionLauncher(
                     onClick = confirm,
                     enabled = viewModel.canRequestPermission(permissionsState)
                 ) {
-                    Text("Give Permission")
+                    Text(GRANT_PERMISSIONS)
                 }
             },
             dismissButton = {
                 Button(
                     onClick = dismiss
                 ) {
-                    Text("Close")
+                    Text(CLOSE)
                 }
             }
         )
