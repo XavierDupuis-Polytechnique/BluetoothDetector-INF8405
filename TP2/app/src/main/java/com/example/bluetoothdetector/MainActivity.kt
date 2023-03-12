@@ -7,6 +7,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.bluetoothdetector.common.view.Navigation
+import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 
@@ -22,8 +23,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainContent() {
     val themeSelectorViewModel = ThemeSelectorViewModel(isSystemInDarkTheme())
+    val permissionsViewModel = PermissionsViewModel()
     BluetoothDetectorTheme(themeSelectorViewModel.isDarkTheme) {
-        Navigation(themeSelectorViewModel)
+        Navigation(themeSelectorViewModel, permissionsViewModel)
     }
 }
 
