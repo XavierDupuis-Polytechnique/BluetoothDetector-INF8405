@@ -21,18 +21,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         initLocationSource()
         setContent {
-            MainContent()
+            MainContent(locationSource)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        locationSource.resumeLocationUpdates()
+        locationSource.resumeLocationUpdatesAsync()
     }
 
     override fun onPause() {
         super.onPause()
-        locationSource.pauseLocationUpdates()
+        locationSource.pauseLocationUpdatesAsync()
     }
 
     private fun initLocationSource() {
@@ -44,11 +44,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainContent() {
+fun MainContent(locationSource: LocationSource) {
     val themeSelectorViewModel = ThemeSelectorViewModel(isSystemInDarkTheme())
     val permissionsViewModel = PermissionsViewModel()
     BluetoothDetectorTheme(themeSelectorViewModel.isDarkTheme) {
-        Navigation(themeSelectorViewModel, permissionsViewModel)
+        Navigation(
+            locationSource,
+            themeSelectorViewModel,
+            permissionsViewModel,
+        )
     }
 }
 
