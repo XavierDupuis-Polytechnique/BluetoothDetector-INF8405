@@ -31,20 +31,13 @@ fun MainScreen(
             .fillMaxSize()
     ) {
         CardContainer(
-            // TODO : PROBABLY UPDATE WITH
-            // modifier = Modifier
-            //     .wrapContentWidth()
-            //     .wrapContentHeight()
             modifier = Modifier
-                .fillMaxWidth(0.65f)
-                .fillMaxHeight(1f)
+                .weight(0.75f)
+                .fillMaxHeight()
         ) {
             MapView(locationSource)
         }
-        CardContainer(
-            modifier = Modifier
-                .wrapContentWidth()
-        ) {
+        CardContainer {
             DevicesListView()
         }
     }
