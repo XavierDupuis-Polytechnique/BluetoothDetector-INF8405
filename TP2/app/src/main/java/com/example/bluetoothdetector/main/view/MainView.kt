@@ -8,19 +8,23 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bluetoothdetector.common.view.CardContainer
 import com.example.bluetoothdetector.common.view.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.Page
+import com.example.bluetoothdetector.main.sources.LocationSource
 import com.example.bluetoothdetector.main.viewmodel.MainViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
+import com.google.android.gms.location.FusedLocationProviderClient
 
 @Composable
 fun MainScreen(
-    navigateTo: (Page) -> Unit,
+    locationSource: LocationSource,
     viewModel: MainViewModel = viewModel(),
+    navigateTo: (Page) -> Unit,
 ) {
     CenteredHorizontalContainer(
         modifier = Modifier
@@ -35,7 +39,7 @@ fun MainScreen(
                 .fillMaxWidth(0.65f)
                 .fillMaxHeight(1f)
         ) {
-            MapView()
+            MapView(locationSource)
         }
         CardContainer(
             modifier = Modifier
@@ -46,10 +50,15 @@ fun MainScreen(
     }
 }
 
+@SuppressLint("VisibleForTests")
 @Preview(showBackground = true, device = Devices.PIXEL_C)
 @Composable
 fun MainPreview() {
-    MainScreen({})
+    MainScreen(
+        LocationSource(
+            FusedLocationProviderClient(LocalContext.current)
+        )
+    ) {}
 }
 
 @SuppressLint("UnrememberedMutableState")
@@ -57,6 +66,6 @@ fun MainPreview() {
 @Composable
 fun MainDarkPreview() {
     BluetoothDetectorTheme(mutableStateOf(true)) {
-        MainScreen({})
+        MainPreview()
     }
 }
