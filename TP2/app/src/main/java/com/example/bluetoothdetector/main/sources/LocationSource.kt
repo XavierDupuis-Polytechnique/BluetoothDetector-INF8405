@@ -6,6 +6,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
+import com.google.android.gms.tasks.Task
 
 
 class LocationSource(private val fusedLocationProviderClient: FusedLocationProviderClient) {
@@ -38,15 +39,23 @@ class LocationSource(private val fusedLocationProviderClient: FusedLocationProvi
     // TODO : CHECK AND FAIL GRACEFULLY
     @SuppressLint("MissingPermission")
     fun resumeLocationUpdates() {
-        fusedLocationProviderClient.requestLocationUpdates(
+        val requestTask = fusedLocationProviderClient.requestLocationUpdates(
             locationRequest,
             locationCallback,
             Looper.getMainLooper()
         )
+        logTaskStatus(requestTask)
     }
 
     fun pauseLocationUpdates() {
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+        val removeTask = fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+        logTaskStatus(removeTask)
     }
 
+    private fun logTaskStatus(task: Task<Void>) {
+        task.addOnCanceledListener { println("canceled $task") }
+        task.addOnCompleteListener { println("complete $task") }
+        task.addOnFailureListener { println("failure $task") }
+        task.addOnSuccessListener { println("success $task") }
+    }
 }
