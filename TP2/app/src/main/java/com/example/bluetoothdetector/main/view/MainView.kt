@@ -19,6 +19,7 @@ import com.example.bluetoothdetector.main.sources.LocationSource
 import com.example.bluetoothdetector.main.viewmodel.MainViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 @Composable
 fun MainScreen(
@@ -49,7 +50,7 @@ fun MainScreen(
 fun MainPreview() {
     MainScreen(
         LocationSource(
-            FusedLocationProviderClient(LocalContext.current)
+            LocationServices.getFusedLocationProviderClient(LocalContext.current)
         )
     ) {}
 }
