@@ -11,9 +11,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.bluetoothdetector.common.view.CardContainer
-import com.example.bluetoothdetector.common.view.CenteredHorizontalContainer
-import com.example.bluetoothdetector.common.view.CenteredVerticalContainer
+import com.example.bluetoothdetector.common.view.containers.CardContainer
+import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
+import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.domain.ActionButton
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.domain.Severity

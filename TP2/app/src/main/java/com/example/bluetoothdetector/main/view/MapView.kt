@@ -3,7 +3,7 @@ package com.example.bluetoothdetector.main.view
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.bluetoothdetector.common.view.CenteredVerticalContainer
+import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.sources.LocationSource
 import com.example.bluetoothdetector.main.viewmodel.MapViewModel
 
