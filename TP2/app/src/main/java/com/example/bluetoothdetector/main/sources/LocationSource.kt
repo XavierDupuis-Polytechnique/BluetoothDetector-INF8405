@@ -5,10 +5,7 @@ import android.location.Location
 import android.os.Looper
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.*
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.google.android.gms.tasks.Task
@@ -18,19 +15,17 @@ class LocationSource(private val fusedLocationProviderClient: FusedLocationProvi
 
     companion object {
         // TODO : FIND HOW TO USE NEXT LINE
-        // const val LocationRequestAccuracy: Int = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        const val LocationRequestAccuracy: Int = LocationRequest.PRIORITY_HIGH_ACCURACY
+        // const val LocationRequestAccuracy: Int = Priority.PRIORITY_BALANCED_POWER_ACCURACY
+        const val LocationRequestPriority: Int = Priority.PRIORITY_HIGH_ACCURACY
         const val LocationRequestInterval: Long = 10000
-        const val LocationRequestFastestInterval: Long = 5000
     }
 
     val currentLocation: MutableState<Location?> = mutableStateOf(null)
 
-    private var locationRequest: LocationRequest = LocationRequest.create().apply {
-        priority = LocationRequestAccuracy
-        interval = LocationRequestInterval
-        fastestInterval = LocationRequestFastestInterval
-    }
+    private var locationRequest: LocationRequest = LocationRequest.Builder(
+        LocationRequestPriority,
+        LocationRequestInterval
+    ).build()
 
     private var locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) =
@@ -71,7 +66,7 @@ class LocationSource(private val fusedLocationProviderClient: FusedLocationProvi
     @SuppressLint("MissingPermission")
     fun getCurrentLocationAsync() {
         val requestTask = fusedLocationProviderClient.getCurrentLocation(
-            LocationRequestAccuracy,
+            LocationRequestPriority,
             object : CancellationToken() {
                 override fun onCanceledRequested(p0: OnTokenCanceledListener): CancellationToken {
                     return this
