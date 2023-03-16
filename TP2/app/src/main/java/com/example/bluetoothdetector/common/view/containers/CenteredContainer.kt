@@ -1,4 +1,4 @@
-package com.example.bluetoothdetector.common.view
+package com.example.bluetoothdetector.common.view.containers
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable

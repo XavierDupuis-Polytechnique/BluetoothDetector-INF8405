@@ -13,6 +13,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.view.*
+import com.example.bluetoothdetector.common.view.containers.CardContainer
+import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
+import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.splash.viewmodel.SplashViewModel
 
 const val AppVersion = 1.0
