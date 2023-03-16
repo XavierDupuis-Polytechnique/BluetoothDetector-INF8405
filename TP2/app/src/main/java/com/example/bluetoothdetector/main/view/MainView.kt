@@ -19,7 +19,7 @@ import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import com.google.android.gms.location.LocationServices
 
 const val RightWeight = 1f
-const val LeftWeight = RightWeight * 3
+const val LeftWeight = RightWeight * 2
 
 @Composable
 fun MainScreen(
