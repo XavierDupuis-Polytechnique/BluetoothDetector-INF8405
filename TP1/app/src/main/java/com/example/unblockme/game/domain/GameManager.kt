@@ -19,6 +19,7 @@ const val defaultPath = "/data/user/0/com.example.unblockme/files/cache"
 
 // Manages games states, moves and levels
 object GameManager {
+    // Holds the current displayed state of the success dialog
     val isSuccessShown = mutableStateOf(false)
 
     // Holds the current level id
@@ -139,17 +140,21 @@ object GameManager {
         currentState.value = gameStates.peek()
     }
 
+    // Initialize default user best scores
     var bestScores = mutableListOf("--", "--", "--")
 
+    // Returns the current level best score of the user
     fun getCurrentBestScore(): String {
         return bestScores[currentLevel.value - 1]
     }
 
+    // Return the current level best possible score
     fun getCurrentMin(): String {
         val minScores = mutableListOf("15", "17", "15")
         return minScores[currentLevel.value - 1]
     }
 
+    // Save the new best score when user beats his previous best
     fun saveToCache(level: Int, score: Int) {
         var file = getCache()
         var oldScores = file.readLines().toMutableList()
@@ -165,24 +170,28 @@ object GameManager {
         }
     }
 
+    // Open the local device cache of best scores
     fun readCache() {
         var file = getCache()
         val currentScores = file.readLines().toMutableList()
         bestScores = currentScores
     }
 
+    // Reset the cache of best scores
     fun resetCache() {
         var file = getCache()
         file.writeText(defaultCacheValue)
         readCache()
     }
 
+    // Set the local cache to the best possible scores
     fun setBestCache() {
         var file = getCache()
         file.writeText("15\n17\n15")
         readCache()
     }
 
+    // Loads the user best scores from local cache
     fun getCache(): File {
         val file = File(defaultPath)
         if (!file.exists()) {

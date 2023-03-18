@@ -4,6 +4,13 @@ import com.example.unblockme.game.model.*
 
 // Level layout for level 1
 val Level1Layout: Blocks = listOf(
+    MainBlock(
+        listOf(
+            Coordinates(0, 2),
+            Coordinates(1, 2),
+        ),
+        Direction.Horizontal
+    ),
     OtherBlock(
         listOf(
             Coordinates(0, 0),
@@ -19,13 +26,6 @@ val Level1Layout: Blocks = listOf(
             Coordinates(2, 3),
         ),
         Direction.Vertical
-    ),
-    MainBlock(
-        listOf(
-            Coordinates(0, 2),
-            Coordinates(1, 2),
-        ),
-        Direction.Horizontal
     ),
     OtherBlock(
         listOf(

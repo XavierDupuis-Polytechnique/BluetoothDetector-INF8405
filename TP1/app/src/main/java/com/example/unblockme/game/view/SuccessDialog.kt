@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.animation.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,25 +26,18 @@ import androidx.compose.animation.AnimatedVisibility
 @Composable
 fun SuccessDialog(
     viewModel: SuccessViewModel = viewModel()
-
-){
-    AnimatedVisibility(visible = viewModel.isSuccessShown.value,exit = fadeOut(animationSpec = tween(10000, easing = LinearEasing)))
-    {
-
+) {
+    AnimatedVisibility(
+        visible = viewModel.isSuccessShown.value,
+        enter = fadeIn(),
+        exit = fadeOut(),
+    ) {
+        CustomDialog()
     }
-
-
-
-
-        //The success window will appear with sound
+    if (viewModel.isSuccessShown.value) {
+        // The success window will appear with sound
         val context = LocalContext.current
         val mediaPlayer: MediaPlayer = MediaPlayer.create(context, R.raw.audio)
         mediaPlayer.start()
-
-        CustomDialog(
-            onDismiss = { viewModel.onDismissDialog() }
-        )
-
+    }
 }
-
-
