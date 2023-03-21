@@ -1,4 +1,4 @@
-package com.example.bluetoothdetector.main.sources
+package com.example.bluetoothdetector.repository
 
 import android.annotation.SuppressLint
 import android.location.Location
@@ -11,8 +11,9 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.google.android.gms.tasks.Task
 
 
-class LocationRepository(private val fusedLocationProviderClient: FusedLocationProviderClient) {
-
+class LocationRepository(
+    private val fusedLocationProviderClient: FusedLocationProviderClient
+) {
     companion object {
         // TODO : FIND HOW TO USE NEXT LINE
         // const val LocationRequestAccuracy: Int = Priority.PRIORITY_BALANCED_POWER_ACCURACY

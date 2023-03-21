@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
-import com.example.bluetoothdetector.main.sources.LocationRepository
+import com.example.bluetoothdetector.repository.LocationRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -17,7 +17,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject lateinit var locationRepository: LocationRepository
+    @Inject
+    lateinit var locationRepository: LocationRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

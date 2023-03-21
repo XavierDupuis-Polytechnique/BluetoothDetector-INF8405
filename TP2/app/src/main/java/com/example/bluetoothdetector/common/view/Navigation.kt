@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
-import com.example.bluetoothdetector.main.sources.LocationRepository
 import com.example.bluetoothdetector.main.view.MainScreen
 import com.example.bluetoothdetector.splash.view.SplashScreen
 

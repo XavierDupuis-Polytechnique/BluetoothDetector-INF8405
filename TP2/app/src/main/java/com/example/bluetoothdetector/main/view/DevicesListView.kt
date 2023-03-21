@@ -11,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.viewmodel.DevicesListViewModel
