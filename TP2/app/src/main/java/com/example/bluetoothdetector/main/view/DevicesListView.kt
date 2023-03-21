@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.domain.DeviceActions
@@ -19,7 +20,7 @@ import com.example.bluetoothdetector.ui.theme.RECORDED_DEVICES
 
 @Composable
 fun DevicesListView(
-    viewModel: DevicesListViewModel = viewModel()
+    viewModel: DevicesListViewModel = hiltViewModel()
 ) {
     val sortedDevices = remember(
         viewModel.devices.value,
@@ -53,7 +54,7 @@ fun DevicesListView(
 @Preview(showBackground = true)
 @Composable
 fun DeviceEmptyListPreview() {
-    val viewModel = DevicesListViewModel()
+    val viewModel: DevicesListViewModel = hiltViewModel()
     viewModel.devices.value = listOf()
     DevicesListView(viewModel)
 }
