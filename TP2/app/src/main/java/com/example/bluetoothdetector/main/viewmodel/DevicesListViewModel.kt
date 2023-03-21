@@ -3,7 +3,7 @@ package com.example.bluetoothdetector.main.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bluetoothdetector.main.model.Device
-import com.example.bluetoothdetector.repository.DeviceRepository
+import com.example.bluetoothdetector.main.repository.DeviceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
 import javax.inject.Inject

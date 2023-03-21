@@ -1,4 +1,4 @@
-package com.example.bluetoothdetector.repository
+package com.example.bluetoothdetector.main.repository
 
 import androidx.compose.runtime.mutableStateOf
 import com.example.bluetoothdetector.main.model.Device
