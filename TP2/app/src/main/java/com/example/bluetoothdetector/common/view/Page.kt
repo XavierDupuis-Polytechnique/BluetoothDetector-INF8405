@@ -9,7 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
+import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 
 enum class Page {
     Splash,
@@ -32,7 +32,7 @@ fun Page(content: @Composable () -> Unit) {
 // Full page component for main views with theme selection
 @Composable
 fun PageWithHeader(
-    themeSelectorViewModel: ThemeSelectorViewModel,
+    headerContent: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
     Page {
@@ -40,7 +40,7 @@ fun PageWithHeader(
             Card(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                ThemeSelector(themeSelectorViewModel)
+                headerContent()
             }
             content()
         }

@@ -2,13 +2,20 @@ package com.example.bluetoothdetector.main.view
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.viewmodel.MapViewModel
 
 @Composable
 fun MapView(
-    viewModel: MapViewModel = viewModel()
+    viewModel: MapViewModel = hiltViewModel()
 ) {
+    val longitude = viewModel.location.value?.longitude.toString()
+    val latitude = viewModel.location.value?.latitude.toString()
     // TODO
-    Text("Map")
+    CenteredVerticalContainer {
+        Text("Map")
+        Text("longitude : $longitude")
+        Text("latitude : $latitude")
+    }
 }

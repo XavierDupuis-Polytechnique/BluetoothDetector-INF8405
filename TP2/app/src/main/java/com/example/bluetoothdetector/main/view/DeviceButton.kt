@@ -8,20 +8,20 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.bluetoothdetector.common.view.CenteredVerticalContainer
-import com.example.bluetoothdetector.main.domain.ActionButton
-import com.example.bluetoothdetector.main.domain.Severity
+import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
+import com.example.bluetoothdetector.main.domain.Action
+import com.example.bluetoothdetector.main.domain.ActionSeverity
 
 @Composable
 fun DeviceButton(
-    button: ActionButton
+    button: Action
 ) {
     Button(
         modifier = Modifier.padding(2.dp),
         onClick = button.action,
         enabled = button.canAction(),
         colors =
-        if (button.severity == Severity.Danger)
+        if (button.actionSeverity == ActionSeverity.Danger)
             ButtonDefaults.buttonColors(
                 backgroundColor = MaterialTheme.colors.error,
                 contentColor = MaterialTheme.colors.onError,

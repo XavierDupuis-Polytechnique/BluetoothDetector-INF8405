@@ -1,8 +1,6 @@
-package com.example.bluetoothdetector.common.view
+package com.example.bluetoothdetector.common.view.containers
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,7 +10,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun CenteredVerticalContainer(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -28,7 +26,7 @@ fun CenteredVerticalContainer(
 @Composable
 fun CenteredHorizontalContainer(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable RowScope.() -> Unit
 ) {
     Row(
         modifier = modifier,

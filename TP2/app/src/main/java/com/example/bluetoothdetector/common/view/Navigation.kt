@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 import com.example.bluetoothdetector.main.view.MainScreen
 import com.example.bluetoothdetector.splash.view.SplashScreen
@@ -13,6 +14,7 @@ import com.example.bluetoothdetector.splash.view.SplashScreen
 @Composable
 fun Navigation(
     themeSelectorViewModel: ThemeSelectorViewModel,
+    permissionsViewModel: PermissionsViewModel,
     startDestination: Page = Page.Splash,
     navController: NavHostController = rememberNavController()
 ) {
@@ -27,8 +29,14 @@ fun Navigation(
         }
 
         composable(Page.Main.name) {
-            PageWithHeader(themeSelectorViewModel) {
-                MainScreen(navigateTo)
+            PageWithHeader(
+                headerContent = {
+                    HeaderView(themeSelectorViewModel, permissionsViewModel)
+                }
+            ) {
+                MainScreen(
+                    navigateTo = navigateTo,
+                )
             }
         }
     }

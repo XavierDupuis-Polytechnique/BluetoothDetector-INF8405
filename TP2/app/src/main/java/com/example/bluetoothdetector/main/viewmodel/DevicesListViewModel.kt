@@ -3,12 +3,17 @@ package com.example.bluetoothdetector.main.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bluetoothdetector.main.model.Device
+import com.example.bluetoothdetector.repository.DeviceRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
+import javax.inject.Inject
 import kotlin.concurrent.schedule
 
-class DevicesListViewModel : ViewModel() {
-    // TODO : REDIRECT
-    val devices = mutableStateOf(listOf(Device(), Device()))
+@HiltViewModel
+class DevicesListViewModel @Inject constructor(
+    deviceRepository: DeviceRepository
+) : ViewModel() {
+    val devices = deviceRepository.devices
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
     var expandedDevice = mutableStateOf<Device?>(null)
 
