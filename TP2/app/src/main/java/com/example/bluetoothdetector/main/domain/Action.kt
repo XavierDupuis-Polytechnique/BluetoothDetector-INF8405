@@ -2,15 +2,10 @@ package com.example.bluetoothdetector.main.domain
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
-enum class Severity {
-    Normal,
-    Danger
-}
-
-data class ActionButton(
+data class Action(
     val label: () -> String,
     val canAction: () -> Boolean = { true },
     val action: () -> Unit,
     val icon: () -> ImageVector,
-    val severity: Severity = Severity.Normal
+    val actionSeverity: ActionSeverity = ActionSeverity.Normal
 )
