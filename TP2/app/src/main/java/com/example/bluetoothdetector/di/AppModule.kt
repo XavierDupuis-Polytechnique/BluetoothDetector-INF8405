@@ -1,7 +1,9 @@
 package com.example.bluetoothdetector.di
 
+import android.bluetooth.BluetoothManager
 import android.content.Context
 import com.example.bluetoothdetector.main.sources.DeviceSource
+import com.example.bluetoothdetector.repository.Bluetooth
 import com.example.bluetoothdetector.repository.DeviceRepository
 import com.example.bluetoothdetector.repository.LocationRepository
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -39,4 +41,15 @@ object AppModule {
         fusedLocationProviderClient: FusedLocationProviderClient
     ) = LocationRepository(fusedLocationProviderClient)
 
+    @Singleton
+    @Provides
+    fun provideBluetoothManager(
+        @ApplicationContext context: Context
+    ) = context
+
+    @Singleton
+    @Provides
+    fun provideBluetoothRepository(
+        context: Context
+    ) = Bluetooth(context)
 }

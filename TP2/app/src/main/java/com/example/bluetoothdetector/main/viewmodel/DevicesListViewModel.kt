@@ -3,6 +3,7 @@ package com.example.bluetoothdetector.main.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bluetoothdetector.main.model.Device
+import com.example.bluetoothdetector.repository.Bluetooth
 import com.example.bluetoothdetector.repository.DeviceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
@@ -11,9 +12,11 @@ import kotlin.concurrent.schedule
 
 @HiltViewModel
 class DevicesListViewModel @Inject constructor(
-    deviceRepository: DeviceRepository
+    deviceRepository: DeviceRepository,
+    bluetooth: Bluetooth,
 ) : ViewModel() {
     val devices = deviceRepository.devices
+    val bluetoothDevice = bluetooth
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
     var expandedDevice = mutableStateOf<Device?>(null)
 
@@ -55,5 +58,9 @@ class DevicesListViewModel @Inject constructor(
 
     fun forget(device: Device) {
         // TODO
+    }
+
+    fun getBluetoothD(): String {
+        return bluetoothDevice.testBluetooth()
     }
 }

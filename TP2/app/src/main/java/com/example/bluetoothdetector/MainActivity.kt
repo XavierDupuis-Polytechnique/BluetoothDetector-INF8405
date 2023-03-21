@@ -1,18 +1,21 @@
 package com.example.bluetoothdetector
 
-import android.Manifest
-import android.os.Build
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothDevice
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
+import com.example.bluetoothdetector.repository.Bluetooth
 import com.example.bluetoothdetector.repository.LocationRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,32 +26,36 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var locationRepository: LocationRepository
+    @Inject
+    lateinit var bluetooth: Bluetooth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    // TODO: Permission is granted. Continue the action or workflow in your
-                    // app.
-                } else {
-                    // TODO: Explain to the user that the feature is unavailable because the
-                    // feature requires a permission that the user has denied. At the
-                    // same time, respect the user's decision. Don't link to system
-                    // settings in an effort to convince the user to change their
-                    // decision.
-                }
-            }
-
-
-
         setContent {
             MainContent()
-            requestPermissionLauncher.launch(
-                Manifest.permission.BLUETOOTH_CONNECT
-            )
+        }
+        // Register for broadcasts when a device is discovered.
+        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+        registerReceiver(btReceiver, filter)
+
+    }
+
+    private val btReceiver = object : BroadcastReceiver() {
+
+        @SuppressLint("MissingPermission")
+        override fun onReceive(context: Context, intent: Intent) {
+            val action: String? = intent.action
+            when(action) {
+                BluetoothDevice.ACTION_FOUND -> {
+                    // Discovery has found a device. Get the BluetoothDevice
+                    // object and its info from the Intent.
+                    val device: BluetoothDevice? =
+                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+                    val deviceName = device?.name
+                    val deviceHardwareAddress = device?.address // MAC address
+
+                    bluetooth.testBluetooth(device)
+                }
+            }
         }
     }
 
@@ -61,9 +68,13 @@ class MainActivity : ComponentActivity() {
         super.onPause()
         locationRepository.pauseLocationUpdatesAsync()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(btReceiver)
+    }
+
 }
-
-
 
 @Composable
 fun MainContent() {

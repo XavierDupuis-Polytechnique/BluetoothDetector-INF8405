@@ -42,32 +42,3 @@ data class Device(
     }
 }
 
-fun testBluetooth(context: Context): String{
-    val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-
-    val bluetoothAdapter = bluetoothManager.adapter
-
-    if (ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.BLUETOOTH_CONNECT
-        ) != PackageManager.PERMISSION_GRANTED
-    ) {
-//        requestPermissionLauncher.launch(
-//            Manifest.permission.BLUETOOTH_CONNECT
-//
-//        )
-
-        return "No permissions"
-
-    }
-     val a = bluetoothAdapter.bondedDevices
-
-////    val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
-////    pairedDevices?.forEach { device ->
-////        val deviceName = device.name
-////        val deviceHardwareAddress = device.address // MAC address
-////    }
-
-    return a.toString()
-}
-

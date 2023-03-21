@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.bluetoothdetector.common.view.containers.CardContainer
@@ -19,8 +18,9 @@ import com.example.bluetoothdetector.main.domain.Action
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.domain.ActionSeverity
 import com.example.bluetoothdetector.main.model.Device
-import com.example.bluetoothdetector.main.model.testBluetooth
+import com.example.bluetoothdetector.repository.Bluetooth
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Composable
 fun DeviceView(
@@ -55,7 +55,6 @@ private fun DeviceInfo(device: Device) {
         Text(device.name)
         Text(device.macAddress)
         Text(device.date.toString())
-        Text(testBluetooth(LocalContext.current))
     }
 }
 
