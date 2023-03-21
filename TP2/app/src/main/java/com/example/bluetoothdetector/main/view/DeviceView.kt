@@ -14,9 +14,9 @@ import androidx.compose.ui.unit.dp
 import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
-import com.example.bluetoothdetector.main.domain.ActionButton
+import com.example.bluetoothdetector.main.domain.Action
+import com.example.bluetoothdetector.main.domain.ActionSeverity
 import com.example.bluetoothdetector.main.domain.DeviceActions
-import com.example.bluetoothdetector.main.domain.Severity
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 
@@ -60,7 +60,7 @@ private fun DeviceInfo(device: Device) {
 private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
     CenteredHorizontalContainer {
         DeviceButton(
-            button = ActionButton(
+            button = Action(
                 action = deviceActions.share,
                 label = { "" },
                 canAction = { true },
@@ -68,7 +68,7 @@ private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
             )
         )
         DeviceButton(
-            button = ActionButton(
+            button = Action(
                 action = deviceActions.toggleFavorite,
                 label = { "" },
                 canAction = { true },
@@ -76,7 +76,7 @@ private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
             )
         )
         DeviceButton(
-            button = ActionButton(
+            button = Action(
                 action = deviceActions.getItinerary,
                 label = { "" },
                 canAction = { true },
@@ -84,12 +84,12 @@ private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
             )
         )
         DeviceButton(
-            button = ActionButton(
+            button = Action(
                 action = deviceActions.forget,
                 label = { "" },
                 canAction = { true },
                 icon = { Icons.Default.Delete },
-                severity = Severity.Danger
+                actionSeverity = ActionSeverity.Danger
             )
         )
     }

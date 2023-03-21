@@ -12,7 +12,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bluetoothdetector.R
-import com.example.bluetoothdetector.common.view.*
+import com.example.bluetoothdetector.common.view.Page
+import com.example.bluetoothdetector.common.view.SpinnerView
 import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer

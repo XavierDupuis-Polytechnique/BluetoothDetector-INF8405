@@ -9,47 +9,40 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
-import com.example.bluetoothdetector.main.sources.LocationSource
+import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
-import com.google.android.gms.location.LocationServices
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var locationSource: LocationSource
-
+    @Inject
+    lateinit var locationRepository: LocationRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initLocationSource()
         setContent {
-            MainContent(locationSource)
+            MainContent()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        locationSource.resumeLocationUpdatesAsync()
+        locationRepository.resumeLocationUpdatesAsync()
     }
 
     override fun onPause() {
         super.onPause()
-        locationSource.pauseLocationUpdatesAsync()
+        locationRepository.pauseLocationUpdatesAsync()
     }
-
-    private fun initLocationSource() {
-        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        locationSource = LocationSource(fusedLocationProviderClient)
-    }
-
-
 }
 
 @Composable
-fun MainContent(locationSource: LocationSource) {
+fun MainContent() {
     val themeSelectorViewModel = ThemeSelectorViewModel(isSystemInDarkTheme())
     val permissionsViewModel = PermissionsViewModel()
     BluetoothDetectorTheme(themeSelectorViewModel.isDarkTheme) {
         Navigation(
-            locationSource,
             themeSelectorViewModel,
             permissionsViewModel,
         )
