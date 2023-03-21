@@ -11,7 +11,7 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.google.android.gms.tasks.Task
 
 
-class LocationSource(private val fusedLocationProviderClient: FusedLocationProviderClient) {
+class LocationRepository(private val fusedLocationProviderClient: FusedLocationProviderClient) {
 
     companion object {
         // TODO : FIND HOW TO USE NEXT LINE
