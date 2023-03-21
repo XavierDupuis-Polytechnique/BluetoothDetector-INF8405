@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -77,4 +79,15 @@ dependencies {
     // Location
     def location_version = '21.0.1'
     implementation ("com.google.android.gms:play-services-location:$location_version")
+
+    // Hilt Dependency Injection
+    def hilt_compose_version = '1.0.0'
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_compose_version"
+}
+
+kapt {
+    correctErrorTypes true
 }
