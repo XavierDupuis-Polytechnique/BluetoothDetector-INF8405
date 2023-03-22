@@ -13,9 +13,6 @@ class DeviceRepository @Inject constructor(
     //  TODO : UPDATE / REMOVE
     val a = "SomeRepositoryValue"
 
-    //  TODO : UPDATE / REMOVE
-    val b = deviceSource.b
-
     val devices = mutableStateOf(listOf(Device(), Device()))
 
     fun share(device: Device) {
