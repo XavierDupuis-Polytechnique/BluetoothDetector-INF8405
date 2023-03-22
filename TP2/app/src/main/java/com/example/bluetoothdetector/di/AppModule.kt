@@ -19,7 +19,9 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDeviceSource() = DeviceSource()
+    fun provideDeviceSource(
+        @ApplicationContext context: Context
+    ) = DeviceSource(context)
 
     @Singleton
     @Provides

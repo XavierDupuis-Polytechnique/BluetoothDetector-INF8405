@@ -8,13 +8,14 @@ import javax.inject.Singleton
 
 @Singleton
 class DeviceRepository @Inject constructor(
-    deviceSource: DeviceSource,
+    private val deviceSource: DeviceSource,
 ) {
     //  TODO : UPDATE / REMOVE
     val a = "SomeRepositoryValue"
 
-    //  TODO : UPDATE / REMOVE
-    val b = deviceSource.b
-
     val devices = mutableStateOf(listOf(Device(), Device()))
+
+    fun share(device: Device) {
+        deviceSource.share(device)
+    }
 }
