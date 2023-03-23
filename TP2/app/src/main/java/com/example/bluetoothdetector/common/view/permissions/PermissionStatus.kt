@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.bluetoothdetector.common.domain.Modules
 import com.example.bluetoothdetector.common.view.typography.Subtitle
@@ -28,7 +29,7 @@ fun PermissionStatus(
     Column {
         Modules.forEach { module ->
             Subtitle(module.moduleType.name)
-            Text(module.description)
+            Text(stringResource(module.description))
             module.permissions.forEach { permission ->
                 val isRevoked =
                     permissionsState.revokedPermissions.any { permissionState ->

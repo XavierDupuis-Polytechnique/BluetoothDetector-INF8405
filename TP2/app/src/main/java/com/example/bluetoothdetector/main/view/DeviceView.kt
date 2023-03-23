@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
-import com.example.bluetoothdetector.main.domain.Action
-import com.example.bluetoothdetector.main.domain.ActionSeverity
+import com.example.bluetoothdetector.common.domain.action.Action
+import com.example.bluetoothdetector.common.domain.action.ActionSeverity
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
@@ -61,33 +61,25 @@ private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
     CenteredHorizontalContainer {
         DeviceButton(
             button = Action(
-                action = deviceActions.share,
-                label = { "" },
-                canAction = { true },
+                execute = deviceActions.share,
                 icon = { Icons.Default.Share }
             )
         )
         DeviceButton(
             button = Action(
-                action = deviceActions.toggleFavorite,
-                label = { "" },
-                canAction = { true },
+                execute = deviceActions.toggleFavorite,
                 icon = { if (isFavorite) Icons.Default.Star else Icons.Default.Stars }
             )
         )
         DeviceButton(
             button = Action(
-                action = deviceActions.getItinerary,
-                label = { "" },
-                canAction = { true },
+                execute = deviceActions.getItinerary,
                 icon = { Icons.Default.Map }
             )
         )
         DeviceButton(
             button = Action(
-                action = deviceActions.forget,
-                label = { "" },
-                canAction = { true },
+                execute = deviceActions.forget,
                 icon = { Icons.Default.Delete },
                 actionSeverity = ActionSeverity.Danger
             )

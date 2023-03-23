@@ -2,12 +2,12 @@ package com.example.bluetoothdetector.common.view.permissions
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.domain.Module
 import com.example.bluetoothdetector.common.domain.Modules
 import com.example.bluetoothdetector.common.domain.getAllPermissions
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
-import com.example.bluetoothdetector.ui.theme.PERMISSIONS_GRANTED
-import com.example.bluetoothdetector.ui.theme.PERMISSIONS_REQUIRED
 import com.example.bluetoothdetector.ui.theme.accepted
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -35,7 +35,12 @@ fun PermissionHeader(
             contentColor = contentColor
         )
     ) {
-        Text(if (allPermissionsGranted) PERMISSIONS_GRANTED else PERMISSIONS_REQUIRED)
+        Text(
+            if (allPermissionsGranted)
+                stringResource(R.string.permissions_granted)
+            else
+                stringResource(R.string.permissions_required)
+        )
     }
     PermissionLauncher(
         viewModel,

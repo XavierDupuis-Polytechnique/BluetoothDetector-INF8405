@@ -9,13 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.viewmodel.DevicesListViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
-import com.example.bluetoothdetector.ui.theme.RECORDED_DEVICES
 
 @Composable
 fun DevicesListView(
@@ -28,7 +29,7 @@ fun DevicesListView(
         viewModel.devices.value.sortedBy { !viewModel.isFavorite(it) }
     }
     CenteredVerticalContainer {
-        Text("${viewModel.devices.value.size} $RECORDED_DEVICES")
+        Text("${viewModel.devices.value.size} ${stringResource(R.string.recorded_devices)}")
         LazyColumn(
             modifier = Modifier.fillMaxHeight()
         ) {
