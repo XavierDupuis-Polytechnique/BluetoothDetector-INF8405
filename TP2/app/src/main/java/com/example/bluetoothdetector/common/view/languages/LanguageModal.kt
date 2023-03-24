@@ -14,8 +14,8 @@ import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.domain.action.Action
 import com.example.bluetoothdetector.common.domain.modal.ModalActions
 import com.example.bluetoothdetector.common.repository.LanguageRepository
-import com.example.bluetoothdetector.common.view.modal.Modal
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
+import com.example.bluetoothdetector.common.view.modal.Modal
 import com.example.bluetoothdetector.common.viewmodel.LanguageViewModel
 
 @Composable
