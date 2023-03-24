@@ -21,7 +21,14 @@ val English = Language(
     Locale.ENGLISH
 )
 
+val German = Language(
+    R.string.german,
+    R.string.german_abbreviation,
+    Locale.GERMAN
+)
+
 val Languages = listOf(
     English,
-    French
+    French,
+    German
 )

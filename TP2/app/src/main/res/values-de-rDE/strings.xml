@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BluetoothDetector</string>
+    <string name="permissions_required">Einige Berechtigungen sind erforderlich</string>
+    <string name="permissions_granted">Alle Berechtigungen werden erteilt</string>
+    <string name="grant_permissions">Berechtigungen erteilen</string>
+    <string name="permissions_status">Berechtigungsstatus</string>
+    <string name="close">Schließen</string>
+    <string name="maps_module_description">Bietet Karten und GPS Funktionen</string>
+    <string name="detector_module_description">Bietet Erkennungsfunktionen für Bluetooth-Geräte</string>
+    <string name="french">Französisch</string>
+    <string name="english">Englisch</string>
+    <string name="choose_language">Wähle deine Sprache</string>
+    <string name="confirm">Zusagen</string>
+    <string name="cancel">Beenden</string>
+    <string name="german">Deutsch</string>
+    <plurals name="recorded_devices">
+        <item quantity="one">%1$d aufgezeichnete Gerät</item>
+        <item quantity="other">%1$d aufgezeichnete Geräte</item>
+    </plurals>
+</resources>

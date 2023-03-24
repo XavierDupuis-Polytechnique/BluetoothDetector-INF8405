@@ -12,7 +12,7 @@
     <string name="french_abbreviation" translatable="false">FR</string>
     <string name="english">English</string>
     <string name="english_abbreviation" translatable="false">EN</string>
-    <string name="choose_language">Choose your language</string>
+    <string name="choose_language">Select your language</string>
     <string name="no_string" translatable="false">No String</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
@@ -22,4 +22,6 @@
         <item quantity="many">%1$d recorded devices</item>
         <item quantity="other">%1$d recorded devices</item>
     </plurals>
+    <string name="german">German</string>
+    <string name="german_abbreviation" translatable="false">DE</string>
 </resources>
