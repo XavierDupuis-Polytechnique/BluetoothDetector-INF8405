@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BluetoothDetector</string>
-    <string name="recorded_devices">appareil(s) enregistré(s)</string>
     <string name="permissions_required">Quelques permissions manquantes</string>
     <string name="permissions_granted">Toutes les permissions accordées</string>
     <string name="grant_permissions">Accorder les permissions</string>
@@ -14,4 +13,9 @@
     <string name="choose_language">Choisissez votre langue</string>
     <string name="confirm">Confirmer</string>
     <string name="cancel">Annuler</string>
+    <plurals name="recorded_devices">
+        <item quantity="one">%1$d appareil enregistré</item>
+        <item quantity="many">%1$d appareils enregistrés</item>
+        <item quantity="other">%1$d appareils enregistrés</item>
+    </plurals>
 </resources>

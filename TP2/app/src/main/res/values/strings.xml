@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">BluetoothDetector</string>
-    <string name="recorded_devices">recorded device(s)</string>
     <string name="permissions_required">Some permissions are required</string>
     <string name="permissions_granted">All permissions are granted</string>
     <string name="grant_permissions">Grant permissions</string>
@@ -17,4 +16,10 @@
     <string name="no_string" translatable="false">No String</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <plurals name="recorded_devices">
+        <item quantity="zero">No recorded device</item>
+        <item quantity="one">%1$d recorded device</item>
+        <item quantity="many">%1$d recorded devices</item>
+        <item quantity="other">%1$d recorded devices</item>
+    </plurals>
 </resources>
