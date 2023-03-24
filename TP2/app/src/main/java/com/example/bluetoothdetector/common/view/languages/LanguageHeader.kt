@@ -12,7 +12,7 @@ fun LanguagesHeader(
     viewModel: LanguageViewModel = hiltViewModel()
 ) {
     TextButton(onClick = { viewModel.showLanguages() }) {
-        Text(stringResource(viewModel.selectedLanguage.value.abbreviation))
+        Text(stringResource(viewModel.currentLanguage.value.abbreviation))
     }
     if (viewModel.isLanguageModalShown.value) {
         LanguagesModal(viewModel)

@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.domain.action.Action
 import com.example.bluetoothdetector.common.domain.modal.ModalActions
+import com.example.bluetoothdetector.common.repository.LanguageRepository
 import com.example.bluetoothdetector.common.view.Modal
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
@@ -20,13 +21,13 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
 @Composable
 fun LanguagesModal(
-    viewModel: LanguageViewModel,
+    viewModel: LanguageViewModel
 ) {
     Modal(
         title = R.string.choose_language,
         closeModal = { viewModel.closeModal() }
     ) {
-        viewModel.availableLanguages.forEach {
+        LanguageRepository.AvailableLanguages.forEach {
             val colors =
                 if (viewModel.isCurrentLanguage(it))
                     ButtonDefaults.outlinedButtonColors()
