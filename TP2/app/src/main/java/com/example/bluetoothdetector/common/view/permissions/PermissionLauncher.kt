@@ -39,14 +39,14 @@ fun PermissionLauncher(
                     onClick = confirm,
                     enabled = viewModel.canRequestPermission(permissionsState)
                 ) {
-                    Text(stringResource(R.string.grant_permissions) )
+                    Text(stringResource(R.string.grant_permissions))
                 }
             },
             dismissButton = {
                 Button(
                     onClick = dismiss
                 ) {
-                    Text(stringResource(R.string.close) )
+                    Text(stringResource(R.string.close))
                 }
             }
         )

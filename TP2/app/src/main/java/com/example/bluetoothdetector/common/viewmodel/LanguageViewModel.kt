@@ -1,18 +1,11 @@
 package com.example.bluetoothdetector.common.viewmodel
 
-import android.annotation.SuppressLint
-import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bluetoothdetector.common.domain.English
 import com.example.bluetoothdetector.common.domain.Language
-import com.example.bluetoothdetector.common.domain.Languages
-import com.example.bluetoothdetector.common.domain.modal.ModalResult
 import com.example.bluetoothdetector.common.repository.LanguageRepository
-import com.example.bluetoothdetector.main.repository.DeviceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
