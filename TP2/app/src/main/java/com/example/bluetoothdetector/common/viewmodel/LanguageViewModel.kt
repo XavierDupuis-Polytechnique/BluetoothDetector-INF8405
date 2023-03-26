@@ -19,12 +19,12 @@ class LanguageViewModel @Inject constructor(
     val isLanguageModalShown = mutableStateOf(false)
 
     fun showLanguages() {
+        selectedLanguage.value = currentLanguage.value
         isLanguageModalShown.value = true
     }
 
     fun closeModal() {
         isLanguageModalShown.value = false
-        selectedLanguage.value = currentLanguage.value
     }
 
     fun isCurrentLanguage(language: Language): Boolean {
