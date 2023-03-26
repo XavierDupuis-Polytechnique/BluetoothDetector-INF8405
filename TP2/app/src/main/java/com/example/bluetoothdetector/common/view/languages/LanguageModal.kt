@@ -2,10 +2,7 @@ package com.example.bluetoothdetector.common.view.languages
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,25 +26,26 @@ fun LanguagesModal(
         LanguageRepository.AvailableLanguages.forEach {
             val colors =
                 if (viewModel.isSelectedLanguage(it))
-                    ButtonDefaults.buttonColors(
+                    ButtonDefaults.outlinedButtonColors(
                         contentColor = MaterialTheme.colors.onPrimary,
                         backgroundColor = MaterialTheme.colors.primary
                     )
                 else
-                    ButtonDefaults.buttonColors(
-                        contentColor = MaterialTheme.colors.onSecondary,
-                        backgroundColor = MaterialTheme.colors.secondary
+                    ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colors.onSurface,
+                        backgroundColor = MaterialTheme.colors.surface
                     )
 
             Button(
-                enabled = !viewModel.isCurrentLanguage(it),
+                // TODO : REVIEW UX
+                // enabled = !viewModel.isCurrentLanguage(it),
                 onClick = { viewModel.selectLanguage(it) },
                 colors = colors
             ) {
                 CenteredHorizontalContainer {
-                    Text(stringResource(it.denomination))
-                    Spacer(modifier = Modifier.padding(8.dp))
                     Text(stringResource(it.abbreviation))
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Text(stringResource(it.denomination))
                 }
             }
         }
@@ -56,7 +54,8 @@ fun LanguagesModal(
                 primary = Action(
                     label = { R.string.confirm },
                     execute = { viewModel.confirmSelectedLanguage() },
-                    canExecute = { viewModel.canConfirmSelectedLanguage() }
+                    // TODO : REVIEW UX
+                    // canExecute = { viewModel.canConfirmSelectedLanguage() }
                 )
             )
         )
