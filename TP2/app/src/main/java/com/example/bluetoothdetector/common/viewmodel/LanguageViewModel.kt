@@ -2,7 +2,6 @@ package com.example.bluetoothdetector.common.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.bluetoothdetector.common.domain.English
 import com.example.bluetoothdetector.common.domain.Language
 import com.example.bluetoothdetector.common.repository.LanguageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +12,9 @@ class LanguageViewModel @Inject constructor(
     private val languageRepository: LanguageRepository
 ) : ViewModel() {
 
-    private val selectedLanguage = mutableStateOf(English)
-
     val currentLanguage = languageRepository.currentLanguage
+
+    private val selectedLanguage = mutableStateOf(languageRepository.currentLanguage.value)
 
     val isLanguageModalShown = mutableStateOf(false)
 
