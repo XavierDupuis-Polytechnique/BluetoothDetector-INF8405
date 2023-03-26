@@ -25,6 +25,7 @@ class LanguageViewModel @Inject constructor(
 
     fun closeModal() {
         isLanguageModalShown.value = false
+        selectedLanguage.value = currentLanguage.value
     }
 
     fun isCurrentLanguage(language: Language): Boolean {
