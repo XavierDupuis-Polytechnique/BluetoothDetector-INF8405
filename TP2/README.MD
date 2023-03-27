@@ -4,7 +4,10 @@
 2. Enter API key(s) in `secrets.properties`
 3. `secrets.properties` will not be tracked by version control
 
-!["gradle_secrets.png"](gradle_secrets.png)
+!["gradle_secrets.png"](assets/gradle_secrets.png)
+
+Otherwise, error will be thrown at runtime and Maps features will not work
+!["maps_authorization_failure.png"](assets/maps_authorization_failure.png)
 
 
 # PERMISSIONS
