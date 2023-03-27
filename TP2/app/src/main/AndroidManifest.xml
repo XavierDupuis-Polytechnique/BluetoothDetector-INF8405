@@ -15,28 +15,31 @@
     <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
 <!--    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>-->
 
+    <!--    <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${AIzaSyCBeC0x-okBrCjuToMaJ_thwwjCoCbIaEM}" /> -->
 
-    <application
-        android:name=".BluetoothDetector"
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/icon"
-        android:label="@string/app_name"
-        android:roundIcon="@drawable/icon"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.BluetoothDetector"
-        tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.BluetoothDetector">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <application
+            android:name=".BluetoothDetector"
+            android:allowBackup="true"
+            android:dataExtractionRules="@xml/data_extraction_rules"
+            android:fullBackupContent="@xml/backup_rules"
+            android:icon="@drawable/icon"
+            android:label="@string/app_name"
+            android:roundIcon="@drawable/icon"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.BluetoothDetector"
+            tools:targetApi="31">
+            <activity
+                android:name=".MainActivity"
+                android:exported="true"
+                android:theme="@style/Theme.BluetoothDetector">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+            </activity>
+        </application>
 
-</manifest>
+    </manifest>

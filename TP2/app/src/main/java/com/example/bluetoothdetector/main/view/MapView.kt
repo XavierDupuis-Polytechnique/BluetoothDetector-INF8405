@@ -14,8 +14,31 @@ fun MapView(
     val latitude = viewModel.location.value?.latitude.toString()
     // TODO
     CenteredVerticalContainer {
+        GoogleMap()
         Text("Map")
         Text("longitude : $longitude")
         Text("latitude : $latitude")
     }
+}
+
+@Composable()
+fun GoogleMap()
+/*modifier: Modifier = Modifier,
+              cameraPositionState: CameraPositionState = rememberCameraPositionState(),
+              contentDescription: String? = null,
+              googleMapOptionsFactory: () -> GoogleMapOptions = { GoogleMapOptions() },
+              properties: MapProperties = DefaultMapProperties,
+              locationSource: LocationSource? = null,
+              uiSettings: MapUiSettings = DefaultMapUiSettings,
+              indoorStateChangeListener: IndoorStateChangeListener = DefaultIndoorStateChangeListener,
+              onMapClick: (LatLng) -> Unit = {},
+              onMapLongClick: (LatLng) -> Unit = {},
+              onMapLoaded: () -> Unit = {},
+              onMyLocationButtonClick: () -> Boolean = { false },
+              onMyLocationClick: (Location) -> Unit = {},
+              onPOIClick: (PointOfInterest) -> Unit = {},
+              contentPadding: PaddingValues = NoPadding,
+              content: @Composable() () -> Unit? = null)*/
+{
+
 }
