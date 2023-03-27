@@ -15,10 +15,6 @@
     <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
 <!--    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>-->
 
-    <!--    <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${AIzaSyCBeC0x-okBrCjuToMaJ_thwwjCoCbIaEM}" /> -->
-
         <application
             android:name=".BluetoothDetector"
             android:allowBackup="true"
@@ -40,6 +36,8 @@
                     <category android:name="android.intent.category.LAUNCHER" />
                 </intent-filter>
             </activity>
+            <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="${MAPS_API_KEY}" />
         </application>
-
     </manifest>
