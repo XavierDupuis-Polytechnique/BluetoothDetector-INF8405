@@ -92,8 +92,26 @@ dependencies {
     // Google Maps Compose (https://github.com/googlemaps/android-maps-compose)
     def google_maps_version = '2.5.1'
     implementation "com.google.maps.android:maps-compose:$google_maps_version"
+
+    // Gradle Secrets (https://github.com/google/secrets-gradle-plugin)
+    implementation "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:$gradle_secrets_version"
 }
 
 kapt {
     correctErrorTypes true
+}
+
+secrets {
+    // Change the properties file from the default "local.properties" in your root project
+    // to another properties file in your root project.
+    propertiesFileName 'secrets.properties'
+
+    // A properties file containing default secret values. This file can be checked in version
+    // control.
+    defaultPropertiesFileName = 'secrets.defaults.properties'
+
+    // Configure which keys should be ignored by the plugin by providing regular expressions.
+    // "sdk.dir" is ignored by default.
+    // ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    // ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
 }
