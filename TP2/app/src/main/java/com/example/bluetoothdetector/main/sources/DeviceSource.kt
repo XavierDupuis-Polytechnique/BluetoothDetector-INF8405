@@ -1,23 +1,19 @@
 package com.example.bluetoothdetector.main.sources
 
-import android.content.Context
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.bluetoothdetector.main.domain.DeviceConverter
+import com.example.bluetoothdetector.main.domain.DeviceDao
 import com.example.bluetoothdetector.main.model.Device
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class DeviceSource @Inject constructor(
-    private val context: Context
-) {
-    fun share(device: Device) {
-        val shareIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            // TODO : ADD OTHER INFORMATION
-            putExtra(Intent.EXTRA_TEXT, device.name)
-            type = "text/plain"
-        }
-        startActivity(context, shareIntent, null)
+@Database(entities = [Device::class], version = 1)
+@TypeConverters(DeviceConverter::class)
+abstract class DeviceSource : RoomDatabase() {
+
+    abstract val deviceDao: DeviceDao
+
+    companion object {
+        val Name: String = DeviceSource::javaClass.name
     }
 }
