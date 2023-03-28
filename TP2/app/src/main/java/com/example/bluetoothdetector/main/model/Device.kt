@@ -1,20 +1,7 @@
 package com.example.bluetoothdetector.main.model
 
-import android.Manifest
-import android.app.PendingIntent.getActivity
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.os.ParcelUuid
 
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.ContextCompat.startActivity
-import com.example.bluetoothdetector.MainActivity
-import java.security.AccessController.getContext
 import java.util.*
 
 // TODO : REMOVE
@@ -24,9 +11,14 @@ val addresses = listOf(
 )
 
 data class Device(
-    val name: String = generateDeviceName(),
-    val macAddress: String = addresses[0],
+    var name: String = generateDeviceName(),
+    var macAddress: String = addresses[0],
     val date: Date = Date(),
+    var bluetoothClass: String? = null,
+    var type: String? = null,
+    var bondState: String? = null,
+    var uuids: Array<ParcelUuid>? = null,
+
     // TODO : add others
     //    val location: Location
     //    val classType: ClassType

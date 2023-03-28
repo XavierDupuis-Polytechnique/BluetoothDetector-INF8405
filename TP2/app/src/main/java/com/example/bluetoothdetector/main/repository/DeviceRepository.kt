@@ -14,6 +14,7 @@ class DeviceRepository @Inject constructor(
     val a = "SomeRepositoryValue"
 
     val devices = mutableStateOf(listOf(Device(), Device()))
+    val listOfDevice: MutableMap<String,Device> = mutableMapOf()
 
     fun share(device: Device) {
         deviceSource.share(device)

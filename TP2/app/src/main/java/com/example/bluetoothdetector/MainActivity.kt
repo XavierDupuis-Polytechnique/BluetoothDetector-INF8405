@@ -1,6 +1,8 @@
 package com.example.bluetoothdetector
 
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothAdapter.ACTION_DISCOVERY_FINISHED
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
-import com.example.bluetoothdetector.repository.Bluetooth
+import com.example.bluetoothdetector.main.repository.Bluetooth
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,8 +36,12 @@ class MainActivity : ComponentActivity() {
             MainContent()
         }
         // Register for broadcasts when a device is discovered.
-        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+        val filter = IntentFilter()
+        filter.addAction(BluetoothDevice.ACTION_FOUND)
+        filter.addAction(ACTION_DISCOVERY_FINISHED)
         registerReceiver(btReceiver, filter)
+
+        bluetooth.startDiscovery()
 
     }
 
@@ -43,17 +49,20 @@ class MainActivity : ComponentActivity() {
 
         @SuppressLint("MissingPermission")
         override fun onReceive(context: Context, intent: Intent) {
-            val action: String? = intent.action
-            when(action) {
+            when(intent.action) {
                 BluetoothDevice.ACTION_FOUND -> {
                     // Discovery has found a device. Get the BluetoothDevice
                     // object and its info from the Intent.
                     val device: BluetoothDevice? =
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-                    val deviceName = device?.name
-                    val deviceHardwareAddress = device?.address // MAC address
 
-                    bluetooth.testBluetooth(device)
+                    bluetooth.addDeviceToList(device)
+                }
+                ACTION_DISCOVERY_FINISHED -> {
+                    // When bluetooth scan ends restart it
+                    println("--- Discovery Finished ---")
+                    println(bluetooth.getDeviceList())
+                    bluetooth.startDiscovery()
                 }
             }
         }

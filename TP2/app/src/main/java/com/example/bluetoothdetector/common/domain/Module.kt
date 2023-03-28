@@ -30,13 +30,11 @@ val Modules = listOf(
         listOf(
             Manifest.permission.BLUETOOTH,
             Manifest.permission.BLUETOOTH_ADMIN,
-            Manifest.permission.BLUETOOTH_CONNECT,
-            Manifest.permission.BLUETOOTH_SCAN,
             // TODO : INVESTIGATE -> ADD / REMOVE
             // https://developer.android.com/guide/topics/connectivity/bluetooth/permissions
             // Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            // Manifest.permission.BLUETOOTH_CONNECT,
-            // Manifest.permission.BLUETOOTH_SCAN,
+            // Manifest.permission.BLUETOOTH_CONNECT, // API 31+
+            // Manifest.permission.BLUETOOTH_SCAN, // API 31+
         )
     )
 )
