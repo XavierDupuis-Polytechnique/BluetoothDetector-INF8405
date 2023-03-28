@@ -1,4 +1,4 @@
-package com.example.bluetoothdetector.repository
+package com.example.bluetoothdetector.main.repository
 
 import androidx.compose.runtime.mutableStateOf
 import com.example.bluetoothdetector.main.model.Device
@@ -8,13 +8,14 @@ import javax.inject.Singleton
 
 @Singleton
 class DeviceRepository @Inject constructor(
-    deviceSource: DeviceSource,
+    private val deviceSource: DeviceSource,
 ) {
     //  TODO : UPDATE / REMOVE
     val a = "SomeRepositoryValue"
 
-    //  TODO : UPDATE / REMOVE
-    val b = deviceSource.b
-
     val devices = mutableStateOf(listOf(Device(), Device()))
+
+    fun share(device: Device) {
+        deviceSource.share(device)
+    }
 }

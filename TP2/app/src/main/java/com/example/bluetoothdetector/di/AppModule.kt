@@ -2,6 +2,8 @@ package com.example.bluetoothdetector.di
 
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import com.example.bluetoothdetector.main.repository.DeviceRepository
+import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.sources.DeviceSource
 import com.example.bluetoothdetector.repository.Bluetooth
 import com.example.bluetoothdetector.repository.DeviceRepository
@@ -21,7 +23,9 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDeviceSource() = DeviceSource()
+    fun provideDeviceSource(
+        @ApplicationContext context: Context
+    ) = DeviceSource(context)
 
     @Singleton
     @Provides

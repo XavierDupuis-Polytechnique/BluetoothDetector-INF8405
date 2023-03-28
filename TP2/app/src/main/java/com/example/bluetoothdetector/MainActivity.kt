@@ -16,7 +16,7 @@ import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 import com.example.bluetoothdetector.repository.Bluetooth
-import com.example.bluetoothdetector.repository.LocationRepository
+import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.repository.Bluetooth
 import com.example.bluetoothdetector.repository.DeviceRepository
+import com.example.bluetoothdetector.main.repository.DeviceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
 import javax.inject.Inject
@@ -12,8 +13,8 @@ import kotlin.concurrent.schedule
 
 @HiltViewModel
 class DevicesListViewModel @Inject constructor(
-    deviceRepository: DeviceRepository,
     bluetooth: Bluetooth,
+    private val deviceRepository: DeviceRepository
 ) : ViewModel() {
     val devices = deviceRepository.devices
     val bluetoothDevice = bluetooth
@@ -21,7 +22,7 @@ class DevicesListViewModel @Inject constructor(
     var expandedDevice = mutableStateOf<Device?>(null)
 
     fun share(device: Device) {
-        // TODO
+        deviceRepository.share(device)
     }
 
     fun isFavorite(device: Device): Boolean {

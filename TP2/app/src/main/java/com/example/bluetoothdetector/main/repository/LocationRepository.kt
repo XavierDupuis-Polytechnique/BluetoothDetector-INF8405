@@ -1,4 +1,4 @@
-package com.example.bluetoothdetector.repository
+package com.example.bluetoothdetector.main.repository
 
 import android.annotation.SuppressLint
 import android.location.Location
