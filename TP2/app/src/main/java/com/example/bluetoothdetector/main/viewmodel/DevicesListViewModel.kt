@@ -2,9 +2,12 @@ package com.example.bluetoothdetector.main.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
@@ -33,7 +36,8 @@ class DevicesListViewModel @Inject constructor(
         }
         // TODO : REMOVE
         Timer().schedule(500L) {
-            devices.value = devices.value.plus(Device())
+            val d = Device()
+            devices[d.name] = d
         }
     }
 
@@ -53,7 +57,7 @@ class DevicesListViewModel @Inject constructor(
         // TODO
     }
 
-    fun forget(device: Device) {
-        // TODO
+    fun forget(device: Device) = viewModelScope.launch {
+        deviceRepository.forget(device)
     }
 }
