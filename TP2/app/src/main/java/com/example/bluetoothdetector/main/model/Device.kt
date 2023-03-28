@@ -1,5 +1,8 @@
 package com.example.bluetoothdetector.main.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
 // TODO : REMOVE
@@ -8,10 +11,12 @@ val addresses = listOf(
 //    MacAddress.fromString("12:34:56:78:90:ab"),
 )
 
+@Entity
 data class Device(
-    val name: String = generateDeviceName(),
-    val macAddress: String = addresses[0],
-    val date: Date = Date(),
+    @PrimaryKey val id: UUID = UUID.randomUUID(),
+    @ColumnInfo(name="name") val name: String = generateDeviceName(),
+    @ColumnInfo(name="mac_address") val macAddress: String = addresses[0],
+    @ColumnInfo(name="date") val date: Date = Date(),
     // TODO : add others
     //    val location: Location
     //    val classType: ClassType
