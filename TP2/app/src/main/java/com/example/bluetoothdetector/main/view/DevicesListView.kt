@@ -45,7 +45,6 @@ fun DevicesListView(
                         expand = { viewModel.toggleExpanded(it) },
                     )
                 )
-                Text(viewModel.getBluetoothD())
             }
         }
 
