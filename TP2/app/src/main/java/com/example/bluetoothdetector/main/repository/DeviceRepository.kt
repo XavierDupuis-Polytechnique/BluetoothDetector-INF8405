@@ -1,7 +1,6 @@
 package com.example.bluetoothdetector.main.repository
 
 import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.mutableStateOf
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.main.sources.DeviceSource
 import javax.inject.Inject
