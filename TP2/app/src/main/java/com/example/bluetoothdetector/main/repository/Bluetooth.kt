@@ -74,7 +74,11 @@ class Bluetooth(
         ) {
             return
         }
-        bluetoothManager.adapter.startDiscovery()
+        try {
+            bluetoothManager.adapter.startDiscovery()
+        } catch (exception: Exception) {
+            // TODO : HANDLE EMULATION ERRORS
+        }
         println("--- Discovery Started ---")
     }
 
@@ -94,7 +98,11 @@ class Bluetooth(
         ) {
             return
         }
-        bluetoothManager.adapter.cancelDiscovery()
+        try {
+            bluetoothManager.adapter.cancelDiscovery()
+        } catch (exception: Exception) {
+            // TODO : HANDLE EMULATION ERRORS
+        }
     }
 
 //    fun getDiscoveredDevices(): MutableSet<Device>{
