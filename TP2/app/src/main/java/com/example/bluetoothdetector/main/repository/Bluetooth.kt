@@ -10,28 +10,32 @@ import androidx.core.app.ActivityCompat
 import com.example.bluetoothdetector.main.model.Device
 import java.util.*
 
-class Bluetooth(private val context: Context, private val deviceRepository: DeviceRepository) {
+class Bluetooth(
+    private val context: Context,
+    private val deviceRepository: DeviceRepository,
+    private val locationRepository: LocationRepository
+) {
     private val bluetoothManager: BluetoothManager =
         context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-    private val bluetoothAdapter: BluetoothAdapter = bluetoothManager.adapter
+//    private val bluetoothAdapter: BluetoothAdapter = bluetoothManager.adapter
 
 
     fun testBluetooth(): String {
 
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.BLUETOOTH_ADMIN
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-//        requestPermissionLauncher.launch(
-//            Manifest.permission.BLUETOOTH_CONNECT
+//        if (ActivityCompat.checkSelfPermission(
+//                context,
+//                Manifest.permission.BLUETOOTH_ADMIN
+//            ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+////        requestPermissionLauncher.launch(
+////            Manifest.permission.BLUETOOTH_CONNECT
+////
+////        )
 //
-//        )
-
-            return "No permissions"
-
-        }
-        val a = bluetoothAdapter.bondedDevices
+//            return "No permissions"
+//
+//        }
+//        val a = bluetoothAdapter.bondedDevices
 //
 //////    val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
 //////    pairedDevices?.forEach { device ->
@@ -39,7 +43,7 @@ class Bluetooth(private val context: Context, private val deviceRepository: Devi
 //////        val deviceHardwareAddress = device.address // MAC address
 //////    }
 //
-        return a.toString()
+        return "a.toString()"
     }
 
     fun startDiscovery() {
@@ -48,16 +52,30 @@ class Bluetooth(private val context: Context, private val deviceRepository: Devi
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
-        bluetoothAdapter.startDiscovery()
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.BLUETOOTH
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.BLUETOOTH_SCAN
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        bluetoothManager.adapter.startDiscovery()
         println("--- Discovery Started ---")
     }
 
@@ -68,16 +86,16 @@ class Bluetooth(private val context: Context, private val deviceRepository: Devi
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
-        bluetoothAdapter.cancelDiscovery()
+        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.BLUETOOTH_SCAN
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        bluetoothManager.adapter.cancelDiscovery()
     }
 
 //    fun getDiscoveredDevices(): MutableSet<Device>{
@@ -91,24 +109,28 @@ class Bluetooth(private val context: Context, private val deviceRepository: Devi
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.BLUETOOTH_SCAN
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             return
         }
         if (device == null || device.name == null) {
             return
         }
-        val className = classMap.getOrDefault(device.bluetoothClass.deviceClass, device.bluetoothClass.deviceClass.toString())
+        val className = classMap.getOrDefault(
+            device.bluetoothClass.deviceClass,
+            device.bluetoothClass.deviceClass.toString()
+        )
         val typeName = typeMap.getOrDefault(device.type, device.type.toString())
-        val bondedStateName = bondStateMap.getOrDefault(device.bondState, device.bondState.toString())
+        val bondedStateName =
+            bondStateMap.getOrDefault(device.bondState, device.bondState.toString())
         val parsedDevice = Device(
             device.name, device.address, Date(), className,
-            typeName, bondedStateName, device.uuids
+            typeName, bondedStateName, device.uuids, locationRepository.currentLocation
         )
 
         if (deviceRepository.listOfDevice.contains(device.address)) {

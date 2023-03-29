@@ -52,6 +52,7 @@ object AppModule {
     @Provides
     fun provideBluetoothRepository(
         context: Context,
-        deviceRepository: DeviceRepository
-    ) = Bluetooth(context, deviceRepository)
+        deviceRepository: DeviceRepository,
+        locationRepository: LocationRepository
+    ) = Bluetooth(context, deviceRepository, locationRepository)
 }
