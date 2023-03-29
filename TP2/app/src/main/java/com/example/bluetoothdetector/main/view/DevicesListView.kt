@@ -22,7 +22,8 @@ fun DevicesListView(
     viewModel: DevicesListViewModel = hiltViewModel()
 ) {
     val sortedDevices = remember(
-        viewModel.devices.values,
+        // TODO : FIX NEXT LINE (SHOULD BE "viewModel.devices.size" BUT DOESN'T WORK)
+        viewModel.devices.size,
         viewModel.favoriteDevices.value
     ) {
         viewModel.devices.values.sortedBy { !viewModel.isFavorite(it) }
