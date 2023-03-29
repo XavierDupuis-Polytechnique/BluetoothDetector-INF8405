@@ -20,19 +20,26 @@ fun MapView(
 ) {
     CenteredVerticalContainer {
         // TODO
-        val singapore = LatLng(viewModel.location.value!!.latitude,viewModel.location.value!!.longitude)
+        val currentLocation = LatLng(viewModel.location.value!!.latitude,viewModel.location.value!!.longitude)
         val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(singapore, 10f)
+            position = CameraPosition.fromLatLngZoom(currentLocation, 10f)
         }
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState
         ) {
             Marker(
-                state = MarkerState(position = singapore),
-                title = "Singapore",
+                state = MarkerState(position = currentLocation),
+                title = "currentLocation",
                 snippet = "Marker in Singapore"
             )
+            viewModel.devices.value.forEach(){
+                Marker(
+                    state = MarkerState(position = LatLng(it.latitude,it.longitude)),
+                    /*title = "currentLocation",
+                    snippet = "Marker in Singapore"*/
+                )
+            }
         }
 
         // TODO : REMOVE NEXT LINES

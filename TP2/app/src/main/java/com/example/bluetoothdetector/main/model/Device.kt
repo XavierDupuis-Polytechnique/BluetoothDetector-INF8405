@@ -1,5 +1,7 @@
 package com.example.bluetoothdetector.main.model
 
+import android.location.Location
+import com.example.bluetoothdetector.main.repository.LocationRepository
 import java.util.*
 
 // TODO : REMOVE
@@ -12,7 +14,11 @@ data class Device(
     val name: String = generateDeviceName(),
     val macAddress: String = addresses[0],
     val date: Date = Date(),
+
+    val longitude: Double = -73.781789,
+    val latitude: Double = 45.674105,
     // TODO : add others
+    //    val location: Location = generateLocation(),
     //    val location: Location
     //    val classType: ClassType
     //    val otherInfo: OtherInfo
