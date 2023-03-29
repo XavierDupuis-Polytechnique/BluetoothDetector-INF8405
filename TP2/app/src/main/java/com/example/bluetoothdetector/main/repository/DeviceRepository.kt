@@ -1,6 +1,6 @@
 package com.example.bluetoothdetector.main.repository
 
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.main.sources.DeviceSource
 import javax.inject.Inject
@@ -13,7 +13,10 @@ class DeviceRepository @Inject constructor(
     //  TODO : UPDATE / REMOVE
     val a = "SomeRepositoryValue"
 
-    val devices = mutableStateOf(listOf(Device(), Device()))
+    val devices: MutableMap<String, Device> = mutableStateMapOf(
+        "FAKE_MAC_ADDRESS_1" to Device(),
+        "FAKE_MAC_ADDRESS_2" to Device()
+    )
 
     fun share(device: Device) {
         deviceSource.share(device)

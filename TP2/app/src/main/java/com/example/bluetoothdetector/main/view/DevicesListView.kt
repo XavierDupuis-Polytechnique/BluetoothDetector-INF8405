@@ -22,13 +22,14 @@ fun DevicesListView(
     viewModel: DevicesListViewModel = hiltViewModel()
 ) {
     val sortedDevices = remember(
-        viewModel.devices.value,
+        // TODO : FIX NEXT LINE (SHOULD BE "viewModel.devices.size" BUT DOESN'T WORK)
+        viewModel.devices.size,
         viewModel.favoriteDevices.value
     ) {
-        viewModel.devices.value.sortedBy { !viewModel.isFavorite(it) }
+        viewModel.devices.values.sortedBy { !viewModel.isFavorite(it) }
     }
     CenteredVerticalContainer {
-        Text("${viewModel.devices.value.size} $RECORDED_DEVICES")
+        Text("${viewModel.devices.size} $RECORDED_DEVICES")
         LazyColumn(
             modifier = Modifier.fillMaxHeight()
         ) {
@@ -49,15 +50,6 @@ fun DevicesListView(
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun DeviceEmptyListPreview() {
-    val viewModel: DevicesListViewModel = hiltViewModel()
-    viewModel.devices.value = listOf()
-    DevicesListView(viewModel)
-}
-
 
 @Preview(showBackground = true)
 @Composable
