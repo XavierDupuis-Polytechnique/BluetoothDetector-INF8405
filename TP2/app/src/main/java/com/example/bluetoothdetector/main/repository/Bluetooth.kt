@@ -16,41 +16,16 @@ class Bluetooth(
 ) {
     private val bluetoothManager: BluetoothManager =
         context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-//    private val bluetoothAdapter: BluetoothAdapter = bluetoothManager.adapter
-
-
-    fun testBluetooth(): String {
-
-//        if (ActivityCompat.checkSelfPermission(
-//                context,
-//                Manifest.permission.BLUETOOTH_ADMIN
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-////        requestPermissionLauncher.launch(
-////            Manifest.permission.BLUETOOTH_CONNECT
-////
-////        )
-//
-//            return "No permissions"
-//
-//        }
-//        val a = bluetoothAdapter.bondedDevices
-//
-//////    val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
-//////    pairedDevices?.forEach { device ->
-//////        val deviceName = device.name
-//////        val deviceHardwareAddress = device.address // MAC address
-//////    }
-//
-        return "a.toString()"
-    }
+//    private val bluetoothAdapter: BluetoothAdapter = bluetoothManager.adapter  // TODO remove
 
     fun startDiscovery() {
+        // Permission check
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // TODO
             return
         }
         if (ActivityCompat.checkSelfPermission(
@@ -58,20 +33,23 @@ class Bluetooth(
                 Manifest.permission.BLUETOOTH
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // TODO
             return
         }
-        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+        if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.BLUETOOTH_SCAN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // TODO
             return
         }
-        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+        if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.BLUETOOTH_CONNECT
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // TODO
             return
         }
         try {
@@ -79,23 +57,27 @@ class Bluetooth(
         } catch (exception: Exception) {
             // TODO : HANDLE EMULATION ERRORS
         }
+        // TODO Debug
         println("--- Discovery Started ---")
     }
 
     // TODO Maybe remove if not useful
     fun stopDiscovery() {
+        // Permission check
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // TODO
             return
         }
-        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+        if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.BLUETOOTH_SCAN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // TODO
             return
         }
         try {
@@ -105,29 +87,34 @@ class Bluetooth(
         }
     }
 
-//    fun getDiscoveredDevices(): MutableSet<Device>{
-//        return listOfDevice
-//    }
-
     fun addDeviceToList(device: BluetoothDevice?) {
-
+        // Permission check
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // TODO
             return
         }
-        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+        if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.BLUETOOTH_SCAN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // TODO
             return
         }
+
         if (device == null || device.name == null) {
             return
         }
+
+        // Prevent duplicate device from being added
+        if (deviceRepository.devices.contains(device.address)) {
+            return
+        }
+
         val className = classMap.getOrDefault(
             device.bluetoothClass.deviceClass,
             device.bluetoothClass.deviceClass.toString()
@@ -135,17 +122,13 @@ class Bluetooth(
         val typeName = typeMap.getOrDefault(device.type, device.type.toString())
         val bondedStateName =
             bondStateMap.getOrDefault(device.bondState, device.bondState.toString())
+
         val parsedDevice = Device(
             device.name, device.address, Date(), className,
             typeName, bondedStateName, device.uuids, locationRepository.currentLocation
         )
-
-        if (deviceRepository.devices.contains(device.address)) {
-            return
-        }
         deviceRepository.devices[device.address] = parsedDevice
         println(parsedDevice)
-        var a: android.bluetooth.BluetoothClass.Device
     }
 
     fun getDeviceList(): MutableMap<String, Device> {

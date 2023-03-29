@@ -1,10 +1,10 @@
 package com.example.bluetoothdetector.di
 
 import android.content.Context
+import com.example.bluetoothdetector.main.repository.Bluetooth
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.sources.DeviceSource
-import com.example.bluetoothdetector.main.repository.Bluetooth
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.Module

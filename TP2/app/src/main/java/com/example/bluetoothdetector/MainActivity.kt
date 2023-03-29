@@ -2,7 +2,6 @@ package com.example.bluetoothdetector
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothAdapter.ACTION_DISCOVERY_FINISHED
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
@@ -31,6 +30,7 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var locationRepository: LocationRepository
+
     @Inject
     lateinit var bluetooth: Bluetooth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
             // TODO
             return
         }
-        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+        if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.BLUETOOTH_CONNECT
             ) != PackageManager.PERMISSION_GRANTED
@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
             // TODO
             return
         }
-        if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+        if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.BLUETOOTH_SCAN
             ) != PackageManager.PERMISSION_GRANTED
@@ -72,6 +72,7 @@ class MainActivity : ComponentActivity() {
             return
         }
 //         Register for broadcasts when a device is discovered.
+        // TODO Gracefully restart after permissions granted if the permission check prevented it
         val filter = IntentFilter()
         filter.addAction(BluetoothDevice.ACTION_FOUND)
         filter.addAction(ACTION_DISCOVERY_FINISHED)
@@ -86,14 +87,14 @@ class MainActivity : ComponentActivity() {
         @SuppressLint("MissingPermission")
         override fun onReceive(context: Context, intent: Intent) {
             if (ActivityCompat.checkSelfPermission(
-                applicationContext,
-                Manifest.permission.BLUETOOTH_ADMIN
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO
-            return
-        }
-            if (android.os.Build.VERSION.SDK_INT > 31 && ActivityCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.BLUETOOTH_ADMIN
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO
+                return
+            }
+            if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
                     applicationContext,
                     Manifest.permission.BLUETOOTH_SCAN
                 ) != PackageManager.PERMISSION_GRANTED
@@ -101,7 +102,7 @@ class MainActivity : ComponentActivity() {
                 // TODO
                 return
             }
-            when(intent.action) {
+            when (intent.action) {
                 BluetoothDevice.ACTION_FOUND -> {
                     // Discovery has found a device. Get the BluetoothDevice
                     // object and its info from the Intent.
@@ -112,6 +113,7 @@ class MainActivity : ComponentActivity() {
                 }
                 ACTION_DISCOVERY_FINISHED -> {
                     // When bluetooth scan ends restart it
+                    // TODO Debug
                     println("--- Discovery Finished ---")
                     println(bluetooth.getDeviceList())
                     bluetooth.startDiscovery()
