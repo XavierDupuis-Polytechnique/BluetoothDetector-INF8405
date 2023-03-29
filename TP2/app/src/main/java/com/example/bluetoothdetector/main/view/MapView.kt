@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.viewmodel.MapViewModel
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -22,7 +23,7 @@ fun MapView(
         // TODO
         val currentLocation = LatLng(viewModel.location.value!!.latitude,viewModel.location.value!!.longitude)
         val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(currentLocation, 10f)
+            position = CameraPosition.fromLatLngZoom(currentLocation, 18f)
         }
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
@@ -31,13 +32,14 @@ fun MapView(
             Marker(
                 state = MarkerState(position = currentLocation),
                 title = "currentLocation",
-                snippet = "Marker in Singapore"
+                icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
+
             )
             viewModel.devices.value.forEach(){
                 Marker(
                     state = MarkerState(position = LatLng(it.latitude,it.longitude)),
-                    /*title = "currentLocation",
-                    snippet = "Marker in Singapore"*/
+                    title = "${it.name}",
+                    /*snippet = "Marker in Singapore"*///text under the title when click on marker
                 )
             }
         }
