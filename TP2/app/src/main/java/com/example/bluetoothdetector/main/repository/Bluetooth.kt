@@ -1,7 +1,6 @@
 package com.example.bluetoothdetector.main.repository
 
 import android.Manifest
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.Context
@@ -133,15 +132,15 @@ class Bluetooth(
             typeName, bondedStateName, device.uuids, locationRepository.currentLocation
         )
 
-        if (deviceRepository.listOfDevice.contains(device.address)) {
+        if (deviceRepository.devices.contains(device.address)) {
             return
         }
-        deviceRepository.listOfDevice[device.address] = parsedDevice
+        deviceRepository.devices[device.address] = parsedDevice
         println(parsedDevice)
         var a: android.bluetooth.BluetoothClass.Device
     }
 
     fun getDeviceList(): MutableMap<String, Device> {
-        return deviceRepository.listOfDevice
+        return deviceRepository.devices
     }
 }
