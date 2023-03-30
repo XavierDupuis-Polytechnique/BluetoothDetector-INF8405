@@ -35,9 +35,10 @@ fun MapView(
                 icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
 
             )
-            viewModel.devices.value.forEach(){
+            viewModel.devices.values.forEach {
+                //if(it.location?.value?.latitude != null && it.location?.value?.longitude!=null)
                 Marker(
-                    state = MarkerState(position = LatLng(it.latitude,it.longitude)),
+                    state = MarkerState(position = LatLng(it.location!!.value!!.latitude,it.location!!.value!!.longitude)),
                     title = "${it.name}",
                     /*snippet = "Marker in Singapore"*///text under the title when click on marker
                 )
