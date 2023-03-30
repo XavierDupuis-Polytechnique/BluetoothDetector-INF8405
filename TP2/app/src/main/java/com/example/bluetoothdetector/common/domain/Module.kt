@@ -23,19 +23,37 @@ val Modules = listOf(
             Manifest.permission.ACCESS_FINE_LOCATION
         )
     ),
-    Module(
-        ModuleType.DETECTOR,
-        R.string.detector_module_description,
-        listOf(
-            Manifest.permission.BLUETOOTH,
-            Manifest.permission.BLUETOOTH_ADMIN,
-            // TODO : INVESTIGATE -> ADD / REMOVE
-            // https://developer.android.com/guide/topics/connectivity/bluetooth/permissions
-            // Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            // Manifest.permission.BLUETOOTH_CONNECT,
-            // Manifest.permission.BLUETOOTH_SCAN,
+
+    // Handle the bluetooth permission changes of api 31
+    if (android.os.Build.VERSION.SDK_INT < 31) {
+        Module(
+            ModuleType.DETECTOR,
+            DETECTOR_MODULE_DESCRIPTION,
+
+            listOf(
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN,
+                // TODO : INVESTIGATE -> ADD / REMOVE
+                // https://developer.android.com/guide/topics/connectivity/bluetooth/permissions
+                // Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            )
         )
-    )
+    } else {
+        Module(
+            ModuleType.DETECTOR,
+            DETECTOR_MODULE_DESCRIPTION,
+
+            listOf(
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN,
+                // TODO : INVESTIGATE -> ADD / REMOVE
+                // https://developer.android.com/guide/topics/connectivity/bluetooth/permissions
+                // Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                Manifest.permission.BLUETOOTH_CONNECT, // API 31+
+                Manifest.permission.BLUETOOTH_SCAN, // API 31+
+            )
+        )
+    }
 )
 
 fun List<Module>.getAllPermissions(): List<String> {

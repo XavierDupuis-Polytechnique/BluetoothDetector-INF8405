@@ -33,7 +33,8 @@ class DevicesListViewModel @Inject constructor(
         }
         // TODO : REMOVE
         Timer().schedule(500L) {
-            devices.value = devices.value.plus(Device())
+            val d = Device()
+            devices[d.name] = d
         }
     }
 
@@ -47,7 +48,6 @@ class DevicesListViewModel @Inject constructor(
         else
             expandedDevice.value = device
     }
-
 
     fun getItinerary(device: Device) {
         // TODO
