@@ -20,7 +20,7 @@ data class Device(
     var type: String? = null,
     var bondState: String? = null,
     var uuids: Array<ParcelUuid>? = null,
-    var location: MutableState<Location?>? = null,
+    var location: Location? = null,
 
     val longitude: Double = -73.781789,
     val latitude: Double = 45.674105,

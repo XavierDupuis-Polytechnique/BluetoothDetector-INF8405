@@ -38,7 +38,7 @@ fun MapView(
             viewModel.devices.values.forEach {
                 //if(it.location?.value?.latitude != null && it.location?.value?.longitude!=null)
                 Marker(
-                    state = MarkerState(position = LatLng(it.location!!.value!!.latitude,it.location!!.value!!.longitude)),
+                    state = MarkerState(position = LatLng(it.location!!.latitude,it.location!!.longitude)),
                     title = "${it.name}",
                     /*snippet = "Marker in Singapore"*///text under the title when click on marker
                 )
