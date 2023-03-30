@@ -1,6 +1,8 @@
 package com.example.bluetoothdetector.main.model
 
 import android.location.Location
+import android.os.ParcelUuid
+import androidx.compose.runtime.MutableState
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import java.util.*
 
@@ -11,14 +13,18 @@ val addresses = listOf(
 )
 
 data class Device(
-    val name: String = generateDeviceName(),
-    val macAddress: String = addresses[0],
+    var name: String = generateDeviceName(),
+    var macAddress: String = addresses[0],
     val date: Date = Date(),
+    var bluetoothClass: String? = null,
+    var type: String? = null,
+    var bondState: String? = null,
+    var uuids: Array<ParcelUuid>? = null,
+    var location: MutableState<Location?>? = null
 
     val longitude: Double = -73.781789,
     val latitude: Double = 45.674105,
     // TODO : add others
-    //    val location: Location = generateLocation(),
     //    val location: Location
     //    val classType: ClassType
     //    val otherInfo: OtherInfo
@@ -32,3 +38,4 @@ data class Device(
         }
     }
 }
+

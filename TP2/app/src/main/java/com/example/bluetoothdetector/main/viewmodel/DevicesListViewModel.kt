@@ -11,14 +11,14 @@ import kotlin.concurrent.schedule
 
 @HiltViewModel
 class DevicesListViewModel @Inject constructor(
-    deviceRepository: DeviceRepository
+    private val deviceRepository: DeviceRepository
 ) : ViewModel() {
     val devices = deviceRepository.devices
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
     var expandedDevice = mutableStateOf<Device?>(null)
 
     fun share(device: Device) {
-        // TODO
+        deviceRepository.share(device)
     }
 
     fun isFavorite(device: Device): Boolean {
@@ -33,7 +33,8 @@ class DevicesListViewModel @Inject constructor(
         }
         // TODO : REMOVE
         Timer().schedule(500L) {
-            devices.value = devices.value.plus(Device())
+            val d = Device()
+            devices[d.name] = d
         }
     }
 
@@ -47,7 +48,6 @@ class DevicesListViewModel @Inject constructor(
         else
             expandedDevice.value = device
     }
-
 
     fun getItinerary(device: Device) {
         // TODO
