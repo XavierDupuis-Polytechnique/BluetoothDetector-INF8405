@@ -21,10 +21,6 @@ data class Device(
     var bondState: String? = null,
     var uuids: Array<ParcelUuid>? = null,
     var location: Location? = null
-    // TODO : add others
-    //    val location: Location
-    //    val classType: ClassType
-    //    val otherInfo: OtherInfo
 ) {
 
     companion object {
