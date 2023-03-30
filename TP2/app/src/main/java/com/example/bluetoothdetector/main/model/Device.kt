@@ -20,7 +20,7 @@ data class Device(
     var type: String? = null,
     var bondState: String? = null,
     var uuids: Array<ParcelUuid>? = null,
-    var location: MutableState<Location?>? = null
+    var location: Location? = null
     // TODO : add others
     //    val location: Location
     //    val classType: ClassType
