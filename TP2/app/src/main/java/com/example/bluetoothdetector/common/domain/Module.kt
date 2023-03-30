@@ -28,8 +28,7 @@ val Modules = listOf(
     if (android.os.Build.VERSION.SDK_INT < 31) {
         Module(
             ModuleType.DETECTOR,
-            DETECTOR_MODULE_DESCRIPTION,
-
+            R.string.detector_module_description,
             listOf(
                 Manifest.permission.BLUETOOTH,
                 Manifest.permission.BLUETOOTH_ADMIN,
@@ -41,8 +40,7 @@ val Modules = listOf(
     } else {
         Module(
             ModuleType.DETECTOR,
-            DETECTOR_MODULE_DESCRIPTION,
-
+            R.string.detector_module_description,
             listOf(
                 Manifest.permission.BLUETOOTH,
                 Manifest.permission.BLUETOOTH_ADMIN,
