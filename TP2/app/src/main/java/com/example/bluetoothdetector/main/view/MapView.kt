@@ -27,7 +27,8 @@ fun MapView(
         }
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState
+            cameraPositionState = cameraPositionState,
+            onMapClick = { viewModel.mapClick(it) }
         ) {
             Marker(
                 state = MarkerState(position = currentLocation),
@@ -36,8 +37,8 @@ fun MapView(
 
             )
 
-            viewModel.devices.values.forEach {
-                it.location?.let { location ->
+            viewModel.devices.values.forEach { device ->
+                device.location?.let { location ->
                     Marker(
                         state = MarkerState(
                             position = LatLng(
@@ -45,7 +46,8 @@ fun MapView(
                                 location.longitude
                             )
                         ),
-                        title = it.name,
+                        title = device.name,
+                        onClick = { viewModel.markerClick(device) }
                     )
                 }
             }

@@ -2,6 +2,7 @@ package com.example.bluetoothdetector.main.repository
 
 import android.location.Location
 import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.main.sources.DeviceSource
 import javax.inject.Inject
@@ -25,7 +26,13 @@ class DeviceRepository @Inject constructor(
         })
     )
 
+    val highlightedDevice = mutableStateOf<Device?>(null)
+
     fun share(device: Device) {
         deviceSource.share(device)
+    }
+
+    fun highlight(device: Device?) {
+        highlightedDevice.value = device
     }
 }

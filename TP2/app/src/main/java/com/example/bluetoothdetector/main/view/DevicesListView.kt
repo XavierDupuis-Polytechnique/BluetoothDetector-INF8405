@@ -24,9 +24,13 @@ fun DevicesListView(
     val sortedDevices = remember(
         // TODO : FIX NEXT LINE (SHOULD BE "viewModel.devices.size" BUT DOESN'T WORK)
         viewModel.devices.size,
-        viewModel.favoriteDevices.value
+        viewModel.favoriteDevices.value,
+        viewModel.highlightedDevice.value
     ) {
-        viewModel.devices.values.sortedBy { !viewModel.isFavorite(it) }
+        viewModel.devices.values
+            .sortedBy { it.date }
+            .sortedBy { !viewModel.isFavorite(it) }
+            .sortedBy { !viewModel.isHighlighted(it) }
     }
     CenteredVerticalContainer {
         Text("${viewModel.devices.size} $RECORDED_DEVICES")
@@ -37,6 +41,7 @@ fun DevicesListView(
                 DeviceView(
                     device = it,
                     isFavorite = viewModel.isFavorite(it),
+                    isHighlighted = viewModel.isHighlighted(it),
                     isExpanded = viewModel.isExpanded(it),
                     deviceActions = DeviceActions(
                         share = { viewModel.share(it) },

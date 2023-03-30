@@ -14,6 +14,7 @@ class DevicesListViewModel @Inject constructor(
     private val deviceRepository: DeviceRepository
 ) : ViewModel() {
     val devices = deviceRepository.devices
+    val highlightedDevice = deviceRepository.highlightedDevice
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
     var expandedDevice = mutableStateOf<Device?>(null)
 
@@ -55,5 +56,9 @@ class DevicesListViewModel @Inject constructor(
 
     fun forget(device: Device) {
         // TODO
+    }
+
+    fun isHighlighted(device: Device): Boolean {
+        return highlightedDevice.value === device
     }
 }
