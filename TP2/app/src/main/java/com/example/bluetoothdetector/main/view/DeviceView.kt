@@ -41,7 +41,7 @@ fun DeviceView(
         ) {
             DeviceInfo(device)
             if (isExpanded) {
-                DeviceAdditionnalInfo(device)
+                DeviceAdditionalInfo(device)
                 DeviceButtons(deviceActions, isFavorite)
             }
         }
@@ -52,12 +52,12 @@ fun DeviceView(
 private fun DeviceInfo(device: Device) {
     CenteredVerticalContainer {
         Text(device.name)
-        Text(device.date.toLocaleString())
+        Text(Device.formatDate(device))
     }
 }
 
 @Composable
-fun DeviceAdditionnalInfo(device: Device) {
+fun DeviceAdditionalInfo(device: Device) {
     CenteredVerticalContainer {
         Text(device.macAddress)
         device.location?.let {
