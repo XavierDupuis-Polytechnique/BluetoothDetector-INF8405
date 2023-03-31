@@ -37,8 +37,7 @@ class DevicesListViewModel @Inject constructor(
         }
         // TODO : REMOVE
         Timer().schedule(500L) {
-            val d = Device()
-            devices[d.name] = d
+            deviceRepository.addDevice(Device())
         }
     }
 
@@ -58,7 +57,7 @@ class DevicesListViewModel @Inject constructor(
     }
 
     fun forget(device: Device) = viewModelScope.launch {
-        deviceRepository.forget(device)
+        deviceRepository.forgetDevice(device)
     }
 
     fun isHighlighted(device: Device): Boolean {

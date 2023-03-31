@@ -8,17 +8,12 @@ import androidx.room.PrimaryKey
 import java.text.SimpleDateFormat
 import java.util.*
 
-// TODO : REMOVE
-val addresses = listOf(
-    "24:1D:57:84:04:35",
-//    MacAddress.fromString("12:34:56:78:90:ab"),
-)
-
 @Entity
 data class Device(
-    @PrimaryKey val macAddress: String = addresses[0],
     @ColumnInfo(name = "name") var name: String = generateDeviceName(),
     @ColumnInfo(name = "date") val date: Date = Date(),
+    // TODO : REMOVE DEFAULT PARAMETER
+    @PrimaryKey val macAddress: String = "$name ${date.time}",
     @ColumnInfo(name = "bluetooth_class") var bluetoothClass: String? = null,
     @ColumnInfo(name = "bluetooth_type") var type: String? = null,
     @ColumnInfo(name = "bluetooth_bond_state") var bondState: String? = null,

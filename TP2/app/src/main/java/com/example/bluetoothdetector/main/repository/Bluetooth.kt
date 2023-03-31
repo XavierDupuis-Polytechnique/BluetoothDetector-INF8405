@@ -133,8 +133,7 @@ class Bluetooth(
             location = locationRepository.currentLocation.value,
             // uuids = device.uuids.toList()
         )
-        deviceRepository.devices[device.address] = parsedDevice
-        println(parsedDevice)
+        deviceRepository.addDevice(parsedDevice)
     }
 
     fun getDeviceList(): MutableMap<String, Device> {
