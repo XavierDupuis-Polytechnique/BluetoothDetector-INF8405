@@ -17,16 +17,16 @@ interface DeviceDao {
     fun observeAll(): Flow<List<Device>>
 
     @Query("SELECT * FROM device WHERE id IN (:deviceIds)")
-    fun loadAllByIds(deviceIds: IntArray): List<Device>
+    suspend fun loadAllByIds(deviceIds: IntArray): List<Device>
 
     @Query("SELECT * FROM device WHERE mac_address LIKE :macAddress LIMIT 1")
-    fun findByMacAddress(macAddress: String): Device
+    suspend fun findByMacAddress(macAddress: String): Device
 
     @Query("SELECT COUNT() FROM device")
     fun observeDeviceCount(): Flow<Int>
 
     @Query("SELECT COUNT() FROM device")
-    fun getDeviceCount(): Int
+    suspend fun getDeviceCount(): Int
 
     @Insert(onConflict = REPLACE)
     suspend fun insertAll(vararg devices: Device)
@@ -38,5 +38,5 @@ interface DeviceDao {
     suspend fun update(device: Device)
 
     @Delete
-    fun delete(device: Device)
+    suspend fun delete(device: Device)
 }

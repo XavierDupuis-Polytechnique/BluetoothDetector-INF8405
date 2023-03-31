@@ -28,7 +28,7 @@ fun DevicesListView(
         viewModel.devices.values.sortedBy { !viewModel.isFavorite(it) }
     }
     CenteredVerticalContainer {
-        Text("${viewModel.devices.size} $RECORDED_DEVICES")
+        Text("${viewModel.deviceCount} $RECORDED_DEVICES")
         LazyColumn(
             modifier = Modifier.fillMaxHeight()
         ) {
