@@ -26,13 +26,23 @@ class DeviceRepository @Inject constructor(
         })
     )
 
+    val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
+
     val highlightedDevice = mutableStateOf<Device?>(null)
 
     fun share(device: Device) {
         deviceSource.share(device)
     }
 
+    fun isFavorite(device: Device): Boolean {
+        return favoriteDevices.value.contains(device)
+    }
+
     fun highlight(device: Device?) {
         highlightedDevice.value = device
+    }
+
+    fun isHighlighted(device: Device): Boolean {
+        return highlightedDevice.value === device
     }
 }

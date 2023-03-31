@@ -35,6 +35,18 @@ val Colors.accepted: Color
     @Composable
     get() = if (isLight) LightValidColor else DarkValidColor
 
+val Colors.deviceMarker: Color
+    @Composable
+    get() = if (isLight) LightColorPalette.primary else DarkColorPalette.primary
+
+val Colors.favoriteDeviceMarker: Color
+    @Composable
+    get() = if (isLight) LightColorPalette.secondary else DarkColorPalette.secondary
+
+val Colors.highlightedDeviceMarker: Color
+    @Composable
+    get() = if (isLight) LightColorPalette.error else DarkColorPalette.error
+
 
 @Composable
 fun BluetoothDetectorTheme(
