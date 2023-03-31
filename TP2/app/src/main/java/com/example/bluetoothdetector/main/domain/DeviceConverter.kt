@@ -1,5 +1,6 @@
 package com.example.bluetoothdetector.main.domain
 
+import android.location.Location
 import androidx.room.TypeConverter
 import java.util.*
 
@@ -13,5 +14,15 @@ class DeviceConverter {
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
+    }
+
+    @TypeConverter
+    fun locationFromString(value: String?): Location? {
+        return value?.let { Location(value) }
+    }
+
+    @TypeConverter
+    fun locationToString(location: Location?): String? {
+        return location?.toString()
     }
 }
