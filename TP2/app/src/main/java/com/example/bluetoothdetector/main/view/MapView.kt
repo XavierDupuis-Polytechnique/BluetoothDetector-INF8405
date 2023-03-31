@@ -1,6 +1,5 @@
 package com.example.bluetoothdetector.main.view
 
-import android.graphics.Color
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -13,15 +12,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.viewmodel.MapViewModel
-import com.example.bluetoothdetector.ui.theme.deviceMarker
-import com.example.bluetoothdetector.ui.theme.favoriteDeviceMarker
-import com.example.bluetoothdetector.ui.theme.highlightedDeviceMarker
+import com.example.bluetoothdetector.ui.theme.defaultDevice
+import com.example.bluetoothdetector.ui.theme.favoriteDevice
+import com.example.bluetoothdetector.ui.theme.highlightedDevice
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.*
-import kotlin.math.roundToInt
 
 @Composable
 fun MapView(
@@ -83,11 +81,11 @@ private fun DeviceMarkers(viewModel: MapViewModel) {
         device.location?.let { location ->
             val color =
                 if (viewModel.isHighlighted(device))
-                    MaterialTheme.colors.highlightedDeviceMarker
+                    MaterialTheme.colors.highlightedDevice
                 else if (viewModel.isFavorite(device))
-                    MaterialTheme.colors.favoriteDeviceMarker
+                    MaterialTheme.colors.favoriteDevice
                 else
-                    MaterialTheme.colors.deviceMarker
+                    MaterialTheme.colors.defaultDevice
             val hue = colorToHue(color.toArgb())
             Marker(
                 state = MarkerState(
