@@ -12,7 +12,6 @@ import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 
 @Composable
 fun HeaderView(
-    themeSelectorViewModel: ThemeSelectorViewModel,
     permissionsViewModel: PermissionsViewModel
 ) {
     CenteredHorizontalContainer(
@@ -20,6 +19,6 @@ fun HeaderView(
     ) {
         PermissionHeader(permissionsViewModel)
         Spacer(modifier = Modifier.weight(1f))
-        ThemeSelector(themeSelectorViewModel)
+        ThemeSelector()
     }
 }
