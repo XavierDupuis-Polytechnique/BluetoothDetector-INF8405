@@ -44,6 +44,7 @@ fun DeviceView(
         ) {
             DeviceInfo(device)
             if (isExpanded) {
+                DeviceAdditionalInfo(device)
                 DeviceButtons(deviceActions, isFavorite)
             }
         }
@@ -54,8 +55,20 @@ fun DeviceView(
 private fun DeviceInfo(device: Device) {
     CenteredVerticalContainer {
         Text(device.name)
+        Text(Device.formatDate(device))
+    }
+}
+
+@Composable
+fun DeviceAdditionalInfo(device: Device) {
+    CenteredVerticalContainer {
         Text(device.macAddress)
-        Text(device.date.toString())
+        device.location?.let {
+            Text(it.latitude.toString())
+            Text(it.longitude.toString())
+        }
+        device.bluetoothClass?.let { Text(it) }
+        device.type?.let { Text(it) }
     }
 }
 
