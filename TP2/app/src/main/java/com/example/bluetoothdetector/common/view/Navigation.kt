@@ -13,7 +13,6 @@ import com.example.bluetoothdetector.splash.view.SplashScreen
 
 @Composable
 fun Navigation(
-    themeSelectorViewModel: ThemeSelectorViewModel,
     permissionsViewModel: PermissionsViewModel,
     startDestination: Page = Page.Splash,
     navController: NavHostController = rememberNavController()
@@ -31,7 +30,7 @@ fun Navigation(
         composable(Page.Main.name) {
             PageWithHeader(
                 headerContent = {
-                    HeaderView(themeSelectorViewModel, permissionsViewModel)
+                    HeaderView(permissionsViewModel)
                 }
             ) {
                 MainScreen(

@@ -24,16 +24,19 @@ import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 fun DeviceView(
     device: Device,
     isFavorite: Boolean,
+    isHighlighted: Boolean,
     isExpanded: Boolean,
     deviceActions: DeviceActions,
 ) {
+    val borderColor =
+        if (isHighlighted) MaterialTheme.colors.error
+        else if (isFavorite) MaterialTheme.colors.secondary
+        else MaterialTheme.colors.primary
+
     CardContainer(
         modifier = Modifier
             .clickable { deviceActions.expand() },
-        borderColor = if (isFavorite)
-            MaterialTheme.colors.secondary
-        else
-            MaterialTheme.colors.primary
+        borderColor = borderColor
     ) {
         CenteredVerticalContainer(
             modifier = Modifier
@@ -117,9 +120,13 @@ fun DevicePreview() {
     var isExpanded by remember {
         mutableStateOf(true)
     }
+    val isHighlighted by remember {
+        mutableStateOf(false)
+    }
     DeviceView(
         device = Device(),
         isFavorite = isFavorite,
+        isHighlighted = isHighlighted,
         isExpanded = isExpanded,
         DeviceActions(
             share = {},
@@ -127,7 +134,7 @@ fun DevicePreview() {
             getItinerary = {},
             forget = {},
             expand = { isExpanded = !isExpanded }
-        )
+        ),
     )
 }
 

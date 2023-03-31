@@ -8,13 +8,14 @@ import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 
 @Composable
 fun ThemeSelector(
-    viewModel: ThemeSelectorViewModel = viewModel()
+    viewModel: ThemeSelectorViewModel = hiltViewModel()
 ) {
     CenteredHorizontalContainer {
         Icon(Icons.Filled.LightMode, "Light Mode")
