@@ -35,10 +35,6 @@ class DevicesListViewModel @Inject constructor(
         } else {
             favoriteDevices.value = favoriteDevices.value.plus(device)
         }
-        // TODO : REMOVE
-        Timer().schedule(500L) {
-            deviceRepository.addDevice(Device())
-        }
     }
 
     fun isExpanded(device: Device): Boolean {
@@ -58,6 +54,10 @@ class DevicesListViewModel @Inject constructor(
 
     fun forget(device: Device) = viewModelScope.launch {
         deviceRepository.forgetDevice(device)
+    }
+
+    fun forgetAll() {
+        deviceRepository.forgetAll()
     }
 
     fun isHighlighted(device: Device): Boolean {

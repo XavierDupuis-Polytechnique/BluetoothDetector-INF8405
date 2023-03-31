@@ -80,6 +80,19 @@ class DeviceRepository @Inject constructor(
          }
     }
 
+    fun forgetAll() {
+        devices.clear()
+        CoroutineScope(Dispatchers.IO).launch {
+            deleteAll()
+        }
+    }
+
+    private suspend fun deleteAll() {
+        safeDeviceOperation {
+            deviceDao.deleteAll()
+        }
+    }
+
     fun addDevice(device: Device) {
         devices[device.macAddress] = device
         CoroutineScope(Dispatchers.IO).launch {

@@ -37,4 +37,11 @@ interface DeviceDao {
 
     @Delete
     suspend fun delete(device: Device)
+
+    @Delete
+    suspend fun delete(vararg devices: Device)
+
+    @Query("DELETE FROM device")
+    suspend fun deleteAll()
+
 }
