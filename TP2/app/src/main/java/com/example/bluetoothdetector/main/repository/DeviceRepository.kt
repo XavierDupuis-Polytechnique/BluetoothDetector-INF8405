@@ -21,23 +21,10 @@ class DeviceRepository @Inject constructor(
     private val deviceDao: DeviceDao
 ) {
     val deviceCount: Flow<Int> = deviceDao.observeDeviceCount()
-    val devices: MutableMap<String, Device> = mutableStateMapOf(
-        // TODO REMOVE
-        "FAKE_MAC_ADDRESS_1" to
-                Device(
-                    name = "STATIC_1",
-                    location = Location("1").apply {
-                        latitude = 45.5049
-                        longitude = -73.6133 }),
-        "FAKE_MAC_ADDRESS_2" to
-                Device(
-                    name = "STATIC_2",
-                    location = Location("2").apply {
-                        latitude = 45.5046
-                        longitude = -73.6132 }),
-    )
+    val devices: MutableMap<String, Device> = mutableStateMapOf()
 
     init {
+        // TODO : REMOVE
         CoroutineScope(Dispatchers.IO).launch {
             deviceDao.observeDeviceCount().collect {
                 println("STORED DEVICE COUNT $it")

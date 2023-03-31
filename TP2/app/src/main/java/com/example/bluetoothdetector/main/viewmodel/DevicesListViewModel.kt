@@ -1,5 +1,6 @@
 package com.example.bluetoothdetector.main.viewmodel
 
+import android.location.Location
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -62,5 +63,15 @@ class DevicesListViewModel @Inject constructor(
 
     fun isHighlighted(device: Device): Boolean {
         return deviceRepository.isHighlighted(device)
+    }
+
+    // TODO : REMOVE
+    fun discoverDevice() {
+        Timer().schedule(500L) {
+            deviceRepository.addDevice(Device(location = Location("1").apply {
+                latitude = 45.5049
+                longitude = -73.6133
+            }))
+        }
     }
 }
