@@ -2,7 +2,6 @@ package com.example.bluetoothdetector.main.repository
 
 import android.content.Context
 import android.content.Intent
-import android.location.Location
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.startActivity
@@ -31,8 +30,8 @@ class DeviceRepository @Inject constructor(
             }
         }
         CoroutineScope(Dispatchers.IO).launch {
-            val savedDevices = deviceDao.getAll().associateBy {
-                    device -> device.macAddress
+            val savedDevices = deviceDao.getAll().associateBy { device ->
+                device.macAddress
             }
             safeDeviceOperation {
                 devices.putAll(savedDevices)
@@ -62,9 +61,9 @@ class DeviceRepository @Inject constructor(
     }
 
     private suspend fun deleteDevice(device: Device) {
-         safeDeviceOperation {
-             deviceDao.delete(device)
-         }
+        safeDeviceOperation {
+            deviceDao.delete(device)
+        }
     }
 
     fun forgetAll() {
