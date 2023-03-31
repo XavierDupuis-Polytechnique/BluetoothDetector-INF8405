@@ -16,10 +16,10 @@ interface DeviceDao {
     @Query("SELECT * FROM device")
     fun observeAll(): Flow<List<Device>>
 
-    @Query("SELECT * FROM device WHERE id IN (:deviceIds)")
-    suspend fun loadAllByIds(deviceIds: IntArray): List<Device>
+    @Query("SELECT * FROM device WHERE macAddress IN (:macAddresses)")
+    suspend fun loadAllByMacAddresses(macAddresses: IntArray): List<Device>
 
-    @Query("SELECT * FROM device WHERE mac_address LIKE :macAddress LIMIT 1")
+    @Query("SELECT * FROM device WHERE macAddress LIKE :macAddress LIMIT 1")
     suspend fun findByMacAddress(macAddress: String): Device
 
     @Query("SELECT COUNT() FROM device")

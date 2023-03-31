@@ -19,14 +19,14 @@ val addresses = listOf(
 
 @Entity
 data class Device(
-    @PrimaryKey macAddress: String = addresses[0],
+    @PrimaryKey val macAddress: String = addresses[0],
     @ColumnInfo(name="name") var name: String = generateDeviceName(),
     @ColumnInfo(name="date") val date: Date = Date(),
     @ColumnInfo(name="bluetooth_class") var bluetoothClass: String? = null,
     @ColumnInfo(name="bluetooth_type") var type: String? = null,
     @ColumnInfo(name="bluetooth_bond_state") var bondState: String? = null,
-    @ColumnInfo(name="location") var location: Location? = null
-    @ColumnInfo(name="uuids") var uuids: Array<ParcelUuid>? = null,
+    @ColumnInfo(name="location") var location: Location? = null,
+    // @ColumnInfo(name="uuids") var uuids: List<ParcelUuid>? = null,
 ) {
 
     companion object {
