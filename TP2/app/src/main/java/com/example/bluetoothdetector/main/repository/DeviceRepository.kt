@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.WorkerThread
 import androidx.compose.runtime.MutableState
+import android.location.Location
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
@@ -24,12 +26,6 @@ class DeviceRepository @Inject constructor(
     private val context: Context,
     private val deviceDao: DeviceDao
 ) {
-    val deviceCount: Flow<Int> = deviceDao.observeDeviceCount()
-    val devices = mutableMapOf<String, Device>(
-        "MA1" to Device(),
-        "MA2" to Device()
-    )
-
     init {
         CoroutineScope(Dispatchers.IO).launch {
             deviceDao.observeDeviceCount().collect {
@@ -53,6 +49,23 @@ class DeviceRepository @Inject constructor(
             }
         }
     }
+
+    val deviceCount: Flow<Int> = deviceDao.observeDeviceCount()
+
+    val devices: MutableMap<String, Device> = mutableStateMapOf(
+        "FAKE_MAC_ADDRESS_1" to Device(location = Location("1").apply {
+            latitude = 45.5049
+            longitude = -73.6133
+        }),
+        "FAKE_MAC_ADDRESS_2" to Device(location = Location("2").apply {
+            latitude = 45.5046
+            longitude = -73.6132
+        })
+    )
+
+    val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
+
+    val highlightedDevice = mutableStateOf<Device?>(null)
 
     fun share(device: Device) {
         val shareIntent: Intent = Intent().apply {
@@ -86,5 +99,17 @@ class DeviceRepository @Inject constructor(
             println("COULD NOT EXECUTE $operation")
             exception.printStackTrace()
         }
+    }
+
+    fun isFavorite(device: Device): Boolean {
+        return favoriteDevices.value.contains(device)
+    }
+
+    fun highlight(device: Device?) {
+        highlightedDevice.value = device
+    }
+
+    fun isHighlighted(device: Device): Boolean {
+        return highlightedDevice.value === device
     }
 }

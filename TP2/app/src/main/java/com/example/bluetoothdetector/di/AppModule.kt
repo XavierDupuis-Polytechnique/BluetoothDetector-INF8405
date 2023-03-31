@@ -3,6 +3,7 @@ package com.example.bluetoothdetector.di
 import android.content.Context
 import androidx.room.Room
 import com.example.bluetoothdetector.main.domain.DeviceDao
+import com.example.bluetoothdetector.main.repository.Bluetooth
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.sources.DeviceSource
@@ -52,5 +53,17 @@ object AppModule {
         DeviceSource.Name
     ).build()
 
+    @Singleton
+    @Provides
+    fun provideBluetoothManager(
+        @ApplicationContext context: Context
+    ) = context
 
+    @Singleton
+    @Provides
+    fun provideBluetoothRepository(
+        context: Context,
+        deviceRepository: DeviceRepository,
+        locationRepository: LocationRepository
+    ) = Bluetooth(context, deviceRepository, locationRepository)
 }

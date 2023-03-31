@@ -20,7 +20,8 @@ class DevicesListViewModel @Inject constructor(
 ) : ViewModel() {
     val devices = deviceRepository.devices
     val deviceCount = deviceRepository.deviceCount
-    val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
+    val highlightedDevice = deviceRepository.highlightedDevice
+    val favoriteDevices = deviceRepository.favoriteDevices
     var expandedDevice = mutableStateOf<Device?>(null)
 
     fun share(device: Device) {
@@ -28,7 +29,7 @@ class DevicesListViewModel @Inject constructor(
     }
 
     fun isFavorite(device: Device): Boolean {
-        return favoriteDevices.value.contains(device)
+        return deviceRepository.isFavorite(device)
     }
 
     fun toggleFavorite(device: Device) {
@@ -55,12 +56,15 @@ class DevicesListViewModel @Inject constructor(
             expandedDevice.value = device
     }
 
-
     fun getItinerary(device: Device) {
         // TODO
     }
 
     fun forget(device: Device) = viewModelScope.launch {
         deviceRepository.forget(device)
+    }
+
+    fun isHighlighted(device: Device): Boolean {
+        return deviceRepository.isHighlighted(device)
     }
 }
