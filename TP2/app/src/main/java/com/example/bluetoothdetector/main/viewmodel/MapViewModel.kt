@@ -22,7 +22,7 @@ class MapViewModel @Inject constructor(
     val devices = deviceRepository.devices
     fun markerClick(device: Device): Boolean {
         deviceRepository.highlight(device)
-        return true
+        return false
     }
 
     fun mapClick(latLng: LatLng) {
@@ -39,6 +39,6 @@ class MapViewModel @Inject constructor(
 
     fun currentPositionMarkerClick(currentLocation: LatLng): Boolean {
         mapClick(currentLocation)
-        return true
+        return false
     }
 }
