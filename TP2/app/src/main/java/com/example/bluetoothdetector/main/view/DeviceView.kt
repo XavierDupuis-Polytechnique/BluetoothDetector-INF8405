@@ -24,16 +24,19 @@ import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 fun DeviceView(
     device: Device,
     isFavorite: Boolean,
+    isHighlighted: Boolean,
     isExpanded: Boolean,
     deviceActions: DeviceActions,
 ) {
+    val borderColor =
+        if (isHighlighted) MaterialTheme.colors.error
+        else if (isFavorite) MaterialTheme.colors.secondary
+        else MaterialTheme.colors.primary
+
     CardContainer(
         modifier = Modifier
             .clickable { deviceActions.expand() },
-        borderColor = if (isFavorite)
-            MaterialTheme.colors.secondary
-        else
-            MaterialTheme.colors.primary
+        borderColor = borderColor
     ) {
         CenteredVerticalContainer(
             modifier = Modifier
@@ -41,6 +44,7 @@ fun DeviceView(
         ) {
             DeviceInfo(device)
             if (isExpanded) {
+                DeviceAdditionalInfo(device)
                 DeviceButtons(deviceActions, isFavorite)
             }
         }
@@ -51,8 +55,20 @@ fun DeviceView(
 private fun DeviceInfo(device: Device) {
     CenteredVerticalContainer {
         Text(device.name)
+        Text(Device.formatDate(device))
+    }
+}
+
+@Composable
+fun DeviceAdditionalInfo(device: Device) {
+    CenteredVerticalContainer {
         Text(device.macAddress)
-        Text(device.date.toString())
+        device.location?.let {
+            Text(it.latitude.toString())
+            Text(it.longitude.toString())
+        }
+        device.bluetoothClass?.let { Text(it) }
+        device.type?.let { Text(it) }
     }
 }
 
@@ -96,9 +112,13 @@ fun DevicePreview() {
     var isExpanded by remember {
         mutableStateOf(true)
     }
+    val isHighlighted by remember {
+        mutableStateOf(false)
+    }
     DeviceView(
         device = Device(),
         isFavorite = isFavorite,
+        isHighlighted = isHighlighted,
         isExpanded = isExpanded,
         DeviceActions(
             share = {},
@@ -106,7 +126,7 @@ fun DevicePreview() {
             getItinerary = {},
             forget = {},
             expand = { isExpanded = !isExpanded }
-        )
+        ),
     )
 }
 
