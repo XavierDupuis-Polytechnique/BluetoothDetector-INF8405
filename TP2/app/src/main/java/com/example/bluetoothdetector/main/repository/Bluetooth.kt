@@ -124,8 +124,14 @@ class Bluetooth(
             bondStateMap.getOrDefault(device.bondState, device.bondState.toString())
 
         val parsedDevice = Device(
-            device.name, device.address, Date(), className,
-            typeName, bondedStateName, device.uuids, locationRepository.currentLocation.value
+            macAddress = device.address,
+            name = device.name,
+            date = Date(),
+            bluetoothClass = className,
+            type = typeName,
+            bondState = bondedStateName,
+            location = locationRepository.currentLocation.value,
+            // uuids = device.uuids.toList()
         )
         deviceRepository.devices[device.address] = parsedDevice
         println(parsedDevice)
