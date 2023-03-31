@@ -14,13 +14,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
-import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 import com.example.bluetoothdetector.main.repository.Bluetooth
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme

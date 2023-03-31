@@ -1,12 +1,10 @@
 package com.example.bluetoothdetector.main.viewmodel
 
-import androidx.compose.material.MaterialTheme
 import androidx.lifecycle.ViewModel
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

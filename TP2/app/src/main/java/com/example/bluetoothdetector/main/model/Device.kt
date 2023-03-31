@@ -1,14 +1,11 @@
 package com.example.bluetoothdetector.main.model
 
+import android.annotation.SuppressLint
+import android.location.Location
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import android.annotation.SuppressLint
-import android.location.Location
-import android.os.ParcelUuid
-import androidx.compose.runtime.MutableState
 import java.text.SimpleDateFormat
-
 import java.util.*
 
 // TODO : REMOVE
@@ -20,12 +17,12 @@ val addresses = listOf(
 @Entity
 data class Device(
     @PrimaryKey val macAddress: String = addresses[0],
-    @ColumnInfo(name="name") var name: String = generateDeviceName(),
-    @ColumnInfo(name="date") val date: Date = Date(),
-    @ColumnInfo(name="bluetooth_class") var bluetoothClass: String? = null,
-    @ColumnInfo(name="bluetooth_type") var type: String? = null,
-    @ColumnInfo(name="bluetooth_bond_state") var bondState: String? = null,
-    @ColumnInfo(name="location") var location: Location? = null,
+    @ColumnInfo(name = "name") var name: String = generateDeviceName(),
+    @ColumnInfo(name = "date") val date: Date = Date(),
+    @ColumnInfo(name = "bluetooth_class") var bluetoothClass: String? = null,
+    @ColumnInfo(name = "bluetooth_type") var type: String? = null,
+    @ColumnInfo(name = "bluetooth_bond_state") var bondState: String? = null,
+    @ColumnInfo(name = "location") var location: Location? = null,
     // @ColumnInfo(name="uuids") var uuids: List<ParcelUuid>? = null,
 ) {
 

@@ -1,6 +1,5 @@
 package com.example.bluetoothdetector.main.view
 
-import android.graphics.Color
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -21,7 +20,6 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.*
-import kotlin.math.roundToInt
 
 @Composable
 fun MapView(

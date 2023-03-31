@@ -2,21 +2,15 @@ package com.example.bluetoothdetector.main.repository
 
 import android.content.Context
 import android.content.Intent
-import androidx.annotation.WorkerThread
-import androidx.compose.runtime.MutableState
 import android.location.Location
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.LiveData
 import com.example.bluetoothdetector.main.domain.DeviceDao
 import com.example.bluetoothdetector.main.model.Device
-import com.example.bluetoothdetector.main.sources.DeviceSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -95,7 +89,7 @@ class DeviceRepository @Inject constructor(
     ) {
         try {
             operation()
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             println("COULD NOT EXECUTE $operation")
             exception.printStackTrace()
         }

@@ -1,7 +1,5 @@
 package com.example.bluetoothdetector.main.domain
 
-import androidx.compose.runtime.MutableState
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import com.example.bluetoothdetector.main.model.Device
