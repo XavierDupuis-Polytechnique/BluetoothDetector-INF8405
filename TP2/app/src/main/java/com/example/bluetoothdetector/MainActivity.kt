@@ -14,8 +14,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
+import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
@@ -32,6 +34,9 @@ class MainActivity : ComponentActivity() {
     lateinit var locationRepository: LocationRepository
 
     @Inject
+    lateinit var themeRepository: ThemeRepository
+
+    @Inject
     lateinit var bluetooth: Bluetooth
 
     private var bluetoothStarted = false
@@ -39,7 +44,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainContent()
+            MainContent(themeRepository)
         }
         bluetoothStarted = false
         startBTScan()
@@ -158,13 +163,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainContent() {
-    val themeSelectorViewModel = ThemeSelectorViewModel(isSystemInDarkTheme())
+fun MainContent(themeRepository: ThemeRepository) {
+    themeRepository.init(isSystemInDarkTheme())
     val permissionsViewModel = PermissionsViewModel()
-    BluetoothDetectorTheme(themeSelectorViewModel.isDarkTheme) {
+    BluetoothDetectorTheme(themeRepository.isDarkTheme) {
         Navigation(
-            themeSelectorViewModel,
-            permissionsViewModel,
+            permissionsViewModel
         )
     }
 }

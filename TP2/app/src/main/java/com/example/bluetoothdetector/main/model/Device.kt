@@ -1,8 +1,10 @@
 package com.example.bluetoothdetector.main.model
 
+import android.annotation.SuppressLint
 import android.location.Location
 import android.os.ParcelUuid
 import androidx.compose.runtime.MutableState
+import java.text.SimpleDateFormat
 
 import java.util.*
 
@@ -20,11 +22,7 @@ data class Device(
     var type: String? = null,
     var bondState: String? = null,
     var uuids: Array<ParcelUuid>? = null,
-    var location: MutableState<Location?>? = null
-    // TODO : add others
-    //    val location: Location
-    //    val classType: ClassType
-    //    val otherInfo: OtherInfo
+    var location: Location? = null
 ) {
 
     companion object {
@@ -32,6 +30,12 @@ data class Device(
         private var currentDeviceId = 0
         fun generateDeviceName(): String {
             return "${devicePrefix}${currentDeviceId++}"
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        private val DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        fun formatDate(device: Device): String {
+            return DateFormat.format(device.date)
         }
     }
 }

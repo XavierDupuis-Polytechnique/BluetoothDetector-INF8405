@@ -19,21 +19,27 @@ import com.example.bluetoothdetector.main.domain.ActionSeverity
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
+import com.example.bluetoothdetector.ui.theme.defaultDevice
+import com.example.bluetoothdetector.ui.theme.favoriteDevice
+import com.example.bluetoothdetector.ui.theme.highlightedDevice
 
 @Composable
 fun DeviceView(
     device: Device,
     isFavorite: Boolean,
+    isHighlighted: Boolean,
     isExpanded: Boolean,
     deviceActions: DeviceActions,
 ) {
+    val borderColor =
+        if (isHighlighted) MaterialTheme.colors.highlightedDevice
+        else if (isFavorite) MaterialTheme.colors.favoriteDevice
+        else MaterialTheme.colors.defaultDevice
+
     CardContainer(
         modifier = Modifier
             .clickable { deviceActions.expand() },
-        borderColor = if (isFavorite)
-            MaterialTheme.colors.secondary
-        else
-            MaterialTheme.colors.primary
+        borderColor = borderColor
     ) {
         CenteredVerticalContainer(
             modifier = Modifier
@@ -41,6 +47,7 @@ fun DeviceView(
         ) {
             DeviceInfo(device)
             if (isExpanded) {
+                DeviceAdditionalInfo(device)
                 DeviceButtons(deviceActions, isFavorite)
             }
         }
@@ -51,8 +58,20 @@ fun DeviceView(
 private fun DeviceInfo(device: Device) {
     CenteredVerticalContainer {
         Text(device.name)
+        Text(Device.formatDate(device))
+    }
+}
+
+@Composable
+fun DeviceAdditionalInfo(device: Device) {
+    CenteredVerticalContainer {
         Text(device.macAddress)
-        Text(device.date.toString())
+        device.location?.let {
+            Text(it.latitude.toString())
+            Text(it.longitude.toString())
+        }
+        device.bluetoothClass?.let { Text(it) }
+        device.type?.let { Text(it) }
     }
 }
 
@@ -104,9 +123,13 @@ fun DevicePreview() {
     var isExpanded by remember {
         mutableStateOf(true)
     }
+    val isHighlighted by remember {
+        mutableStateOf(false)
+    }
     DeviceView(
         device = Device(),
         isFavorite = isFavorite,
+        isHighlighted = isHighlighted,
         isExpanded = isExpanded,
         DeviceActions(
             share = {},
@@ -114,7 +137,7 @@ fun DevicePreview() {
             getItinerary = {},
             forget = {},
             expand = { isExpanded = !isExpanded }
-        )
+        ),
     )
 }
 

@@ -113,7 +113,7 @@ class Bluetooth(
 
         val parsedDevice = Device(
             device.name, device.address, Date(), className,
-            typeName, bondedStateName, device.uuids, locationRepository.currentLocation
+            typeName, bondedStateName, device.uuids, locationRepository.currentLocation.value
         )
         deviceRepository.devices[device.address] = parsedDevice
         println(parsedDevice)
