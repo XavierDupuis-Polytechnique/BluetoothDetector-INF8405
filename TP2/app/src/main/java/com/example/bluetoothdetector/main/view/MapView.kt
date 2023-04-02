@@ -12,14 +12,11 @@ import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.domain.MapsModule
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.main.viewmodel.MapViewModel
-import com.example.bluetoothdetector.ui.theme.deviceMarker
-import com.example.bluetoothdetector.ui.theme.favoriteDeviceMarker
-import com.example.bluetoothdetector.ui.theme.highlightedDeviceMarker
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.example.bluetoothdetector.ui.theme.defaultDevice
 import com.example.bluetoothdetector.ui.theme.favoriteDevice
 import com.example.bluetoothdetector.ui.theme.highlightedDevice
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng

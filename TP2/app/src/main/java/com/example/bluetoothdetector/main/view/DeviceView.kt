@@ -2,7 +2,6 @@ package com.example.bluetoothdetector.main.view
 
 import android.annotation.SuppressLint
 import android.location.Location
-import android.os.ParcelUuid
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -21,10 +20,10 @@ import com.example.bluetoothdetector.main.domain.ActionSeverity
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
-import java.util.*
 import com.example.bluetoothdetector.ui.theme.defaultDevice
 import com.example.bluetoothdetector.ui.theme.favoriteDevice
 import com.example.bluetoothdetector.ui.theme.highlightedDevice
+import java.util.*
 
 @Composable
 fun DeviceView(
@@ -137,7 +136,7 @@ fun DevicePreview() {
             bluetoothClass = "AUDIO_VIDEO_CAMCORDER",
             type = "DEVICE_TYPE_UNKNOWN",
             bondState = "BOND_NONE",
-            location = Location("1").apply{
+            location = Location("1").apply {
                 latitude = 12.3456
                 longitude = 12.0789
             }

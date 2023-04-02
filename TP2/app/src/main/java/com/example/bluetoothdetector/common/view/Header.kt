@@ -8,7 +8,6 @@ import androidx.compose.ui.unit.dp
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.permissions.PermissionHeader
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
-import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 
 @Composable
 fun HeaderView(
