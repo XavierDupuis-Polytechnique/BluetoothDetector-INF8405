@@ -51,7 +51,7 @@ object AppModule {
         context,
         DeviceSource::class.java,
         DeviceSource.Name
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides
