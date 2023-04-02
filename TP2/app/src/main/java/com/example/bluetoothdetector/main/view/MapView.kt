@@ -17,6 +17,9 @@ import com.example.bluetoothdetector.ui.theme.favoriteDeviceMarker
 import com.example.bluetoothdetector.ui.theme.highlightedDeviceMarker
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.example.bluetoothdetector.ui.theme.defaultDevice
+import com.example.bluetoothdetector.ui.theme.favoriteDevice
+import com.example.bluetoothdetector.ui.theme.highlightedDevice
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -71,11 +74,11 @@ private fun DeviceMarkers(viewModel: MapViewModel) {
         device.location?.let { location ->
             val color =
                 if (viewModel.isHighlighted(device))
-                    MaterialTheme.colors.highlightedDeviceMarker
+                    MaterialTheme.colors.highlightedDevice
                 else if (viewModel.isFavorite(device))
-                    MaterialTheme.colors.favoriteDeviceMarker
+                    MaterialTheme.colors.favoriteDevice
                 else
-                    MaterialTheme.colors.deviceMarker
+                    MaterialTheme.colors.defaultDevice
             val hue = colorToHue(color.toArgb())
             Marker(
                 state = MarkerState(

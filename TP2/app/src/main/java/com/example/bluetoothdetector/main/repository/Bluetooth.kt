@@ -20,7 +20,6 @@ class Bluetooth(
 ) {
     private val bluetoothManager: BluetoothManager =
         context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-//    private val bluetoothAdapter: BluetoothAdapter = bluetoothManager.adapter  // TODO remove
 
     fun startDiscovery() {
         // Permission check
@@ -29,7 +28,6 @@ class Bluetooth(
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         if (ActivityCompat.checkSelfPermission(
@@ -37,7 +35,6 @@ class Bluetooth(
                 Manifest.permission.BLUETOOTH
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
@@ -45,7 +42,6 @@ class Bluetooth(
                 Manifest.permission.BLUETOOTH_SCAN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
@@ -53,7 +49,6 @@ class Bluetooth(
                 Manifest.permission.BLUETOOTH_CONNECT
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         try {
@@ -61,11 +56,8 @@ class Bluetooth(
         } catch (exception: Exception) {
             // TODO : HANDLE EMULATION ERRORS
         }
-        // TODO Debug
-        println("--- Discovery Started ---")
     }
 
-    // TODO Maybe remove if not useful
     fun stopDiscovery() {
         // Permission check
         if (ActivityCompat.checkSelfPermission(
@@ -73,7 +65,6 @@ class Bluetooth(
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
@@ -81,7 +72,6 @@ class Bluetooth(
                 Manifest.permission.BLUETOOTH_SCAN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         try {
@@ -98,7 +88,6 @@ class Bluetooth(
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
@@ -106,7 +95,6 @@ class Bluetooth(
                 Manifest.permission.BLUETOOTH_SCAN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
 

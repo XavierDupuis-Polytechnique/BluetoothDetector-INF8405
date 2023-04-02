@@ -22,6 +22,9 @@ import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import java.util.*
+import com.example.bluetoothdetector.ui.theme.defaultDevice
+import com.example.bluetoothdetector.ui.theme.favoriteDevice
+import com.example.bluetoothdetector.ui.theme.highlightedDevice
 
 @Composable
 fun DeviceView(
@@ -32,9 +35,9 @@ fun DeviceView(
     deviceActions: DeviceActions,
 ) {
     val borderColor =
-        if (isHighlighted) MaterialTheme.colors.error
-        else if (isFavorite) MaterialTheme.colors.secondary
-        else MaterialTheme.colors.primary
+        if (isHighlighted) MaterialTheme.colors.highlightedDevice
+        else if (isFavorite) MaterialTheme.colors.favoriteDevice
+        else MaterialTheme.colors.defaultDevice
 
     CardContainer(
         modifier = Modifier
