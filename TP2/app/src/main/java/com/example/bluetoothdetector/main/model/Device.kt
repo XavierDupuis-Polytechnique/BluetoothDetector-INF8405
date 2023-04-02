@@ -5,6 +5,7 @@ import android.location.Location
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import android.os.ParcelUuid
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,7 +19,7 @@ data class Device(
     @ColumnInfo(name = "bluetooth_type") var type: String? = null,
     @ColumnInfo(name = "bluetooth_bond_state") var bondState: String? = null,
     @ColumnInfo(name = "location") var location: Location? = null,
-    // @ColumnInfo(name="uuids") var uuids: List<ParcelUuid>? = null,
+    @ColumnInfo(name="uuids") var uuids: List<ParcelUuid>? = null,
 ) {
 
     companion object {

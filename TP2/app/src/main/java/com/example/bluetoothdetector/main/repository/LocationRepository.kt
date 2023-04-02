@@ -19,6 +19,10 @@ class LocationRepository(
         // const val LocationRequestAccuracy: Int = Priority.PRIORITY_BALANCED_POWER_ACCURACY
         const val LocationRequestPriority: Int = Priority.PRIORITY_HIGH_ACCURACY
         const val LocationRequestInterval: Long = 10000
+        val DefaultLocation: Location = Location("Polytechnique").apply {
+            latitude = 45.5048
+            longitude = -73.6132
+        }
     }
 
     val currentLocation: MutableState<Location?> = mutableStateOf(null)

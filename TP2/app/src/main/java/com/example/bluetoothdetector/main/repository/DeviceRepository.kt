@@ -38,6 +38,17 @@ class DeviceRepository @Inject constructor(
             }
         }
     }
+    // TODO : REMOVE
+    // val devices: MutableMap<String, Device> = mutableStateMapOf(
+    //     "FAKE_MAC_ADDRESS_1" to Device(location = Location("1").apply {
+    //         latitude = 45.5059
+    //         longitude = -73.6143
+    //     }),
+    //     "FAKE_MAC_ADDRESS_2" to Device(location = Location("2").apply {
+    //         latitude = 45.5056
+    //         longitude = -73.6122
+    //     })
+    // )
 
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
 

@@ -35,15 +35,15 @@ val Colors.accepted: Color
     @Composable
     get() = if (isLight) LightValidColor else DarkValidColor
 
-val Colors.deviceMarker: Color
+val Colors.defaultDevice: Color
     @Composable
     get() = if (isLight) LightColorPalette.primary else DarkColorPalette.primary
 
-val Colors.favoriteDeviceMarker: Color
+val Colors.favoriteDevice: Color
     @Composable
     get() = if (isLight) LightColorPalette.secondary else DarkColorPalette.secondary
 
-val Colors.highlightedDeviceMarker: Color
+val Colors.highlightedDevice: Color
     @Composable
     get() = if (isLight) LightColorPalette.error else DarkColorPalette.error
 
