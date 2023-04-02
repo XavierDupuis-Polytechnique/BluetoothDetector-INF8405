@@ -3,9 +3,7 @@ package com.example.bluetoothdetector.main.model
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.ParcelUuid
-import androidx.compose.runtime.MutableState
 import java.text.SimpleDateFormat
-
 import java.util.*
 
 // TODO : REMOVE
