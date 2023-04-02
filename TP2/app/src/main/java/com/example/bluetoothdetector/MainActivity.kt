@@ -82,7 +82,9 @@ class MainActivity : ComponentActivity() {
                     // TODO Debug
                     println("--- Discovery Finished ---")
                     println(bluetooth.getDeviceList())
+                    if (bluetoothStarted) {
                     bluetooth.startDiscovery()
+                    }
                 }
             }
         }
@@ -97,10 +99,18 @@ class MainActivity : ComponentActivity() {
     override fun onPause() {
         super.onPause()
         locationRepository.pauseLocationUpdatesAsync()
+        if (bluetoothStarted) {
+            bluetooth.stopDiscovery()
+            bluetoothStarted = false
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        if (bluetoothStarted) {
+            bluetooth.stopDiscovery()
+            bluetoothStarted = false
+        }
         unregisterReceiver(btReceiver)
     }
 
