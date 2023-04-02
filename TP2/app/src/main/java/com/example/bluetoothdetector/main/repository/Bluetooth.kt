@@ -129,31 +129,29 @@ class Bluetooth(
         deviceRepository.addDevice(parsedDevice)
     }
 
-    fun getDeviceList(): MutableMap<String, Device> {
-        return deviceRepository.devices
+    private fun randomizeGps(location: Location): Location {
+        return location.randomize()
     }
+}
 
-    fun randomizeGps(location: Location): Location {
-        var random = Random(System.currentTimeMillis())
-        val radius = 20
-        var x0 = location.longitude
-        var y0 = location.latitude
-        // Convert radius from meters to degrees
-        val radiusInDegrees = (radius / 111000f).toDouble()
-        val u = random.nextDouble()
-        val v = random.nextDouble()
-        val w = radiusInDegrees * sqrt(u)
-        val t = 2.0 * Math.PI * v
-        val x = w * cos(t)
-        val y = w * sin(t)
-        // Adjust the x-coordinate for the shrinking of the east-west distances
-        val newX = x / cos(Math.toRadians(y0))
-        val foundLongitude = newX + x0
-        val foundLatitude = y + y0
-
-        location.longitude = foundLongitude
-        location.latitude = foundLatitude
-
-        return location
-    }
+fun Location.randomize(): Location {
+    var random = Random(System.currentTimeMillis())
+    val radius = 20
+    var x0 = longitude
+    var y0 = latitude
+    // Convert radius from meters to degrees
+    val radiusInDegrees = (radius / 111000f).toDouble()
+    val u = random.nextDouble()
+    val v = random.nextDouble()
+    val w = radiusInDegrees * sqrt(u)
+    val t = 2.0 * Math.PI * v
+    val x = w * cos(t)
+    val y = w * sin(t)
+    // Adjust the x-coordinate for the shrinking of the east-west distances
+    val newX = x / cos(Math.toRadians(y0))
+    val foundLongitude = newX + x0
+    val foundLatitude = y + y0
+    longitude = foundLongitude
+    latitude = foundLatitude
+    return this
 }
