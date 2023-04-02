@@ -15,16 +15,17 @@ data class Module(
     val permissions: Permissions = listOf()
 )
 
-val Modules = listOf(
-    Module(
-        ModuleType.MAPS,
-        MAPS_MODULE_DESCRIPTION,
-        listOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-    ),
+val MapsModule = Module(
+    ModuleType.MAPS,
+    MAPS_MODULE_DESCRIPTION,
+    listOf(
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    )
+)
 
+val Modules = listOf(
+    MapsModule,
     // Handle the bluetooth permission changes of api 31
     if (android.os.Build.VERSION.SDK_INT < 31) {
         Module(

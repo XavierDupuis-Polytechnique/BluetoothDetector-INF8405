@@ -17,12 +17,12 @@ class DeviceRepository @Inject constructor(
 
     val devices: MutableMap<String, Device> = mutableStateMapOf(
         "FAKE_MAC_ADDRESS_1" to Device(location = Location("1").apply {
-            latitude = 45.5049
-            longitude = -73.6133
+            latitude = 45.5059
+            longitude = -73.6143
         }),
         "FAKE_MAC_ADDRESS_2" to Device(location = Location("2").apply {
-            latitude = 45.5046
-            longitude = -73.6132
+            latitude = 45.5056
+            longitude = -73.6122
         })
     )
 
