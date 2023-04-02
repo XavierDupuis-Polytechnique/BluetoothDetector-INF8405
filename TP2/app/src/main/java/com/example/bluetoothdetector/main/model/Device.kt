@@ -11,15 +11,22 @@ import java.util.*
 
 @Entity
 data class Device(
-    @ColumnInfo(name = "name") var name: String = generateDeviceName(),
-    @ColumnInfo(name = "date") val date: Date = Date(),
-    // TODO : REMOVE DEFAULT PARAMETER
-    @PrimaryKey val macAddress: String = "$name ${date.time}",
-    @ColumnInfo(name = "bluetooth_class") var bluetoothClass: String? = null,
-    @ColumnInfo(name = "bluetooth_type") var type: String? = null,
-    @ColumnInfo(name = "bluetooth_bond_state") var bondState: String? = null,
-    @ColumnInfo(name = "location") var location: Location? = null,
-    @ColumnInfo(name="uuids") var uuids: List<ParcelUuid>? = null,
+    @PrimaryKey
+    val macAddress: String,
+    @ColumnInfo(name = "name")
+    var name: String = generateDeviceName(),
+    @ColumnInfo(name = "date")
+    val date: Date = Date(),
+    @ColumnInfo(name = "bluetooth_class")
+    var bluetoothClass: String? = null,
+    @ColumnInfo(name = "bluetooth_type")
+    var type: String? = null,
+    @ColumnInfo(name = "bluetooth_bond_state")
+    var bondState: String? = null,
+    @ColumnInfo(name = "location")
+    var location: Location? = null,
+    @ColumnInfo(name="parcel_uuids")
+    var parcelUuids: List<ParcelUuid>? = null,
 ) {
 
     companion object {

@@ -71,7 +71,9 @@ class DevicesListViewModel @Inject constructor(
             deviceRepository.addDevice(Device(location = Location("1").apply {
                 latitude = 45.5049
                 longitude = -73.6133
-            }))
+            },
+            macAddress = Date().toString()
+            ))
         }
     }
 }
