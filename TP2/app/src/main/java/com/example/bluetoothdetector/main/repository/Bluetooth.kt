@@ -120,12 +120,11 @@ class Bluetooth(
         val parsedDevice = Device(
             macAddress = device.address,
             name = device.name,
-            date = Date(),
             bluetoothClass = className,
             type = typeName,
             bondState = bondedStateName,
             location = newLocation,
-            uuids = device.uuids.toList()
+            parcelUuids = device.uuids.toList()
         )
         deviceRepository.addDevice(parsedDevice)
     }

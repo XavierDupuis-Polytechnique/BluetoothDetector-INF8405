@@ -1,6 +1,7 @@
 package com.example.bluetoothdetector.main.domain
 
 import android.location.Location
+import android.os.ParcelUuid
 import androidx.room.TypeConverter
 import java.util.*
 
@@ -24,5 +25,19 @@ class DeviceConverter {
     @TypeConverter
     fun locationToString(location: Location?): String? {
         return location?.toString()
+    }
+
+    @TypeConverter
+    fun parcelUuidsFromString(value: String?): List<ParcelUuid>? {
+        return value?.let { list ->
+            list.split(",").map {
+                ParcelUuid(UUID.fromString(it))
+            }
+        }
+    }
+
+    @TypeConverter
+    fun parcelUuidsToString(parcelUuids: List<ParcelUuid>?): String? {
+        return parcelUuids?.joinToString(separator = ",")
     }
 }
