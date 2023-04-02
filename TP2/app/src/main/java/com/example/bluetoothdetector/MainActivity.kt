@@ -57,7 +57,6 @@ class MainActivity : ComponentActivity() {
                     Manifest.permission.BLUETOOTH_ADMIN
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO
                 return
             }
             if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
@@ -65,7 +64,6 @@ class MainActivity : ComponentActivity() {
                     Manifest.permission.BLUETOOTH_SCAN
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO
                 return
             }
             when (intent.action) {
@@ -79,9 +77,6 @@ class MainActivity : ComponentActivity() {
                 }
                 ACTION_DISCOVERY_FINISHED -> {
                     // When bluetooth scan ends restart it
-                    // TODO Debug
-                    println("--- Discovery Finished ---")
-                    println(bluetooth.getDeviceList())
                     if (bluetoothStarted) {
                     bluetooth.startDiscovery()
                     }
@@ -122,7 +117,6 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.BLUETOOTH_ADMIN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         if (ActivityCompat.checkSelfPermission(
@@ -130,7 +124,6 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.BLUETOOTH
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
@@ -138,7 +131,6 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.BLUETOOTH_CONNECT
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
         if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
@@ -146,7 +138,6 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.BLUETOOTH_SCAN
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO
             return
         }
 
