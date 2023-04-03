@@ -119,10 +119,6 @@ class DeviceRepository @Inject constructor(
         }
     }
 
-    fun getItinerary(device: Device) {
-        deviceSource.getItinerary(device)
-    }
-
     fun isFavorite(device: Device): Boolean {
         return favoriteDevices.value.contains(device)
     }
