@@ -7,7 +7,7 @@ import com.example.bluetoothdetector.main.domain.DeviceConverter
 import com.example.bluetoothdetector.main.domain.DeviceDao
 import com.example.bluetoothdetector.main.model.Device
 
-@Database(entities = [Device::class], version = 2)
+@Database(entities = [Device::class], version = 4)
 @TypeConverters(DeviceConverter::class)
 abstract class DeviceSource : RoomDatabase() {
 
