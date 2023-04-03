@@ -134,24 +134,22 @@ class Bluetooth(
     }
 }
 
-fun Location.randomize(): Location {
-    var random = Random(System.currentTimeMillis())
-    val radius = 20
-    var x0 = longitude
-    var y0 = latitude
+fun Location.randomize(radius: Double = 20.0): Location {
+    val random = Random(System.currentTimeMillis())
     // Convert radius from meters to degrees
-    val radiusInDegrees = (radius / 111000f).toDouble()
+    val r = radius / 111319.9
     val u = random.nextDouble()
     val v = random.nextDouble()
-    val w = radiusInDegrees * sqrt(u)
+    val w = r * sqrt(u)
     val t = 2.0 * Math.PI * v
-    val x = w * cos(t)
     val y = w * sin(t)
+    var x = w * cos(t)
     // Adjust the x-coordinate for the shrinking of the east-west distances
-    val newX = x / cos(Math.toRadians(y0))
-    val foundLongitude = newX + x0
-    val foundLatitude = y + y0
-    longitude = foundLongitude
-    latitude = foundLatitude
-    return this
+    x /= cos(Math.toRadians(latitude))
+    val newLongitude = longitude + x
+    val newLatitude = latitude + y
+    return Location("").apply {
+        longitude = newLongitude
+        latitude = newLatitude
+    }
 }
