@@ -32,7 +32,7 @@ class DeviceSource @Inject constructor(
         device.location?.let {
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("geo:${it.longitude}+${it.latitude}?z=$zoom)")
+                Uri.parse("geo:${it.latitude}+${it.longitude}?z=$zoom)")
             )
             try {
                 startActivity(context, intent, null)
