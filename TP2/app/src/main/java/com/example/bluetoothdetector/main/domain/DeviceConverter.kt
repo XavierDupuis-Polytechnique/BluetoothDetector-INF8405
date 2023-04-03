@@ -6,38 +6,34 @@ import androidx.room.TypeConverter
 import java.util.*
 
 // https://developer.android.com/training/data-storage/room/referencing-data
-class DeviceConverter {
+class DeviceConverter : AbstractConverter() {
     @TypeConverter
-    fun dateFromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
+    fun dateFromTimestamp(value: String?): Date? {
+        return decode(value, Date::class.java)
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
+    fun dateToTimestamp(value: Date?): String? {
+        return encode(value)
     }
 
     @TypeConverter
     fun locationFromString(value: String?): Location? {
-        return value?.let { Location(value) }
+        return decode(value, Location::class.java)
     }
 
     @TypeConverter
-    fun locationToString(location: Location?): String? {
-        return location?.toString()
+    fun locationToString(value: Location?): String? {
+        return encode(value)
     }
 
     @TypeConverter
     fun parcelUuidsFromString(value: String?): List<ParcelUuid>? {
-        return value?.let { list ->
-            list.split(",").map {
-                ParcelUuid(UUID.fromString(it))
-            }
-        }
+        return decode(value, Array<ParcelUuid>::class.java)
     }
 
     @TypeConverter
-    fun parcelUuidsToString(parcelUuids: List<ParcelUuid>?): String? {
-        return parcelUuids?.joinToString(separator = ",")
+    fun parcelUuidsToString(value: List<ParcelUuid>?): String? {
+        return encode(value)
     }
 }
