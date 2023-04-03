@@ -102,6 +102,10 @@ dependencies {
 
     // Gradle Secrets (https://github.com/google/secrets-gradle-plugin)
     implementation "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:$gradle_secrets_version"
+
+    // Gson (https://github.com/google/gson)
+    def gson_version = '2.10.1'
+    implementation "com.google.code.gson:gson:$gson_version"
 }
 
 kapt {
