@@ -50,7 +50,8 @@ fun DeviceView(
             DeviceInfo(device)
             if (isExpanded) {
                 DeviceAdditionalInfo(device)
-                DeviceButtons(deviceActions, isFavorite)
+                val isLocationAvailable = device.location !== null
+                DeviceButtons(deviceActions, isFavorite, isLocationAvailable)
             }
         }
     }
@@ -79,7 +80,11 @@ fun DeviceAdditionalInfo(device: Device) {
 
 
 @Composable
-private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
+private fun DeviceButtons(
+    deviceActions: DeviceActions,
+    isFavorite: Boolean,
+    isLocationAvailable: Boolean
+) {
     CenteredHorizontalContainer {
         DeviceButton(
             button = Action(
@@ -101,7 +106,7 @@ private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
             button = Action(
                 action = deviceActions.getItinerary,
                 label = { "" },
-                canAction = { true },
+                canAction = { isLocationAvailable },
                 icon = { Icons.Default.Map }
             )
         )
