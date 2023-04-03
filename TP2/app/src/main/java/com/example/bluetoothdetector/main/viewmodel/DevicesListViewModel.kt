@@ -29,11 +29,7 @@ class DevicesListViewModel @Inject constructor(
     }
 
     fun toggleFavorite(device: Device) {
-        if (isFavorite(device)) {
-            favoriteDevices.value = favoriteDevices.value.minus(device)
-        } else {
-            favoriteDevices.value = favoriteDevices.value.plus(device)
-        }
+        deviceRepository.toggleFavorite(device)
     }
 
     fun isExpanded(device: Device): Boolean {

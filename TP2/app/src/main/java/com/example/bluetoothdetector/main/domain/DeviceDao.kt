@@ -8,22 +8,22 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DeviceDao {
-    @Query("SELECT * FROM device")
+    @Query("SELECT * FROM devices")
     suspend fun getAll(): List<Device>
 
-    @Query("SELECT * FROM device")
+    @Query("SELECT * FROM devices")
     fun observeAll(): Flow<List<Device>>
 
-    @Query("SELECT * FROM device WHERE macAddress IN (:macAddresses)")
+    @Query("SELECT * FROM devices WHERE macAddress IN (:macAddresses)")
     suspend fun loadAllByMacAddresses(macAddresses: IntArray): List<Device>
 
-    @Query("SELECT * FROM device WHERE macAddress LIKE :macAddress LIMIT 1")
+    @Query("SELECT * FROM devices WHERE macAddress LIKE :macAddress LIMIT 1")
     suspend fun findByMacAddress(macAddress: String): Device
 
-    @Query("SELECT COUNT() FROM device")
+    @Query("SELECT COUNT() FROM devices")
     fun observeDeviceCount(): Flow<Int>
 
-    @Query("SELECT COUNT() FROM device")
+    @Query("SELECT COUNT() FROM devices")
     suspend fun getDeviceCount(): Int
 
     @Insert(onConflict = REPLACE)

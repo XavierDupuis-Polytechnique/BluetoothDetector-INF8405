@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 import java.text.SimpleDateFormat
 import java.util.*
 
-@Entity
+@Entity(tableName = "devices")
 data class Device(
     @PrimaryKey
     val macAddress: String,

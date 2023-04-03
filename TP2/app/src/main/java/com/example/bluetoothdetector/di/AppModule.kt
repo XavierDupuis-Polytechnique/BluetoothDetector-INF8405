@@ -7,6 +7,7 @@ import com.example.bluetoothdetector.main.repository.Bluetooth
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.sources.DeviceSource
+import com.example.bluetoothdetector.main.sources.FavoriteDeviceSource
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.Module
@@ -28,8 +29,8 @@ object AppModule {
     @Provides
     fun provideDeviceRepository(
         @ApplicationContext context: Context,
-        deviceDao: DeviceDao
-    ) = DeviceRepository(context, deviceDao)
+        deviceSource: DeviceSource
+    ) = DeviceRepository(context, deviceSource)
 
     @Singleton
     @Provides

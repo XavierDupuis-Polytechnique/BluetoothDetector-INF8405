@@ -8,8 +8,8 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.startActivity
-import com.example.bluetoothdetector.main.domain.DeviceDao
 import com.example.bluetoothdetector.main.model.Device
+import com.example.bluetoothdetector.main.sources.DeviceSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -20,20 +20,13 @@ import javax.inject.Singleton
 @Singleton
 class DeviceRepository @Inject constructor(
     private val context: Context,
-    private val deviceDao: DeviceDao
+    private val deviceSource: DeviceSource
 ) {
-    val deviceCount: Flow<Int> = deviceDao.observeDeviceCount()
+    val deviceCount: Flow<Int> = deviceSource.observeDeviceCount()
     val devices: MutableMap<String, Device> = mutableStateMapOf()
 
     init {
-        CoroutineScope(Dispatchers.IO).launch {
-            val savedDevices = deviceDao.getAll().associateBy { device ->
-                device.macAddress
-            }
-            safeDeviceOperation {
-                devices.putAll(savedDevices)
-            }
-        }
+        deviceSource.populateDevices(devices)
     }
 
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
@@ -85,9 +78,7 @@ class DeviceRepository @Inject constructor(
     }
 
     private suspend fun deleteDevice(device: Device) {
-        safeDeviceOperation {
-            deviceDao.delete(device)
-        }
+        deviceSource.delete(device)
     }
 
     fun forgetAll() {
@@ -98,9 +89,7 @@ class DeviceRepository @Inject constructor(
     }
 
     private suspend fun deleteAll() {
-        safeDeviceOperation {
-            deviceDao.deleteAll()
-        }
+        deviceSource.deleteAll()
     }
 
     fun addDevice(device: Device) {
@@ -111,24 +100,19 @@ class DeviceRepository @Inject constructor(
     }
 
     private suspend fun saveDevice(device: Device) {
-        safeDeviceOperation {
-            deviceDao.insert(device)
-        }
-    }
-
-    private suspend fun safeDeviceOperation(
-        operation: suspend () -> Unit
-    ) {
-        try {
-            operation()
-        } catch (exception: Exception) {
-            println("COULD NOT EXECUTE $operation")
-            exception.printStackTrace()
-        }
+        deviceSource.insert(device)
     }
 
     fun isFavorite(device: Device): Boolean {
         return favoriteDevices.value.contains(device)
+    }
+
+    fun toggleFavorite(device: Device) {
+        if (isFavorite(device)) {
+            favoriteDevices.value = favoriteDevices.value.minus(device)
+        } else {
+            favoriteDevices.value = favoriteDevices.value.plus(device)
+        }
     }
 
     fun highlight(device: Device?) {
