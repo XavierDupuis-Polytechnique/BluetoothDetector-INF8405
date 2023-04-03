@@ -2,6 +2,7 @@ package com.example.bluetoothdetector.main.repository
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateMapOf
@@ -43,6 +44,7 @@ class DeviceRepository @Inject constructor(
         val intent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, device.toString())
+            addFlags(FLAG_ACTIVITY_NEW_TASK)
             type = "text/plain"
         }
         try {
@@ -59,7 +61,9 @@ class DeviceRepository @Inject constructor(
             val intent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse("geo:0,0?q=${it.latitude},${it.longitude} (${device.name})")
-            )
+            ).apply {
+                addFlags(FLAG_ACTIVITY_NEW_TASK)
+            }
             try {
                 startActivity(context, intent, null)
             } catch (exception: Exception) {
