@@ -13,6 +13,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
 
+
 @HiltViewModel
 class DevicesListViewModel @Inject constructor(
     private val deviceRepository: DeviceRepository
@@ -51,7 +52,7 @@ class DevicesListViewModel @Inject constructor(
     }
 
     fun getItinerary(device: Device) {
-        // TODO
+        deviceRepository.getItinerary(device)
     }
 
     fun forget(device: Device) = viewModelScope.launch {

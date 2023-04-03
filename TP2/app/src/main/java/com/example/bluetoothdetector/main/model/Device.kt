@@ -28,6 +28,16 @@ data class Device(
     @ColumnInfo(name="parcel_uuids")
     var parcelUuids: List<ParcelUuid>? = null,
 ) {
+    override fun toString(): String {
+        return "name : $name\n" +
+                "macAddress: $macAddress\n" +
+                "date: $date\n" +
+                "bluetooth_class : $bluetoothClass\n" +
+                "bluetooth_type : $type\n" +
+                "bond_state : $bondState\n" +
+                "latitude: ${location?.latitude}\n" +
+                "longitude: ${location?.longitude}\n"
+    }
 
     companion object {
         private const val devicePrefix = "Device"
@@ -41,6 +51,11 @@ data class Device(
         fun formatDate(device: Device): String {
             return DateFormat.format(device.date)
         }
+
+        fun formatLocation(value: Double, digits: Int = 6): String {
+            return value.format(digits)
+        }
     }
 }
 
+fun Double.format(digits: Int) = "%.${digits}f".format(this)

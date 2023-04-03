@@ -50,7 +50,8 @@ fun DeviceView(
             DeviceInfo(device)
             if (isExpanded) {
                 DeviceAdditionalInfo(device)
-                DeviceButtons(deviceActions, isFavorite)
+                val isLocationAvailable = device.location !== null
+                DeviceButtons(deviceActions, isFavorite, isLocationAvailable)
             }
         }
     }
@@ -59,26 +60,31 @@ fun DeviceView(
 @Composable
 private fun DeviceInfo(device: Device) {
     CenteredVerticalContainer {
-        Text(device.name)
-        Text(Device.formatDate(device))
+        DeviceField(device.name)
+        DeviceField(Device.formatDate(device))
     }
 }
-
 @Composable
 fun DeviceAdditionalInfo(device: Device) {
     CenteredVerticalContainer {
         Text(device.macAddress)
         device.location?.let {
-            Text(it.latitude.toString())
-            Text(it.longitude.toString())
+            DeviceField(Device.formatLocation(it.latitude), "Latitude")
+            DeviceField(Device.formatLocation(it.longitude), "Longitude")
         }
-        device.bluetoothClass?.let { Text(it) }
-        device.type?.let { Text(it) }
+        device.bluetoothClass?.let { DeviceField(it, "Class") }
+        device.type?.let { DeviceField(it, "Type") }
     }
 }
 
+
+
 @Composable
-private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
+private fun DeviceButtons(
+    deviceActions: DeviceActions,
+    isFavorite: Boolean,
+    isLocationAvailable: Boolean
+) {
     CenteredHorizontalContainer {
         DeviceButton(
             button = Action(
@@ -100,7 +106,7 @@ private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
             button = Action(
                 action = deviceActions.getItinerary,
                 label = { "" },
-                canAction = { true },
+                canAction = { isLocationAvailable },
                 icon = { Icons.Default.Map }
             )
         )
@@ -131,14 +137,14 @@ fun DevicePreview() {
     DeviceView(
         device = Device(
             name = "MyDevice",
-            macAddress = "12:23:34:45:67",
+            macAddress = "12:23:34:45:67:AB",
             date = Date(),
             bluetoothClass = "AUDIO_VIDEO_CAMCORDER",
             type = "DEVICE_TYPE_UNKNOWN",
             bondState = "BOND_NONE",
             location = Location("1").apply {
-                latitude = 12.3456
-                longitude = 12.0789
+                latitude = 12.345678912345656
+                longitude = 67.345678912345656
             }
         ),
         isFavorite = isFavorite,
