@@ -124,7 +124,7 @@ class Bluetooth(
             type = typeName,
             bondState = bondedStateName,
             location = newLocation,
-            parcelUuids = device.uuids.toList()
+            parcelUuids = device.uuids?.toList()
         )
         deviceRepository.addDevice(parsedDevice)
     }
