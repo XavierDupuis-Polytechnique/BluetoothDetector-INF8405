@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class DevicesListViewModel @Inject constructor(
     private val deviceRepository: DeviceRepository
@@ -47,7 +48,7 @@ class DevicesListViewModel @Inject constructor(
     }
 
     fun getItinerary(device: Device) {
-        // TODO
+        deviceRepository.getItinerary(device)
     }
 
     fun forget(device: Device) = viewModelScope.launch {
