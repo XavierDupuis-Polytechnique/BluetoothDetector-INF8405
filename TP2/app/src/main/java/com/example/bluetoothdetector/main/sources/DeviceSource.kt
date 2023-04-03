@@ -16,7 +16,6 @@ class DeviceSource @Inject constructor(
     fun share(device: Device) {
         val intent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            // TODO : ADD OTHER INFORMATION
             putExtra(Intent.EXTRA_TEXT, device.toString())
             type = "text/plain"
         }
