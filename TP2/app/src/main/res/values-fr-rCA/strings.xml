@@ -19,4 +19,15 @@
         <item quantity="other">%1$d appareils enregistrés</item>
     </plurals>
     <string name="german">Allemand</string>
+    <string name="device_mac_address">Adresse MAC</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="device_class">Classe</string>
+    <string name="device_type">Type</string>
+    <string name="device_name">Nom</string>
+    <string name="date">Date</string>
+    <string name="device_bond_state">État de liaison</string>
+    <string name="start_intent_error">Impossible de commencer l\'activité d\'intention</string>
+    <string name="start_intent_google_maps_not_unavailable">Google Maps n\'est pas installé ou est désactivé</string>
+    <string name="start_intent_could_not_share_device">Impossible de partager l\'appareil</string>
 </resources>
