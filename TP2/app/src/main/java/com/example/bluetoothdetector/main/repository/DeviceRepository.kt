@@ -40,7 +40,6 @@ class DeviceRepository @Inject constructor(
     fun share(device: Device) {
         val shareIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            // TODO : ADD OTHER INFORMATION
             putExtra(Intent.EXTRA_TEXT, device.name)
             type = "text/plain"
         }
