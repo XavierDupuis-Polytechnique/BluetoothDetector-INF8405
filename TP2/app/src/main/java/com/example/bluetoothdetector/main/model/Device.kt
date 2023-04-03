@@ -22,6 +22,16 @@ data class Device(
     var uuids: Array<ParcelUuid>? = null,
     var location: Location? = null
 ) {
+    override fun toString(): String {
+        return "name : $name\n" +
+                "macAddress: $macAddress\n" +
+                "date: $date\n" +
+                "bluetooth_class : $bluetoothClass\n" +
+                "bluetooth_type : $type\n" +
+                "bond_state : $bondState\n" +
+                "latitude: ${location?.latitude}\n" +
+                "longitude: ${location?.longitude}\n"
+    }
 
     companion object {
         private const val devicePrefix = "Device"

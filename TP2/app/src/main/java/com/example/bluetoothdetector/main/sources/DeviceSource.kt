@@ -17,7 +17,7 @@ class DeviceSource @Inject constructor(
         val intent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             // TODO : ADD OTHER INFORMATION
-            putExtra(Intent.EXTRA_TEXT, device.name)
+            putExtra(Intent.EXTRA_TEXT, device.toString())
             type = "text/plain"
         }
         try {
