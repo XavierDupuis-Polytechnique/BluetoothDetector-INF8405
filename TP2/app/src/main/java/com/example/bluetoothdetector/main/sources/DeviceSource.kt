@@ -3,6 +3,7 @@ package com.example.bluetoothdetector.main.sources
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import com.example.bluetoothdetector.main.model.Device
 import javax.inject.Inject
@@ -22,6 +23,7 @@ class DeviceSource @Inject constructor(
         try {
             startActivity(context, intent, null)
         } catch (exception: Exception) {
+            Toast.makeText(context, "Could not share device", Toast.LENGTH_SHORT).show()
             exception.printStackTrace()
         }
     }
@@ -35,6 +37,7 @@ class DeviceSource @Inject constructor(
             try {
                 startActivity(context, intent, null)
             } catch (exception: Exception) {
+                Toast.makeText(context, "Google Maps is not installed or is disabled", Toast.LENGTH_SHORT).show()
                 exception.printStackTrace()
             }
         }
