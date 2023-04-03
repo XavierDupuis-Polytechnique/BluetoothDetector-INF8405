@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.PlusOne
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -55,17 +54,6 @@ fun DevicesListView(
                     canAction = { true },
                     icon = { Icons.Default.Delete },
                     actionSeverity = ActionSeverity.Danger
-                )
-            )
-            Spacer(modifier = Modifier.padding(horizontal = 8.dp))
-            // TODO REMOVE
-            DeviceButton(
-                button = Action(
-                    action = { viewModel.discoverDevice() },
-                    label = { "" },
-                    canAction = { true },
-                    icon = { Icons.Default.PlusOne },
-                    actionSeverity = ActionSeverity.Normal
                 )
             )
         }

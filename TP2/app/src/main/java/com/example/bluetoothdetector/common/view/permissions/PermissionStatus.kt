@@ -21,10 +21,6 @@ import com.google.accompanist.permissions.MultiplePermissionsState
 fun PermissionStatus(
     permissionsState: MultiplePermissionsState,
 ) {
-    // TODO : REMOVE
-    // val anyShouldShowRationale = permissionsState.permissions.any {
-    //     it.status.shouldShowRationale
-    // }
     Column {
         Modules.forEach { module ->
             Subtitle(module.moduleType.name)
