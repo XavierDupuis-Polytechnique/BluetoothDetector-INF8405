@@ -64,11 +64,7 @@ class DeviceRepository @Inject constructor(
             ).apply {
                 addFlags(FLAG_ACTIVITY_NEW_TASK)
             }
-            try {
-                startActivity(context, intent, null)
-            } catch (exception: Exception) {
-                safeLaunchIntent(intent, "Google Maps is not installed or is disabled")
-            }
+            safeLaunchIntent(intent, "Google Maps is not installed or is disabled")
         }
     }
 
