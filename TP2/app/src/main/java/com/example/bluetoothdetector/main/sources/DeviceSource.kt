@@ -21,14 +21,6 @@ abstract class DeviceSource : RoomDatabase() {
         val Name: String = DeviceSource::javaClass.name
     }
 
-    fun observeDeviceCount(): Flow<Int> {
-        return deviceDao.observeDeviceCount()
-    }
-
-    suspend fun getAll(): List<Device> {
-        return deviceDao.getAll()
-    }
-
     fun populateDevices(devices: MutableMap<String, Device>) {
         CoroutineScope(Dispatchers.IO).launch {
             val savedDevices = getAll().associateBy { device ->
@@ -38,6 +30,14 @@ abstract class DeviceSource : RoomDatabase() {
                 devices.putAll(savedDevices)
             }
         }
+    }
+
+    fun observeDeviceCount(): Flow<Int> {
+        return deviceDao.observeDeviceCount()
+    }
+
+    suspend fun getAll(): List<Device> {
+        return deviceDao.getAll()
     }
 
     suspend fun delete(device: Device) {

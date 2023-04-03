@@ -33,6 +33,19 @@ class DeviceRepository @Inject constructor(
 
     val highlightedDevice = mutableStateOf<Device?>(null)
 
+    private fun safeLaunchIntent(
+        intent: Intent,
+        errorMessage: String,
+        duration: Int = Toast.LENGTH_SHORT
+    ) {
+        try {
+            startActivity(context, intent, null)
+        } catch (exception: Exception) {
+            Toast.makeText(context, errorMessage, duration).show()
+            exception.printStackTrace()
+        }
+    }
+
     fun share(device: Device) {
         val intent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -40,12 +53,7 @@ class DeviceRepository @Inject constructor(
             addFlags(FLAG_ACTIVITY_NEW_TASK)
             type = "text/plain"
         }
-        try {
-            startActivity(context, intent, null)
-        } catch (exception: Exception) {
-            Toast.makeText(context, "Could not share device", Toast.LENGTH_SHORT).show()
-            exception.printStackTrace()
-        }
+        safeLaunchIntent(intent, "Could not share device")
     }
 
     fun getItinerary(device: Device, zoom: Int = 18) {
@@ -60,12 +68,7 @@ class DeviceRepository @Inject constructor(
             try {
                 startActivity(context, intent, null)
             } catch (exception: Exception) {
-                Toast.makeText(
-                    context,
-                    "Google Maps is not installed or is disabled",
-                    Toast.LENGTH_SHORT
-                ).show()
-                exception.printStackTrace()
+                safeLaunchIntent(intent, "Google Maps is not installed or is disabled")
             }
         }
     }
