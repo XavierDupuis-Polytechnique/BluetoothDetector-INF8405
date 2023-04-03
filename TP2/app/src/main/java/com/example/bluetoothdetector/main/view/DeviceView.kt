@@ -5,7 +5,6 @@ import android.location.Location
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
@@ -68,7 +67,7 @@ private fun DeviceInfo(device: Device) {
 @Composable
 fun DeviceAdditionalInfo(device: Device) {
     CenteredVerticalContainer {
-        Text(device.macAddress)
+        DeviceField(device.macAddress, "MAC Address")
         device.location?.let {
             DeviceField(Device.formatLocation(it.latitude), "Latitude")
             DeviceField(Device.formatLocation(it.longitude), "Longitude")
