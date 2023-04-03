@@ -14,16 +14,17 @@ data class Module(
     val permissions: Permissions = listOf()
 )
 
-val Modules = listOf(
-    Module(
-        ModuleType.MAPS,
-        R.string.maps_module_description,
-        listOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-    ),
+val MapsModule = Module(
+    ModuleType.MAPS,
+    R.string.maps_module_description,
+    listOf(
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    )
+)
 
+val Modules = listOf(
+    MapsModule,
     // Handle the bluetooth permission changes of api 31
     if (android.os.Build.VERSION.SDK_INT < 31) {
         Module(
@@ -32,9 +33,6 @@ val Modules = listOf(
             listOf(
                 Manifest.permission.BLUETOOTH,
                 Manifest.permission.BLUETOOTH_ADMIN,
-                // TODO : INVESTIGATE -> ADD / REMOVE
-                // https://developer.android.com/guide/topics/connectivity/bluetooth/permissions
-                // Manifest.permission.ACCESS_BACKGROUND_LOCATION
             )
         )
     } else {
@@ -44,9 +42,6 @@ val Modules = listOf(
             listOf(
                 Manifest.permission.BLUETOOTH,
                 Manifest.permission.BLUETOOTH_ADMIN,
-                // TODO : INVESTIGATE -> ADD / REMOVE
-                // https://developer.android.com/guide/topics/connectivity/bluetooth/permissions
-                // Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 Manifest.permission.BLUETOOTH_CONNECT, // API 31+
                 Manifest.permission.BLUETOOTH_SCAN, // API 31+
             )

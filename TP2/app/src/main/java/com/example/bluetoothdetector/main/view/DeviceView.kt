@@ -1,10 +1,10 @@
 package com.example.bluetoothdetector.main.view
 
 import android.annotation.SuppressLint
+import android.location.Location
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
@@ -19,6 +19,10 @@ import com.example.bluetoothdetector.common.view.containers.CenteredVerticalCont
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
+import com.example.bluetoothdetector.ui.theme.defaultDevice
+import com.example.bluetoothdetector.ui.theme.favoriteDevice
+import com.example.bluetoothdetector.ui.theme.highlightedDevice
+import java.util.*
 
 @Composable
 fun DeviceView(
@@ -29,9 +33,9 @@ fun DeviceView(
     deviceActions: DeviceActions,
 ) {
     val borderColor =
-        if (isHighlighted) MaterialTheme.colors.error
-        else if (isFavorite) MaterialTheme.colors.secondary
-        else MaterialTheme.colors.primary
+        if (isHighlighted) MaterialTheme.colors.highlightedDevice
+        else if (isFavorite) MaterialTheme.colors.favoriteDevice
+        else MaterialTheme.colors.defaultDevice
 
     CardContainer(
         modifier = Modifier
@@ -45,7 +49,8 @@ fun DeviceView(
             DeviceInfo(device)
             if (isExpanded) {
                 DeviceAdditionalInfo(device)
-                DeviceButtons(deviceActions, isFavorite)
+                val isLocationAvailable = device.location !== null
+                DeviceButtons(deviceActions, isFavorite, isLocationAvailable)
             }
         }
     }
@@ -54,26 +59,31 @@ fun DeviceView(
 @Composable
 private fun DeviceInfo(device: Device) {
     CenteredVerticalContainer {
-        Text(device.name)
-        Text(Device.formatDate(device))
+        DeviceField(device.name)
+        DeviceField(Device.formatDate(device))
     }
 }
 
 @Composable
 fun DeviceAdditionalInfo(device: Device) {
     CenteredVerticalContainer {
-        Text(device.macAddress)
+        DeviceField(device.macAddress, "MAC Address")
         device.location?.let {
-            Text(it.latitude.toString())
-            Text(it.longitude.toString())
+            DeviceField(Device.formatLocation(it.latitude), "Latitude")
+            DeviceField(Device.formatLocation(it.longitude), "Longitude")
         }
-        device.bluetoothClass?.let { Text(it) }
-        device.type?.let { Text(it) }
+        device.bluetoothClass?.let { DeviceField(it, "Class") }
+        device.type?.let { DeviceField(it, "Type") }
     }
 }
 
+
 @Composable
-private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
+private fun DeviceButtons(
+    deviceActions: DeviceActions,
+    isFavorite: Boolean,
+    isLocationAvailable: Boolean
+) {
     CenteredHorizontalContainer {
         DeviceButton(
             button = Action(
@@ -90,6 +100,7 @@ private fun DeviceButtons(deviceActions: DeviceActions, isFavorite: Boolean) {
         DeviceButton(
             button = Action(
                 execute = deviceActions.getItinerary,
+                canExecute = { isLocationAvailable },
                 icon = { Icons.Default.Map }
             )
         )
@@ -116,7 +127,18 @@ fun DevicePreview() {
         mutableStateOf(false)
     }
     DeviceView(
-        device = Device(),
+        device = Device(
+            name = "MyDevice",
+            macAddress = "12:23:34:45:67:AB",
+            date = Date(),
+            bluetoothClass = "AUDIO_VIDEO_CAMCORDER",
+            type = "DEVICE_TYPE_UNKNOWN",
+            bondState = "BOND_NONE",
+            location = Location("1").apply {
+                latitude = 12.345678912345656
+                longitude = 67.345678912345656
+            }
+        ),
         isFavorite = isFavorite,
         isHighlighted = isHighlighted,
         isExpanded = isExpanded,

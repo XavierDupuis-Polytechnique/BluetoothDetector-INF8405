@@ -2,18 +2,20 @@ package com.example.bluetoothdetector.main.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.concurrent.schedule
+
 
 @HiltViewModel
 class DevicesListViewModel @Inject constructor(
     private val deviceRepository: DeviceRepository
 ) : ViewModel() {
     val devices = deviceRepository.devices
+    val deviceCount = deviceRepository.deviceCount
     val highlightedDevice = deviceRepository.highlightedDevice
     val favoriteDevices = deviceRepository.favoriteDevices
     var expandedDevice = mutableStateOf<Device?>(null)
@@ -27,16 +29,7 @@ class DevicesListViewModel @Inject constructor(
     }
 
     fun toggleFavorite(device: Device) {
-        if (isFavorite(device)) {
-            favoriteDevices.value = favoriteDevices.value.minus(device)
-        } else {
-            favoriteDevices.value = favoriteDevices.value.plus(device)
-        }
-        // TODO : REMOVE
-        Timer().schedule(500L) {
-            val d = Device()
-            devices[d.name] = d
-        }
+        deviceRepository.toggleFavorite(device)
     }
 
     fun isExpanded(device: Device): Boolean {
@@ -51,14 +44,19 @@ class DevicesListViewModel @Inject constructor(
     }
 
     fun getItinerary(device: Device) {
-        // TODO
+        deviceRepository.getItinerary(device)
     }
 
-    fun forget(device: Device) {
-        // TODO
+    fun forget(device: Device) = viewModelScope.launch {
+        deviceRepository.forgetDevice(device)
+    }
+
+    fun forgetAll() {
+        deviceRepository.forgetAll()
     }
 
     fun isHighlighted(device: Device): Boolean {
         return deviceRepository.isHighlighted(device)
     }
+
 }

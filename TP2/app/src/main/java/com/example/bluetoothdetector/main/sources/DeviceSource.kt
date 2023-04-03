@@ -1,23 +1,71 @@
 package com.example.bluetoothdetector.main.sources
 
-import android.content.Context
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.bluetoothdetector.main.domain.DeviceConverter
+import com.example.bluetoothdetector.main.domain.DeviceDao
 import com.example.bluetoothdetector.main.model.Device
-import javax.inject.Inject
-import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
-@Singleton
-class DeviceSource @Inject constructor(
-    private val context: Context
-) {
-    fun share(device: Device) {
-        val shareIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            // TODO : ADD OTHER INFORMATION
-            putExtra(Intent.EXTRA_TEXT, device.name)
-            type = "text/plain"
+@Database(entities = [Device::class], version = 6)
+@TypeConverters(DeviceConverter::class)
+abstract class DeviceSource : RoomDatabase() {
+
+    protected abstract val deviceDao: DeviceDao
+
+    companion object {
+        val Name: String = DeviceSource::javaClass.name
+    }
+
+    fun populateDevices(devices: MutableMap<String, Device>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val savedDevices = getAll().associateBy { device ->
+                device.macAddress
+            }
+            safeOperation {
+                devices.putAll(savedDevices)
+            }
         }
-        startActivity(context, shareIntent, null)
+    }
+
+    fun observeDeviceCount(): Flow<Int> {
+        return deviceDao.observeDeviceCount()
+    }
+
+    suspend fun getAll(): List<Device> {
+        return deviceDao.getAll()
+    }
+
+    suspend fun delete(device: Device) {
+        safeOperation {
+            deviceDao.delete(device)
+        }
+    }
+
+    suspend fun deleteAll() {
+        safeOperation {
+            deviceDao.deleteAll()
+        }
+    }
+
+    suspend fun insert(device: Device) {
+        safeOperation {
+            deviceDao.insert(device)
+        }
+    }
+
+    private suspend fun safeOperation(
+        operation: suspend () -> Unit
+    ) {
+        try {
+            operation()
+        } catch (exception: Exception) {
+            println("COULD NOT EXECUTE $operation")
+            exception.printStackTrace()
+        }
     }
 }

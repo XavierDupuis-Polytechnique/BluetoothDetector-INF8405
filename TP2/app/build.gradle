@@ -90,12 +90,23 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_compose_version"
 
+    // Room Local Database Storage
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    
     // Google Maps Compose (https://github.com/googlemaps/android-maps-compose)
     def google_maps_version = '2.5.1'
     implementation "com.google.maps.android:maps-compose:$google_maps_version"
 
     // Gradle Secrets (https://github.com/google/secrets-gradle-plugin)
     implementation "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:$gradle_secrets_version"
+
+    // Gson (https://github.com/google/gson)
+    def gson_version = '2.10.1'
+    implementation "com.google.code.gson:gson:$gson_version"
 }
 
 kapt {

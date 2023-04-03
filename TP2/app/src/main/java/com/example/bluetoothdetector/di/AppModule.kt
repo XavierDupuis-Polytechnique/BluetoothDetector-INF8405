@@ -1,6 +1,7 @@
 package com.example.bluetoothdetector.di
 
 import android.content.Context
+import androidx.room.Room
 import com.example.bluetoothdetector.main.repository.Bluetooth
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
@@ -20,15 +21,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDeviceSource(
-        @ApplicationContext context: Context
-    ) = DeviceSource(context)
-
-    @Singleton
-    @Provides
     fun provideDeviceRepository(
+        @ApplicationContext context: Context,
         deviceSource: DeviceSource
-    ) = DeviceRepository(deviceSource)
+    ) = DeviceRepository(context, deviceSource)
 
     @Singleton
     @Provides
@@ -41,6 +37,16 @@ object AppModule {
     fun provideLocationRepository(
         fusedLocationProviderClient: FusedLocationProviderClient
     ) = LocationRepository(fusedLocationProviderClient)
+
+    @Singleton
+    @Provides
+    fun provideDeviceSource(
+        @ApplicationContext context: Context
+    ) = Room.databaseBuilder(
+        context,
+        DeviceSource::class.java,
+        DeviceSource.Name
+    ).fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides
