@@ -25,12 +25,6 @@ class DeviceRepository @Inject constructor(
     val devices: MutableMap<String, Device> = mutableStateMapOf()
 
     init {
-        // TODO : REMOVE
-        CoroutineScope(Dispatchers.IO).launch {
-            deviceDao.observeDeviceCount().collect {
-                println("STORED DEVICE COUNT $it")
-            }
-        }
         CoroutineScope(Dispatchers.IO).launch {
             val savedDevices = deviceDao.getAll().associateBy { device ->
                 device.macAddress
@@ -40,17 +34,6 @@ class DeviceRepository @Inject constructor(
             }
         }
     }
-    // TODO : REMOVE
-    // val devices: MutableMap<String, Device> = mutableStateMapOf(
-    //     "FAKE_MAC_ADDRESS_1" to Device(location = Location("1").apply {
-    //         latitude = 45.5059
-    //         longitude = -73.6143
-    //     }),
-    //     "FAKE_MAC_ADDRESS_2" to Device(location = Location("2").apply {
-    //         latitude = 45.5056
-    //         longitude = -73.6122
-    //     })
-    // )
 
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
 
@@ -80,7 +63,11 @@ class DeviceRepository @Inject constructor(
             try {
                 startActivity(context, intent, null)
             } catch (exception: Exception) {
-                Toast.makeText(context, "Google Maps is not installed or is disabled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Google Maps is not installed or is disabled",
+                    Toast.LENGTH_SHORT
+                ).show()
                 exception.printStackTrace()
             }
         }

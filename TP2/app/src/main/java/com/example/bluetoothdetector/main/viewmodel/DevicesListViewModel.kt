@@ -1,17 +1,13 @@
 package com.example.bluetoothdetector.main.viewmodel
 
-import android.location.Location
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.main.repository.DeviceRepository
-import com.example.bluetoothdetector.main.repository.randomize
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.schedule
 
 
 @HiltViewModel
@@ -67,15 +63,4 @@ class DevicesListViewModel @Inject constructor(
         return deviceRepository.isHighlighted(device)
     }
 
-    // TODO : REMOVE
-    fun discoverDevice() {
-        Timer().schedule(500L) {
-            deviceRepository.addDevice(Device(location = Location("1").apply {
-                latitude = 45.5049
-                longitude = -73.6133
-            }.randomize(),
-            macAddress = Date().toString()
-            ))
-        }
-    }
 }

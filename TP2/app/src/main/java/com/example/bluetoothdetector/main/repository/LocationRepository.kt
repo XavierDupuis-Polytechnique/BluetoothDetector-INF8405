@@ -15,9 +15,7 @@ class LocationRepository(
     private val fusedLocationProviderClient: FusedLocationProviderClient
 ) {
     companion object {
-        // TODO : FIND HOW TO USE NEXT LINE
-        // const val LocationRequestAccuracy: Int = Priority.PRIORITY_BALANCED_POWER_ACCURACY
-        const val LocationRequestPriority: Int = Priority.PRIORITY_HIGH_ACCURACY
+        const val LocationRequestPriority: Int = Priority.PRIORITY_BALANCED_POWER_ACCURACY
         const val LocationRequestInterval: Long = 10000
         val DefaultLocation: Location = Location("Polytechnique").apply {
             latitude = 45.5048
@@ -47,8 +45,6 @@ class LocationRepository(
         getCurrentLocationAsync()
     }
 
-
-    // TODO : CHECK PERMISSIONS AND FAIL GRACEFULLY
     @SuppressLint("MissingPermission")
     fun resumeLocationUpdatesAsync() {
         val requestTask = fusedLocationProviderClient.requestLocationUpdates(
@@ -59,7 +55,6 @@ class LocationRepository(
         applyLocationTask(requestTask, "resumeLocationUpdates")
     }
 
-    // TODO : CHECK PERMISSIONS AND FAIL GRACEFULLY
     @SuppressLint("MissingPermission")
     fun getLastLocationAsync() {
         val requestTask = fusedLocationProviderClient.lastLocation
