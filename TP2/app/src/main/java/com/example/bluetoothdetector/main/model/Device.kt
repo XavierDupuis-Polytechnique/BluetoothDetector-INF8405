@@ -41,6 +41,11 @@ data class Device(
         fun formatDate(device: Device): String {
             return DateFormat.format(device.date)
         }
+
+        fun formatLocation(value: Double, digits: Int = 6): String {
+            return value.format(digits)
+        }
     }
 }
 
+fun Double.format(digits: Int) = "%.${digits}f".format(this)
