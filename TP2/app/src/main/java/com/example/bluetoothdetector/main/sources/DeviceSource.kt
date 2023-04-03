@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 @TypeConverters(DeviceConverter::class)
 abstract class DeviceSource : RoomDatabase() {
 
-    abstract val deviceDao: DeviceDao
+    protected abstract val deviceDao: DeviceDao
 
     companion object {
         val Name: String = DeviceSource::javaClass.name

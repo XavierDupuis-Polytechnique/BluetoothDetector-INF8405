@@ -2,7 +2,6 @@ package com.example.bluetoothdetector.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.bluetoothdetector.main.domain.DeviceDao
 import com.example.bluetoothdetector.main.repository.Bluetooth
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
@@ -19,10 +18,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    @Provides
-    fun provideDeviceDao(deviceSource: DeviceSource): DeviceDao =
-        deviceSource.deviceDao
 
     @Singleton
     @Provides
