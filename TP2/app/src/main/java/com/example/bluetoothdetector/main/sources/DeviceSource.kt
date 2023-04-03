@@ -30,9 +30,10 @@ class DeviceSource @Inject constructor(
 
     fun getItinerary(device: Device, zoom: Int = 18) {
         device.location?.let {
+            // https://developers.google.com/maps/documentation/urls/android-intents
             val intent = Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("geo:${it.latitude}+${it.longitude}?z=$zoom)")
+                Uri.parse("geo:0,0?q=${it.latitude},${it.longitude} (${device.name})")
             )
             try {
                 startActivity(context, intent, null)
