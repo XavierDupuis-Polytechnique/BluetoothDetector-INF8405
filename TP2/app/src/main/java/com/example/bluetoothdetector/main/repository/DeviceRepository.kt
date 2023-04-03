@@ -24,18 +24,17 @@ class DeviceRepository @Inject constructor(
 ) {
     val deviceCount: Flow<Int> = deviceSource.observeDeviceCount()
     val devices: MutableMap<String, Device> = mutableStateMapOf()
+    val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
+    val highlightedDevice = mutableStateOf<Device?>(null)
 
     init {
         deviceSource.populateDevices(devices)
     }
 
-    val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
-
-    val highlightedDevice = mutableStateOf<Device?>(null)
 
     private fun safeLaunchIntent(
         intent: Intent,
-        errorMessage: String,
+        errorMessage: String = "Could not launch intent",
         duration: Int = Toast.LENGTH_SHORT
     ) {
         try {
@@ -76,34 +75,22 @@ class DeviceRepository @Inject constructor(
     fun forgetDevice(device: Device) {
         devices.remove(device.macAddress)
         CoroutineScope(Dispatchers.IO).launch {
-            deleteDevice(device)
+            deviceSource.delete(device)
         }
-    }
-
-    private suspend fun deleteDevice(device: Device) {
-        deviceSource.delete(device)
     }
 
     fun forgetAll() {
         devices.clear()
         CoroutineScope(Dispatchers.IO).launch {
-            deleteAll()
+            deviceSource.deleteAll()
         }
-    }
-
-    private suspend fun deleteAll() {
-        deviceSource.deleteAll()
     }
 
     fun addDevice(device: Device) {
         devices[device.macAddress] = device
         CoroutineScope(Dispatchers.IO).launch {
-            saveDevice(device)
+            deviceSource.insert(device)
         }
-    }
-
-    private suspend fun saveDevice(device: Device) {
-        deviceSource.insert(device)
     }
 
     fun isFavorite(device: Device): Boolean {
