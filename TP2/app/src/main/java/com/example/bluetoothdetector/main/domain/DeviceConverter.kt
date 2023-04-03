@@ -16,12 +16,19 @@ class DeviceConverter : AbstractConverter() {
         encode(value)
 
     @TypeConverter
-    fun locationFromString(value: String?): Location? =
-        decode(value, Location::class.java)
+    fun locationFromString(value: String?): Location? {
+        val latitudeAndLongitude = decode(value, Array<Double>::class.java)
+        return Location("").apply {
+            latitude = latitudeAndLongitude?.get(0) ?: 0.0
+            longitude = latitudeAndLongitude?.get(1) ?: 0.0
+        }
+    }
 
     @TypeConverter
-    fun locationToString(value: Location?): String? =
-        encode(value)
+    fun locationToString(value: Location?): String? {
+        val latitudeAndLongitude = value?.let { arrayListOf(it.latitude, it.longitude) }
+        return encode(latitudeAndLongitude)
+    }
 
     @TypeConverter
     fun parcelUuidsFromString(value: String?): List<ParcelUuid>? =
