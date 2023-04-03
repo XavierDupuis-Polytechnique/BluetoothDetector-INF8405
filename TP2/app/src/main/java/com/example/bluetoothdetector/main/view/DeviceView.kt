@@ -64,6 +64,7 @@ private fun DeviceInfo(device: Device) {
         DeviceField(Device.formatDate(device))
     }
 }
+
 @Composable
 fun DeviceAdditionalInfo(device: Device) {
     CenteredVerticalContainer {
@@ -76,7 +77,6 @@ fun DeviceAdditionalInfo(device: Device) {
         device.type?.let { DeviceField(it, "Type") }
     }
 }
-
 
 
 @Composable

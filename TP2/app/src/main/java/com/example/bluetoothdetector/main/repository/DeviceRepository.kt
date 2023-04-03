@@ -63,7 +63,11 @@ class DeviceRepository @Inject constructor(
             try {
                 startActivity(context, intent, null)
             } catch (exception: Exception) {
-                Toast.makeText(context, "Google Maps is not installed or is disabled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Google Maps is not installed or is disabled",
+                    Toast.LENGTH_SHORT
+                ).show()
                 exception.printStackTrace()
             }
         }

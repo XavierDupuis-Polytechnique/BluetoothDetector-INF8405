@@ -2,10 +2,10 @@ package com.example.bluetoothdetector.main.model
 
 import android.annotation.SuppressLint
 import android.location.Location
+import android.os.ParcelUuid
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import android.os.ParcelUuid
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,7 +25,7 @@ data class Device(
     var bondState: String? = null,
     @ColumnInfo(name = "location")
     var location: Location? = null,
-    @ColumnInfo(name="parcel_uuids")
+    @ColumnInfo(name = "parcel_uuids")
     var parcelUuids: List<ParcelUuid>? = null,
 ) {
     override fun toString(): String {
