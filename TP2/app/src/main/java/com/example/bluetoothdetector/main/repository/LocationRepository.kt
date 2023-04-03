@@ -45,8 +45,6 @@ class LocationRepository(
         getCurrentLocationAsync()
     }
 
-
-    // TODO : CHECK PERMISSIONS AND FAIL GRACEFULLY
     @SuppressLint("MissingPermission")
     fun resumeLocationUpdatesAsync() {
         val requestTask = fusedLocationProviderClient.requestLocationUpdates(
@@ -57,7 +55,6 @@ class LocationRepository(
         applyLocationTask(requestTask, "resumeLocationUpdates")
     }
 
-    // TODO : CHECK PERMISSIONS AND FAIL GRACEFULLY
     @SuppressLint("MissingPermission")
     fun getLastLocationAsync() {
         val requestTask = fusedLocationProviderClient.lastLocation
