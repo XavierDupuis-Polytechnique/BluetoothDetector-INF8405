@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-@Database(entities = [Device::class], version = 5)
+@Database(entities = [Device::class], version = 6)
 @TypeConverters(DeviceConverter::class)
 abstract class DeviceSource : RoomDatabase() {
 

@@ -41,7 +41,7 @@ interface DeviceDao {
     @Delete
     suspend fun delete(vararg devices: Device)
 
-    @Query("DELETE FROM device")
+    @Query("DELETE FROM devices")
     suspend fun deleteAll()
 
 }
