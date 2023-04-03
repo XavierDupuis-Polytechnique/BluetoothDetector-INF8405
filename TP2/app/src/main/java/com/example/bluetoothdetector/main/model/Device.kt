@@ -1,11 +1,13 @@
 package com.example.bluetoothdetector.main.model
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.location.Location
 import android.os.ParcelUuid
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.bluetoothdetector.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,15 +30,15 @@ data class Device(
     @ColumnInfo(name = "parcel_uuids")
     var parcelUuids: List<ParcelUuid>? = null,
 ) {
-    override fun toString(): String {
-        return "name : $name\n" +
-                "macAddress: $macAddress\n" +
-                "date: $date\n" +
-                "bluetooth_class : $bluetoothClass\n" +
-                "bluetooth_type : $type\n" +
-                "bond_state : $bondState\n" +
-                "latitude: ${location?.latitude}\n" +
-                "longitude: ${location?.longitude}\n"
+    fun toString(context: Context): String {
+        return  "${context.getString(R.string.device_name)} : $name\n" +
+                "${context.getString(R.string.device_mac_address)} : $macAddress\n" +
+                "${context.getString(R.string.date)} : $date\n" +
+                "${context.getString(R.string.device_class)} : $bluetoothClass\n" +
+                "${context.getString(R.string.device_type)} : $type\n" +
+                "${context.getString(R.string.device_bond_state)} : $bondState\n" +
+                "${context.getString(R.string.latitude)} : ${location?.latitude}\n" +
+                "${context.getString(R.string.longitude)} : ${location?.longitude}\n"
     }
 
     companion object {

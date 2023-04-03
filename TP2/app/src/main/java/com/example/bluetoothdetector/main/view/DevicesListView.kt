@@ -26,8 +26,6 @@ import com.example.bluetoothdetector.common.domain.action.Action
 import com.example.bluetoothdetector.common.domain.action.ActionSeverity
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
-import com.example.bluetoothdetector.main.domain.Action
-import com.example.bluetoothdetector.main.domain.ActionSeverity
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.viewmodel.DevicesListViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.startActivity
+import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.main.sources.DeviceSource
 import kotlinx.coroutines.CoroutineScope
@@ -34,7 +35,7 @@ class DeviceRepository @Inject constructor(
 
     private fun safeLaunchIntent(
         intent: Intent,
-        errorMessage: String = "Could not launch intent",
+        errorMessage: String = context.getString(R.string.start_intent_error),
         duration: Int = Toast.LENGTH_SHORT
     ) {
         try {
@@ -48,11 +49,14 @@ class DeviceRepository @Inject constructor(
     fun share(device: Device) {
         val intent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, device.toString())
+            putExtra(Intent.EXTRA_TEXT, device.toString(context))
             addFlags(FLAG_ACTIVITY_NEW_TASK)
             type = "text/plain"
         }
-        safeLaunchIntent(intent, "Could not share device")
+        safeLaunchIntent(
+            intent,
+            context.getString(R.string.start_intent_could_not_share_device)
+        )
     }
 
     fun getItinerary(device: Device, zoom: Int = 18) {
@@ -64,7 +68,10 @@ class DeviceRepository @Inject constructor(
             ).apply {
                 addFlags(FLAG_ACTIVITY_NEW_TASK)
             }
-            safeLaunchIntent(intent, "Google Maps is not installed or is disabled")
+            safeLaunchIntent(
+                intent,
+                context.getString(R.string.start_intent_google_maps_not_unavailable)
+            )
         }
     }
 

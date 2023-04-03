@@ -9,8 +9,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.domain.action.Action
 import com.example.bluetoothdetector.common.domain.action.ActionSeverity
 import com.example.bluetoothdetector.common.view.containers.CardContainer
@@ -67,13 +69,13 @@ private fun DeviceInfo(device: Device) {
 @Composable
 fun DeviceAdditionalInfo(device: Device) {
     CenteredVerticalContainer {
-        DeviceField(device.macAddress, "MAC Address")
+        DeviceField(device.macAddress, stringResource(R.string.device_mac_address))
         device.location?.let {
-            DeviceField(Device.formatLocation(it.latitude), "Latitude")
-            DeviceField(Device.formatLocation(it.longitude), "Longitude")
+            DeviceField(Device.formatLocation(it.latitude), stringResource(R.string.latitude))
+            DeviceField(Device.formatLocation(it.longitude), stringResource(R.string.longitude))
         }
-        device.bluetoothClass?.let { DeviceField(it, "Class") }
-        device.type?.let { DeviceField(it, "Type") }
+        device.bluetoothClass?.let { DeviceField(it, stringResource(R.string.device_class)) }
+        device.type?.let { DeviceField(it, stringResource(R.string.device_type)) }
     }
 }
 
