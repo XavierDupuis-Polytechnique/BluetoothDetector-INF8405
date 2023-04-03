@@ -1,10 +1,14 @@
 package com.example.bluetoothdetector.main.viewmodel
 
+import android.location.Location
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.main.repository.DeviceRepository
+import com.example.bluetoothdetector.main.repository.randomize
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 import kotlin.concurrent.schedule
@@ -15,6 +19,7 @@ class DevicesListViewModel @Inject constructor(
     private val deviceRepository: DeviceRepository
 ) : ViewModel() {
     val devices = deviceRepository.devices
+    val deviceCount = deviceRepository.deviceCount
     val highlightedDevice = deviceRepository.highlightedDevice
     val favoriteDevices = deviceRepository.favoriteDevices
     var expandedDevice = mutableStateOf<Device?>(null)
@@ -33,11 +38,6 @@ class DevicesListViewModel @Inject constructor(
         } else {
             favoriteDevices.value = favoriteDevices.value.plus(device)
         }
-        // TODO : REMOVE
-        Timer().schedule(500L) {
-            val d = Device()
-            devices[d.name] = d
-        }
     }
 
     fun isExpanded(device: Device): Boolean {
@@ -55,11 +55,27 @@ class DevicesListViewModel @Inject constructor(
         deviceRepository.getItinerary(device)
     }
 
-    fun forget(device: Device) {
-        // TODO
+    fun forget(device: Device) = viewModelScope.launch {
+        deviceRepository.forgetDevice(device)
+    }
+
+    fun forgetAll() {
+        deviceRepository.forgetAll()
     }
 
     fun isHighlighted(device: Device): Boolean {
         return deviceRepository.isHighlighted(device)
+    }
+
+    // TODO : REMOVE
+    fun discoverDevice() {
+        Timer().schedule(500L) {
+            deviceRepository.addDevice(Device(location = Location("1").apply {
+                latitude = 45.5049
+                longitude = -73.6133
+            }.randomize(),
+            macAddress = Date().toString()
+            ))
+        }
     }
 }

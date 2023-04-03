@@ -118,38 +118,38 @@ class Bluetooth(
         var newLocation = locationRepository.currentLocation.value?.let { randomizeGps(it) }
 
         val parsedDevice = Device(
-            device.name, device.address, Date(), className,
-            typeName, bondedStateName, device.uuids, newLocation
+            macAddress = device.address,
+            name = device.name,
+            bluetoothClass = className,
+            type = typeName,
+            bondState = bondedStateName,
+            location = newLocation,
+            parcelUuids = device.uuids.toList()
         )
-        deviceRepository.devices[device.address] = parsedDevice
-        println(parsedDevice)
+        deviceRepository.addDevice(parsedDevice)
     }
 
-    fun getDeviceList(): MutableMap<String, Device> {
-        return deviceRepository.devices
+    private fun randomizeGps(location: Location): Location {
+        return location.randomize()
     }
+}
 
-    fun randomizeGps(location: Location): Location {
-        var random = Random(System.currentTimeMillis())
-        val radius = 20
-        var x0 = location.longitude
-        var y0 = location.latitude
-        // Convert radius from meters to degrees
-        val radiusInDegrees = (radius / 111000f).toDouble()
-        val u = random.nextDouble()
-        val v = random.nextDouble()
-        val w = radiusInDegrees * sqrt(u)
-        val t = 2.0 * Math.PI * v
-        val x = w * cos(t)
-        val y = w * sin(t)
-        // Adjust the x-coordinate for the shrinking of the east-west distances
-        val newX = x / cos(Math.toRadians(y0))
-        val foundLongitude = newX + x0
-        val foundLatitude = y + y0
-
-        location.longitude = foundLongitude
-        location.latitude = foundLatitude
-
-        return location
+fun Location.randomize(radius: Double = 20.0): Location {
+    val random = Random(System.currentTimeMillis())
+    // Convert radius from meters to degrees
+    val r = radius / 111319.9
+    val u = random.nextDouble()
+    val v = random.nextDouble()
+    val w = r * sqrt(u)
+    val t = 2.0 * Math.PI * v
+    val y = w * sin(t)
+    var x = w * cos(t)
+    // Adjust the x-coordinate for the shrinking of the east-west distances
+    x /= cos(Math.toRadians(latitude))
+    val newLongitude = longitude + x
+    val newLatitude = latitude + y
+    return Location("").apply {
+        longitude = newLongitude
+        latitude = newLatitude
     }
 }
