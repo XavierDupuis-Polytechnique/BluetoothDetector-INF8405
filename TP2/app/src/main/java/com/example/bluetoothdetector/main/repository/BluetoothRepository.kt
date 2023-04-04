@@ -104,7 +104,14 @@ class BluetoothRepository(
 
         // Prevent duplicate device from being added
         if (deviceRepository.devices.contains(device.address)) {
-            return
+
+            if (!isDeviceOutdated(
+                    deviceRepository.devices[device.address]?.location,
+                    locationRepository.currentLocation.value
+                )
+            ) {
+                return
+            }
         }
 
         val className = classMap.getOrDefault(
@@ -131,6 +138,15 @@ class BluetoothRepository(
 
     private fun randomizeGps(location: Location): Location {
         return location.randomize()
+    }
+
+    private fun isDeviceOutdated(deviceLocation: Location?, currentLocation: Location?): Boolean {
+        val updateRadius = 500
+        if (deviceLocation == null) {
+            return true
+        }
+
+        return deviceLocation.distanceTo(currentLocation) > updateRadius
     }
 }
 
