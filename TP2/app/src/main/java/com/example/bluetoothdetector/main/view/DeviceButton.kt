@@ -12,6 +12,7 @@ import com.example.bluetoothdetector.common.view.containers.CenteredVerticalCont
 import com.example.bluetoothdetector.main.domain.Action
 import com.example.bluetoothdetector.main.domain.ActionSeverity
 
+// Device action button
 @Composable
 fun DeviceButton(
     button: Action

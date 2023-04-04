@@ -13,6 +13,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 
+// Header button to access permissions
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun PermissionHeader(
@@ -24,6 +25,7 @@ fun PermissionHeader(
     val allPermissionsGranted =
         viewModel.areAllRequiredPermissionsGranted(permissionsState)
 
+    // Error color if at least one permission is missing
     val backgroundColor =
         if (allPermissionsGranted) MaterialTheme.colors.accepted else MaterialTheme.colors.error
     val contentColor = MaterialTheme.colors.onError

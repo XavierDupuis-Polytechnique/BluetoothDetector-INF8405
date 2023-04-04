@@ -2,7 +2,7 @@ package com.example.bluetoothdetector.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.bluetoothdetector.main.repository.Bluetooth
+import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.sources.DeviceSource
@@ -15,10 +15,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+// App Module
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    // Provides a single instance of the DeviceRepository
     @Singleton
     @Provides
     fun provideDeviceRepository(
@@ -26,18 +28,21 @@ object AppModule {
         deviceSource: DeviceSource
     ) = DeviceRepository(context, deviceSource)
 
+    // Provides a single instance of the FusedLocationProviderClient
     @Singleton
     @Provides
     fun provideFusedLocationProviderClient(
         @ApplicationContext context: Context
     ) = LocationServices.getFusedLocationProviderClient(context)
 
+    // Provides a single instance of the LocationRepository
     @Singleton
     @Provides
     fun provideLocationRepository(
         fusedLocationProviderClient: FusedLocationProviderClient
     ) = LocationRepository(fusedLocationProviderClient)
 
+    // Provides a single instance of the DeviceSource
     @Singleton
     @Provides
     fun provideDeviceSource(
@@ -48,17 +53,12 @@ object AppModule {
         DeviceSource.Name
     ).fallbackToDestructiveMigration().build()
 
-    @Singleton
-    @Provides
-    fun provideBluetoothManager(
-        @ApplicationContext context: Context
-    ) = context
-
+    // Provides a single instance of the BluetoothRepository
     @Singleton
     @Provides
     fun provideBluetoothRepository(
-        context: Context,
+        @ApplicationContext context: Context,
         deviceRepository: DeviceRepository,
         locationRepository: LocationRepository
-    ) = Bluetooth(context, deviceRepository, locationRepository)
+    ) = BluetoothRepository(context, deviceRepository, locationRepository)
 }

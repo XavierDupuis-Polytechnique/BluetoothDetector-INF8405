@@ -1,5 +1,6 @@
 package com.example.bluetoothdetector.main.domain
 
+// Device actions
 data class DeviceActions(
     val share: () -> Unit,
     val toggleFavorite: () -> Unit,

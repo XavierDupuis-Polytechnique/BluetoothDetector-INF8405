@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.viewmodel.ThemeSelectorViewModel
 
+// Theme selector toggle in header bar
 @Composable
 fun ThemeSelector(
     viewModel: ThemeSelectorViewModel = hiltViewModel()

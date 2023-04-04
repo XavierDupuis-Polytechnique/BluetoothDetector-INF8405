@@ -9,8 +9,10 @@ import com.google.accompanist.permissions.PermissionStatus
 @OptIn(ExperimentalPermissionsApi::class)
 class PermissionsViewModel : ViewModel() {
 
-    val isRationaleShown = mutableStateOf(false)
+    // Stores the current permission modal display state
+    val isPermissionModalShown = mutableStateOf(false)
 
+    // Checks if all permissions are granted
     fun areAllRequiredPermissionsGranted(
         permissionsState: MultiplePermissionsState
     ): Boolean {
@@ -19,14 +21,18 @@ class PermissionsViewModel : ViewModel() {
         }
     }
 
+    // Shows the permission modal
     fun showPermissions() {
-        isRationaleShown.value = true
+        isPermissionModalShown.value = true
     }
 
+
+    // Hides the permission modal
     fun closePermissions() {
-        isRationaleShown.value = false
+        isPermissionModalShown.value = false
     }
 
+    // Launches Android internal permissions modal
     fun launchPermissionRequest(permissionsState: MultiplePermissionsState) {
         permissionsState.launchMultiplePermissionRequest()
     }

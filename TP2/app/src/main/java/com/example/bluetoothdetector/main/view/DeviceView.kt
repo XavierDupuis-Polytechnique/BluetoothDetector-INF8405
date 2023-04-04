@@ -24,6 +24,7 @@ import com.example.bluetoothdetector.ui.theme.favoriteDevice
 import com.example.bluetoothdetector.ui.theme.highlightedDevice
 import java.util.*
 
+// Devices information and actions
 @Composable
 fun DeviceView(
     device: Device,
@@ -39,6 +40,7 @@ fun DeviceView(
 
     CardContainer(
         modifier = Modifier
+            // Expand / Collapse device on click
             .clickable { deviceActions.expand() },
         borderColor = borderColor
     ) {
@@ -47,6 +49,7 @@ fun DeviceView(
                 .padding(10.dp)
         ) {
             DeviceInfo(device)
+            // Only show extended information and actions while expanded
             if (isExpanded) {
                 DeviceAdditionalInfo(device)
                 val isLocationAvailable = device.location !== null
@@ -56,6 +59,7 @@ fun DeviceView(
     }
 }
 
+// Collapsed device information
 @Composable
 private fun DeviceInfo(device: Device) {
     CenteredVerticalContainer {
@@ -64,6 +68,7 @@ private fun DeviceInfo(device: Device) {
     }
 }
 
+// Expanded device information
 @Composable
 fun DeviceAdditionalInfo(device: Device) {
     CenteredVerticalContainer {
@@ -77,7 +82,7 @@ fun DeviceAdditionalInfo(device: Device) {
     }
 }
 
-
+// Device action buttons
 @Composable
 private fun DeviceButtons(
     deviceActions: DeviceActions,

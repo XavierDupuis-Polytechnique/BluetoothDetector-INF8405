@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
 import java.text.SimpleDateFormat
 import java.util.*
 
+// Device with related/pertinent information
 @Entity(tableName = "devices")
 data class Device(
     @PrimaryKey
@@ -42,16 +43,20 @@ data class Device(
     companion object {
         private const val devicePrefix = "Device"
         private var currentDeviceId = 0
+
+        // Generates generic device name
         fun generateDeviceName(): String {
             return "${devicePrefix}${currentDeviceId++}"
         }
 
+        // Formats date (simplifies date & time)
         @SuppressLint("SimpleDateFormat")
         private val DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
         fun formatDate(device: Device): String {
             return DateFormat.format(device.date)
         }
 
+        // Formats location (trims digits)
         fun formatLocation(value: Double, digits: Int = 6): String {
             return value.format(digits)
         }

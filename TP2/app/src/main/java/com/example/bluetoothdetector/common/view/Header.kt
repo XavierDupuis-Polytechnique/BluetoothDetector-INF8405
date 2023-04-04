@@ -9,6 +9,7 @@ import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalCo
 import com.example.bluetoothdetector.common.view.permissions.PermissionHeader
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 
+// Header container
 @Composable
 fun HeaderView(
     permissionsViewModel: PermissionsViewModel

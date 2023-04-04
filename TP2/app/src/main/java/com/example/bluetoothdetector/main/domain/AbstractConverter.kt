@@ -2,6 +2,7 @@ package com.example.bluetoothdetector.main.domain
 
 import com.google.gson.Gson
 
+// Converts data from and to JSON format
 abstract class AbstractConverter {
     protected fun <T> encode(value: T?): String? {
         return value?.let { Gson().toJson(it) }

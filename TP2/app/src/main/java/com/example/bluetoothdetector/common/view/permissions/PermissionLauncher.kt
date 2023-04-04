@@ -12,6 +12,7 @@ import com.example.bluetoothdetector.ui.theme.PERMISSIONS_STATUS
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 
+// Permission modal to view and grant currently missing permissions
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun PermissionLauncher(
@@ -26,7 +27,7 @@ fun PermissionLauncher(
         dismiss()
         launchPermissionsRequest()
     }
-    if (viewModel.isRationaleShown.value) {
+    if (viewModel.isPermissionModalShown.value) {
         AlertDialog(
             onDismissRequest = {},
             title = { Title(PERMISSIONS_STATUS) },

@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.google.android.gms.tasks.Task
 
 
+// Manages all operations related to Location
 class LocationRepository(
     private val fusedLocationProviderClient: FusedLocationProviderClient
 ) {
@@ -23,18 +24,22 @@ class LocationRepository(
         }
     }
 
+    // Holds the current (or last known) location
     val currentLocation: MutableState<Location?> = mutableStateOf(null)
 
+    // Holds the location request with desired priority and interval
     private var locationRequest: LocationRequest = LocationRequest.Builder(
         LocationRequestPriority,
         LocationRequestInterval
     ).build()
 
+    // Redirects a location update
     private var locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) =
             onLocationUpdate(locationResult)
     }
 
+    // Update current known location
     private fun onLocationUpdate(locationResult: LocationResult) {
         currentLocation.value = locationResult.lastLocation
     }
@@ -45,6 +50,7 @@ class LocationRepository(
         getCurrentLocationAsync()
     }
 
+    // Resumes location updates
     @SuppressLint("MissingPermission")
     fun resumeLocationUpdatesAsync() {
         val requestTask = fusedLocationProviderClient.requestLocationUpdates(
@@ -55,6 +61,7 @@ class LocationRepository(
         applyLocationTask(requestTask, "resumeLocationUpdates")
     }
 
+    // Request the last location value
     @SuppressLint("MissingPermission")
     fun getLastLocationAsync() {
         val requestTask = fusedLocationProviderClient.lastLocation
@@ -63,6 +70,7 @@ class LocationRepository(
         }
     }
 
+    // Request the current location value
     @SuppressLint("MissingPermission")
     fun getCurrentLocationAsync() {
         val requestTask = fusedLocationProviderClient.getCurrentLocation(
@@ -81,11 +89,13 @@ class LocationRepository(
         }
     }
 
+    // Pauses location updates
     fun pauseLocationUpdatesAsync() {
         val removeTask = fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         applyLocationTask(removeTask, "removeLocationUpdates")
     }
 
+    // Launches a location request and logs related listeners
     private fun <T> applyLocationTask(
         task: Task<T>,
         taskName: String? = null,

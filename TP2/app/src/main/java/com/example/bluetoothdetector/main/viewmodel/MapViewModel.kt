@@ -40,11 +40,6 @@ class MapViewModel @Inject constructor(
         return deviceRepository.isFavorite(device)
     }
 
-    fun currentPositionMarkerClick(currentLocation: LatLng): Boolean {
-        mapClick(currentLocation)
-        return false
-    }
-
     fun areAnyRequiredPermissionsGranted(
         permissionsState: MultiplePermissionsState
     ): Boolean {

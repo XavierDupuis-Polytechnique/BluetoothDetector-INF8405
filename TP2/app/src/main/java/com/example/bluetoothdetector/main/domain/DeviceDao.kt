@@ -6,6 +6,7 @@ import com.example.bluetoothdetector.main.model.Device
 import kotlinx.coroutines.flow.Flow
 
 
+// Offers database access through defined operations
 @Dao
 interface DeviceDao {
     @Query("SELECT * FROM devices")

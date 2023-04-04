@@ -19,7 +19,7 @@ import androidx.core.app.ActivityCompat
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
-import com.example.bluetoothdetector.main.repository.Bluetooth
+import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
     lateinit var themeRepository: ThemeRepository
 
     @Inject
-    lateinit var bluetooth: Bluetooth
+    lateinit var bluetoothRepository: BluetoothRepository
 
     private var bluetoothStarted = false
 
@@ -46,13 +46,9 @@ class MainActivity : ComponentActivity() {
         }
         bluetoothStarted = false
         startBTScan()
-
-
     }
 
     private val btReceiver = object : BroadcastReceiver() {
-
-
         @SuppressLint("MissingPermission")
         override fun onReceive(context: Context, intent: Intent) {
             if (ActivityCompat.checkSelfPermission(
@@ -76,12 +72,12 @@ class MainActivity : ComponentActivity() {
                     val device: BluetoothDevice? =
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
 
-                    bluetooth.addDeviceToList(device)
+                    bluetoothRepository.addDeviceToList(device)
                 }
                 ACTION_DISCOVERY_FINISHED -> {
                     // When bluetooth scan ends restart it
                     if (bluetoothStarted) {
-                        bluetooth.startDiscovery()
+                        bluetoothRepository.startDiscovery()
                     }
                 }
             }
@@ -98,7 +94,7 @@ class MainActivity : ComponentActivity() {
         super.onPause()
         locationRepository.pauseLocationUpdatesAsync()
         if (bluetoothStarted) {
-            bluetooth.stopDiscovery()
+            bluetoothRepository.stopDiscovery()
             bluetoothStarted = false
         }
     }
@@ -106,7 +102,7 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if (bluetoothStarted) {
-            bluetooth.stopDiscovery()
+            bluetoothRepository.stopDiscovery()
             bluetoothStarted = false
         }
         unregisterReceiver(btReceiver)
@@ -150,12 +146,12 @@ class MainActivity : ComponentActivity() {
         } else {
             return
         }
-//         Register for broadcasts when a device is discovered.
+        // Register for broadcasts when a device is discovered.
         val filter = IntentFilter()
         filter.addAction(BluetoothDevice.ACTION_FOUND)
         filter.addAction(ACTION_DISCOVERY_FINISHED)
         registerReceiver(btReceiver, filter)
-        bluetooth.startDiscovery()
+        bluetoothRepository.startDiscovery()
     }
 
 }

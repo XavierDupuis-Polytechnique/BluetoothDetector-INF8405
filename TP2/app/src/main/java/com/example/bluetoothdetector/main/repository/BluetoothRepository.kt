@@ -13,7 +13,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class Bluetooth(
+class BluetoothRepository(
     private val context: Context,
     private val deviceRepository: DeviceRepository,
     private val locationRepository: LocationRepository

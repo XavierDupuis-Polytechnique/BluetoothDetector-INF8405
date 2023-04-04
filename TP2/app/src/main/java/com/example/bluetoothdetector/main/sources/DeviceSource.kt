@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
+// Holds persistent devices data
 @Database(entities = [Device::class], version = 6)
 @TypeConverters(DeviceConverter::class)
 abstract class DeviceSource : RoomDatabase() {
@@ -21,6 +22,7 @@ abstract class DeviceSource : RoomDatabase() {
         val Name: String = DeviceSource::javaClass.name
     }
 
+    // Fills requested map with stored devices data
     fun populateDevices(devices: MutableMap<String, Device>) {
         CoroutineScope(Dispatchers.IO).launch {
             val savedDevices = getAll().associateBy { device ->
@@ -32,32 +34,38 @@ abstract class DeviceSource : RoomDatabase() {
         }
     }
 
+    // Observes the stored device count
     fun observeDeviceCount(): Flow<Int> {
         return deviceDao.observeDeviceCount()
     }
 
+    // Retrieves all stored devices
     suspend fun getAll(): List<Device> {
         return deviceDao.getAll()
     }
 
+    // Deletes selected device from memory
     suspend fun delete(device: Device) {
         safeOperation {
             deviceDao.delete(device)
         }
     }
 
+    // Deletes all devices from memory
     suspend fun deleteAll() {
         safeOperation {
             deviceDao.deleteAll()
         }
     }
 
+    // Inserts selected device from memory
     suspend fun insert(device: Device) {
         safeOperation {
             deviceDao.insert(device)
         }
     }
 
+    // Execute a store operation safely
     private suspend fun safeOperation(
         operation: suspend () -> Unit
     ) {
