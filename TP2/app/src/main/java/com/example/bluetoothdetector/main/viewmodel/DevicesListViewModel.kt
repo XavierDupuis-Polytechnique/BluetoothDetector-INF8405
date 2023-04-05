@@ -22,8 +22,9 @@ class DevicesListViewModel @Inject constructor(
     var refresh = deviceRepository.refresh
 
     fun resetRefresh() {
-        if(refresh.value)
-        refresh.value = false
+        if(refresh.value) {
+            refresh.value = false
+        }
     }
 
     fun share(device: Device) {
