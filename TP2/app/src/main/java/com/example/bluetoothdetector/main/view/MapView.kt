@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.*
 
+// Displays Google Maps view
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MapView(
@@ -65,6 +66,7 @@ fun MapView(
     }
 }
 
+// Displays device markers position
 @Composable
 private fun DeviceMarkers(viewModel: MapViewModel) {
     viewModel.devices.values.forEach { device ->
@@ -92,6 +94,7 @@ private fun DeviceMarkers(viewModel: MapViewModel) {
     }
 }
 
+// Converts theme color to google maps marker hue color
 fun colorToHue(color: Int): Float {
     val hsl = FloatArray(3)
     ColorUtils.colorToHSL(
