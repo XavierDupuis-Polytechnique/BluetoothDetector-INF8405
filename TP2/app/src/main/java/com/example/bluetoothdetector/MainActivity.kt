@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity() {
     private val btReceiver = object : BroadcastReceiver() {
         @SuppressLint("MissingPermission")
         override fun onReceive(context: Context, intent: Intent) {
+            // Permission check
             if (ActivityCompat.checkSelfPermission(
                     applicationContext,
                     Manifest.permission.BLUETOOTH_ADMIN
@@ -75,7 +76,7 @@ class MainActivity : ComponentActivity() {
                     bluetoothRepository.addDeviceToList(device)
                 }
                 ACTION_DISCOVERY_FINISHED -> {
-                    // When bluetooth scan ends restart it
+                    // When bluetooth scan ends, restart it
                     if (bluetoothStarted) {
                         bluetoothRepository.startDiscovery()
                     }
@@ -85,12 +86,14 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onResume() {
+        // Start bluetooth scan when app is resumed
         super.onResume()
         locationRepository.resumeLocationUpdatesAsync()
         startBTScan()
     }
 
     override fun onPause() {
+        // Stop bluetooth scan when app is paused
         super.onPause()
         locationRepository.pauseLocationUpdatesAsync()
         if (bluetoothStarted) {
@@ -100,6 +103,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onDestroy() {
+        // Stop bluetooth scan and unregister the intent receiver when app is destroyed
         super.onDestroy()
         if (bluetoothStarted) {
             bluetoothRepository.stopDiscovery()
@@ -108,7 +112,7 @@ class MainActivity : ComponentActivity() {
         unregisterReceiver(btReceiver)
     }
 
-
+    // Start bluetooth scan
     private fun startBTScan() {
         // Validate permissions
         if (ActivityCompat.checkSelfPermission(

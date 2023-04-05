@@ -1,5 +1,6 @@
 package com.example.bluetoothdetector.main.repository
 
+// List of Bluetooth device classes
 val classMap = mapOf(
     1076 to "AUDIO_VIDEO_CAMCORDER",
     1056 to "AUDIO_VIDEO_CAR_AUDIO",
@@ -64,6 +65,7 @@ val classMap = mapOf(
     1792 to "WEARABLE"
 )
 
+// List of Bluetooth device types
 val typeMap = mapOf(
     0 to "DEVICE_TYPE_UNKNOWN",
     1 to "DEVICE_TYPE_CLASSIC",
@@ -71,6 +73,7 @@ val typeMap = mapOf(
     3 to "DEVICE_TYPE_DUAL"
 )
 
+// List of Bluetooth device bondState
 val bondStateMap = mapOf(
     10 to "BOND_NONE",
     11 to "BOND_BONDING",

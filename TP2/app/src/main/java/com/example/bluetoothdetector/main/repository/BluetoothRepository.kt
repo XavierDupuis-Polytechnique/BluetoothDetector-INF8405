@@ -21,6 +21,7 @@ class BluetoothRepository(
     private val bluetoothManager: BluetoothManager =
         context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
 
+    // Starts a bluetooth discovery scan
     fun startDiscovery() {
         // Permission check
         if (ActivityCompat.checkSelfPermission(
@@ -58,6 +59,7 @@ class BluetoothRepository(
         }
     }
 
+    // Cancel a running bluetooth scan
     fun stopDiscovery() {
         // Permission check
         if (ActivityCompat.checkSelfPermission(
@@ -81,6 +83,7 @@ class BluetoothRepository(
         }
     }
 
+    // Add a found bluetooth device to the device list
     fun addDeviceToList(device: BluetoothDevice?) {
         // Permission check
         if (ActivityCompat.checkSelfPermission(
@@ -104,7 +107,7 @@ class BluetoothRepository(
 
         // Prevent duplicate device from being added
         if (deviceRepository.devices.contains(device.address)) {
-
+            // Check if device is out of range and can be updated
             if (!isDeviceOutdated(
                     deviceRepository.devices[device.address]?.location,
                     locationRepository.currentLocation.value
@@ -114,16 +117,22 @@ class BluetoothRepository(
             }
         }
 
+        // Get the device class name from the device class integer
         val className = classMap.getOrDefault(
             device.bluetoothClass.deviceClass,
             device.bluetoothClass.deviceClass.toString()
         )
+        // Get the device type name from the device type integer
         val typeName = typeMap.getOrDefault(device.type, device.type.toString())
+
+        // Get the device bond state name from the device bond state integer
         val bondedStateName =
             bondStateMap.getOrDefault(device.bondState, device.bondState.toString())
 
+        // Prevent multiple devices from having the same location
         var newLocation = locationRepository.currentLocation.value?.let { randomizeGps(it) }
 
+        // Create a device from the bluetooth device
         val parsedDevice = Device(
             macAddress = device.address,
             name = device.name,
@@ -133,13 +142,17 @@ class BluetoothRepository(
             location = newLocation,
             parcelUuids = device.uuids?.toList()
         )
+
+        // Add the device to the device list
         deviceRepository.addDevice(parsedDevice)
     }
 
+    // Randomize the location of a gps point
     private fun randomizeGps(location: Location): Location {
         return location.randomize()
     }
 
+    // Check if a device is out of range
     private fun isDeviceOutdated(deviceLocation: Location?, currentLocation: Location?): Boolean {
         val updateRadius = 200
         if (deviceLocation == null) {
@@ -150,6 +163,7 @@ class BluetoothRepository(
     }
 }
 
+// Randomize the location of a gps point
 fun Location.randomize(radius: Double = 20.0): Location {
     val random = Random(System.currentTimeMillis())
     // Convert radius from meters to degrees
