@@ -1,5 +1,6 @@
 package com.example.bluetoothdetector.main.sources
 
+import androidx.compose.runtime.MutableState
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -23,13 +24,20 @@ abstract class DeviceSource : RoomDatabase() {
     }
 
     // Fills requested map with stored devices data
-    fun populateDevices(devices: MutableMap<String, Device>) {
+    fun populateDevices(
+        devices: MutableMap<String, Device>,
+        favoriteDevices: MutableState<Set<Device>>
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
-            val savedDevices = getAll().associateBy { device ->
-                device.macAddress
-            }
+            val savedDevices = getAll()
+            val favoriteSavedDevices = savedDevices.filter { it.isFavorite }
             safeOperation {
-                devices.putAll(savedDevices)
+                devices.putAll(
+                    savedDevices.associateBy { device ->
+                        device.macAddress
+                    }
+                )
+                favoriteDevices.value = favoriteDevices.value.plus(favoriteSavedDevices)
             }
         }
     }

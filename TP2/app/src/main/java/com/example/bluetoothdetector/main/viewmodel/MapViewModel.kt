@@ -23,23 +23,29 @@ class MapViewModel @Inject constructor(
     val isDarkTheme = themeRepository.isDarkTheme
     val location = locationRepository.currentLocation
     val devices = deviceRepository.devices
+
+    // Handles click on a device marker
     fun markerClick(device: Device): Boolean {
         deviceRepository.highlight(device)
         return false
     }
 
+    // Handles click on map, on no marker
     fun mapClick(latLng: LatLng) {
         deviceRepository.highlight(null)
     }
 
+    // Check if selected device is highlighted
     fun isHighlighted(device: Device): Boolean {
         return deviceRepository.isHighlighted(device)
     }
 
+    // Check if selected device is favorite
     fun isFavorite(device: Device): Boolean {
         return deviceRepository.isFavorite(device)
     }
 
+    // Check if any of the localisation permissions is granted
     fun areAnyRequiredPermissionsGranted(
         permissionsState: MultiplePermissionsState
     ): Boolean {
@@ -48,6 +54,10 @@ class MapViewModel @Inject constructor(
         }
     }
 
+    // Provides maps camera starting point
+    //  1. Current position
+    //  2. Any device position, if previous not available
+    //  3. Default position (Polytechnique), if previous not available
     fun getStartPosition(): LatLng {
         return location.value?.toLatLng()
             ?: devices.values.firstOrNull { it.location !== null }?.location?.toLatLng()
@@ -55,6 +65,7 @@ class MapViewModel @Inject constructor(
     }
 }
 
+// Converts Location to LatLng
 private fun Location.toLatLng(): LatLng {
     return LatLng(latitude, longitude)
 }

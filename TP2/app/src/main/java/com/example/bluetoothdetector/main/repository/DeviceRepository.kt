@@ -33,7 +33,7 @@ class DeviceRepository @Inject constructor(
     val highlightedDevice = mutableStateOf<Device?>(null)
 
     init {
-        deviceSource.populateDevices(devices)
+        deviceSource.populateDevices(devices, favoriteDevices)
     }
 
 
@@ -108,7 +108,10 @@ class DeviceRepository @Inject constructor(
 
     // Toggles a device from the favorite set
     fun toggleFavorite(device: Device) {
-        if (isFavorite(device)) {
+        val wasFavorite = isFavorite(device)
+        device.isFavorite = !wasFavorite
+        addDevice(device)
+        if (wasFavorite) {
             favoriteDevices.value = favoriteDevices.value.minus(device)
         } else {
             favoriteDevices.value = favoriteDevices.value.plus(device)
