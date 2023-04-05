@@ -158,7 +158,9 @@ class BluetoothRepository(
         if (deviceLocation == null) {
             return true
         }
-
+        if (currentLocation == null) {
+            return false
+        }
         return deviceLocation.distanceTo(currentLocation) > updateRadius
     }
 }
