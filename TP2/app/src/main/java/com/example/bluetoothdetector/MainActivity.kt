@@ -109,7 +109,9 @@ class MainActivity : ComponentActivity() {
             bluetoothRepository.stopDiscovery()
             bluetoothStarted = false
         }
+        if (btReceiver != null) {
         unregisterReceiver(btReceiver)
+        }
     }
 
     // Start bluetooth scan
