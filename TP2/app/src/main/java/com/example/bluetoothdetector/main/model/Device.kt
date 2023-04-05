@@ -28,6 +28,8 @@ data class Device(
     var location: Location? = null,
     @ColumnInfo(name = "parcel_uuids")
     var parcelUuids: List<ParcelUuid>? = null,
+    @ColumnInfo(name = "is_favorite")
+    var isFavorite: Boolean = false,
 ) {
     override fun toString(): String {
         return "name : $name\n" +
