@@ -19,6 +19,12 @@ class DevicesListViewModel @Inject constructor(
     val highlightedDevice = deviceRepository.highlightedDevice
     val favoriteDevices = deviceRepository.favoriteDevices
     var expandedDevice = mutableStateOf<Device?>(null)
+    var refresh = deviceRepository.refresh
+
+    fun resetRefresh() {
+        if(refresh.value)
+        refresh.value = false
+    }
 
     fun share(device: Device) {
         deviceRepository.share(device)

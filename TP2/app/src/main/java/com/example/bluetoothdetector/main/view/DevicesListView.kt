@@ -38,8 +38,10 @@ fun DevicesListView(
         // TODO : FIX NEXT LINE (SHOULD BE "viewModel.devices.size" BUT DOESN'T WORK)
         viewModel.devices.size,
         viewModel.favoriteDevices.value,
-        viewModel.highlightedDevice.value
+        viewModel.highlightedDevice.value,
+        viewModel.refresh
     ) {
+        viewModel.resetRefresh()
         viewModel.devices.values
             .sortedBy { it.date }
             .sortedBy { !viewModel.isFavorite(it) }

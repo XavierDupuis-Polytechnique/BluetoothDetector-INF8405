@@ -108,11 +108,13 @@ class BluetoothRepository(
         // Prevent duplicate device from being added
         if (deviceRepository.devices.contains(device.address)) {
             // Check if device is out of range and can be updated
-            if (!isDeviceOutdated(
+            if (isDeviceOutdated(
                     deviceRepository.devices[device.address]?.location,
                     locationRepository.currentLocation.value
                 )
             ) {
+                deviceRepository.forceRefresh()
+            } else {
                 return
             }
         }

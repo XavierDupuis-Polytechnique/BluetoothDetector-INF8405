@@ -32,6 +32,8 @@ class DeviceRepository @Inject constructor(
     // Holds the highlighted device (none if null)
     val highlightedDevice = mutableStateOf<Device?>(null)
 
+    var refresh = mutableStateOf(false)
+
     init {
         deviceSource.populateDevices(devices, favoriteDevices)
     }
@@ -126,5 +128,11 @@ class DeviceRepository @Inject constructor(
     // Check if selected device is highlighted
     fun isHighlighted(device: Device): Boolean {
         return highlightedDevice.value === device
+    }
+
+    fun forceRefresh() {
+        if(!refresh.value) {
+            refresh.value = true
+        }
     }
 }
