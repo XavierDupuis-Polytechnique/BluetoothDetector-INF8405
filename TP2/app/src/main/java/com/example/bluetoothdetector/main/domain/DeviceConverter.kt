@@ -24,9 +24,11 @@ class DeviceConverter : AbstractConverter() {
     @TypeConverter
     fun locationFromString(value: String?): Location? {
         val latitudeAndLongitude = decode(value, Array<Double>::class.java)
+        val storedLatitude = latitudeAndLongitude?.get(0) ?: return null
+        val storedLongitude = latitudeAndLongitude[1]
         return Location("").apply {
-            latitude = latitudeAndLongitude?.get(0) ?: 0.0
-            longitude = latitudeAndLongitude?.get(1) ?: 0.0
+            latitude = storedLatitude
+            longitude = storedLongitude
         }
     }
 
