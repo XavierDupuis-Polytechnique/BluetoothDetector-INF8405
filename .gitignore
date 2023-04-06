@@ -21,6 +21,6 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-TP2/.idea/deploymentTargetDropDown.xml
-TP2/.idea/inspectionProfiles/Project_Default.xml
-TP2/secrets.properties
+*/.idea/deploymentTargetDropDown.xml
+*/.idea/inspectionProfiles/Project_Default.xml
+*/secrets.properties
