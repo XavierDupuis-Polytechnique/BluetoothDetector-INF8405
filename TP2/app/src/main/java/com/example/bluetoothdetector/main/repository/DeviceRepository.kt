@@ -25,10 +25,13 @@ class DeviceRepository @Inject constructor(
 ) {
     // Holds the current device count
     val deviceCount: Flow<Int> = deviceSource.observeDeviceCount()
+
     // Holds the current mac addresses mapped to the related device
     val devices: MutableMap<String, Device> = mutableStateMapOf()
+
     // Holds the favorite devices
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
+
     // Holds the highlighted device (none if null)
     val highlightedDevice = mutableStateOf<Device?>(null)
 

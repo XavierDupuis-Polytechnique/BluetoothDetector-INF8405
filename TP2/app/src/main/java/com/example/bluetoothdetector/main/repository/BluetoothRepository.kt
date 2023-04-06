@@ -155,7 +155,7 @@ class BluetoothRepository(
     private fun isDeviceOutdated(
         deviceLocation: Location?,
         currentLocation: Location?,
-        updateRadius : Int = 200
+        updateRadius: Int = 200
     ): Boolean {
         if (currentLocation == null) {
             return false
