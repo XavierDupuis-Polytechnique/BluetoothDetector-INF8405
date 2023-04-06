@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
-import com.example.bluetoothdetector.common.view.languages.LanguagesHeader
 import com.example.bluetoothdetector.common.view.permissions.PermissionHeader
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 
@@ -21,7 +20,5 @@ fun HeaderView(
         PermissionHeader(permissionsViewModel)
         Spacer(modifier = Modifier.weight(1f))
         ThemeSelector()
-        Spacer(modifier = Modifier.weight(1f))
-        LanguagesHeader()
     }
 }

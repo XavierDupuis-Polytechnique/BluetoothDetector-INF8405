@@ -15,7 +15,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.bluetoothdetector.common.repository.LanguageRepository
 import androidx.core.app.ActivityCompat
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
@@ -26,15 +25,11 @@ import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var locationRepository: LocationRepository
-
-    @Inject
-    lateinit var languageRepository: LanguageRepository
 
     @Inject
     lateinit var themeRepository: ThemeRepository
@@ -49,7 +44,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             MainContent(themeRepository)
         }
-        languageRepository.recreate = { recreate() }
         bluetoothStarted = false
         startBTScan()
     }
@@ -94,7 +88,6 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         // Start bluetooth scan when app is resumed
         super.onResume()
-        languageRepository.updateCurrentLanguage()
         locationRepository.resumeLocationUpdatesAsync()
         startBTScan()
     }

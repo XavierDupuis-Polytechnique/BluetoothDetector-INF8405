@@ -9,15 +9,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.bluetoothdetector.R
-import com.example.bluetoothdetector.common.domain.action.Action
-import com.example.bluetoothdetector.common.domain.action.ActionSeverity
 import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
+import com.example.bluetoothdetector.main.domain.Action
+import com.example.bluetoothdetector.main.domain.ActionSeverity
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.model.Device
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
@@ -74,13 +72,13 @@ private fun DeviceInfo(device: Device) {
 @Composable
 fun DeviceAdditionalInfo(device: Device) {
     CenteredVerticalContainer {
-        DeviceField(device.macAddress, stringResource(R.string.device_mac_address))
+        DeviceField(device.macAddress, "MAC Address")
         device.location?.let {
-            DeviceField(Device.formatLocation(it.latitude), stringResource(R.string.latitude))
-            DeviceField(Device.formatLocation(it.longitude), stringResource(R.string.longitude))
+            DeviceField(Device.formatLocation(it.latitude), "Latitude")
+            DeviceField(Device.formatLocation(it.longitude), "Longitude")
         }
-        device.bluetoothClass?.let { DeviceField(it, stringResource(R.string.device_class)) }
-        device.type?.let { DeviceField(it, stringResource(R.string.device_type)) }
+        device.bluetoothClass?.let { DeviceField(it, "Class") }
+        device.type?.let { DeviceField(it, "Type") }
     }
 }
 
@@ -94,26 +92,33 @@ private fun DeviceButtons(
     CenteredHorizontalContainer {
         DeviceButton(
             button = Action(
-                execute = deviceActions.share,
+                action = deviceActions.share,
+                label = { "" },
+                canAction = { true },
                 icon = { Icons.Default.Share }
             )
         )
         DeviceButton(
             button = Action(
-                execute = deviceActions.toggleFavorite,
+                action = deviceActions.toggleFavorite,
+                label = { "" },
+                canAction = { true },
                 icon = { if (isFavorite) Icons.Default.Star else Icons.Default.Stars }
             )
         )
         DeviceButton(
             button = Action(
-                execute = deviceActions.getItinerary,
-                canExecute = { isLocationAvailable },
+                action = deviceActions.getItinerary,
+                label = { "" },
+                canAction = { isLocationAvailable },
                 icon = { Icons.Default.Map }
             )
         )
         DeviceButton(
             button = Action(
-                execute = deviceActions.forget,
+                action = deviceActions.forget,
+                label = { "" },
+                canAction = { true },
                 icon = { Icons.Default.Delete },
                 actionSeverity = ActionSeverity.Danger
             )

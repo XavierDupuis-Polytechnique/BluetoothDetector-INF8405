@@ -1,7 +1,8 @@
 package com.example.bluetoothdetector.common.domain
 
 import android.Manifest
-import com.example.bluetoothdetector.R
+import com.example.bluetoothdetector.ui.theme.DETECTOR_MODULE_DESCRIPTION
+import com.example.bluetoothdetector.ui.theme.MAPS_MODULE_DESCRIPTION
 
 // Module types
 enum class ModuleType {
@@ -12,14 +13,14 @@ enum class ModuleType {
 // Module class
 data class Module(
     val moduleType: ModuleType,
-    val description: Int,
+    val description: String = moduleType.name,
     val permissions: Permissions = listOf()
 )
 
 // Maps module definition with related permissions
 val MapsModule = Module(
     ModuleType.MAPS,
-    R.string.maps_module_description,
+    MAPS_MODULE_DESCRIPTION,
     listOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION
@@ -28,7 +29,7 @@ val MapsModule = Module(
 
 val DetectorModule = Module(
     ModuleType.DETECTOR,
-    R.string.detector_module_description,
+    DETECTOR_MODULE_DESCRIPTION,
     // Handle the bluetooth permission changes of API 31
     if (android.os.Build.VERSION.SDK_INT < 31) {
         listOf(

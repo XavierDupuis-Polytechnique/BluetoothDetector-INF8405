@@ -7,11 +7,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.bluetoothdetector.common.domain.action.Action
-import com.example.bluetoothdetector.common.domain.action.ActionSeverity
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
+import com.example.bluetoothdetector.main.domain.Action
+import com.example.bluetoothdetector.main.domain.ActionSeverity
 
 // Device action button
 @Composable
@@ -20,8 +19,8 @@ fun DeviceButton(
 ) {
     Button(
         modifier = Modifier.padding(2.dp),
-        onClick = button.execute,
-        enabled = button.canExecute(),
+        onClick = button.action,
+        enabled = button.canAction(),
         colors =
         if (button.actionSeverity == ActionSeverity.Danger)
             ButtonDefaults.buttonColors(
@@ -34,7 +33,7 @@ fun DeviceButton(
         CenteredVerticalContainer {
             Icon(
                 imageVector = button.icon(),
-                contentDescription = stringResource(button.label())
+                contentDescription = button.label()
             )
         }
     }
