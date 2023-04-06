@@ -26,3 +26,11 @@ adb devices
 ```cmd
 adb shell -s <device> pm reset-permissions bluetoothdetector
 ```
+
+# ROOM DATABASE ERROR (CRASH ON LAUNCH)
+## Crash logs ("Room cannot verify the data integrity ...")
+!["room_error.png"](assets/room_error.png)
+## Access applications  settings
+!["app_settings.jpg"](assets/app_settings.jpg)
+## Clear storage (data & cache)
+!["clear_storage.jpg"](assets/clear_storage.jpg)
