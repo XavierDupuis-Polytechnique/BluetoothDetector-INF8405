@@ -106,15 +106,14 @@ class BluetoothRepository(
         }
 
         // Prevent duplicate device from being added
-        if (deviceRepository.devices.contains(device.address)) {
+        val savedDevice = deviceRepository.devices[device.address]
+        if (savedDevice !== null) {
             // Check if device is out of range and can be updated
-            if (!isDeviceOutdated(
-                    deviceRepository.devices[device.address]?.location,
-                    locationRepository.currentLocation.value
-                )
-            ) {
-                return
-            }
+            val isDeviceOutdated = isDeviceOutdated(
+                savedDevice.location,
+                locationRepository.currentLocation.value
+            )
+            if (!isDeviceOutdated) return
         }
 
         // Get the device class name from the device class integer
@@ -130,7 +129,7 @@ class BluetoothRepository(
             bondStateMap.getOrDefault(device.bondState, device.bondState.toString())
 
         // Prevent multiple devices from having the same location
-        var newLocation = locationRepository.currentLocation.value?.let { randomizeGps(it) }
+        val newLocation = locationRepository.currentLocation.value?.let { randomizeGps(it) }
 
         // Create a device from the bluetooth device
         val parsedDevice = Device(
@@ -153,8 +152,11 @@ class BluetoothRepository(
     }
 
     // Check if a device is out of range
-    private fun isDeviceOutdated(deviceLocation: Location?, currentLocation: Location?): Boolean {
-        val updateRadius = 200
+    private fun isDeviceOutdated(
+        deviceLocation: Location?,
+        currentLocation: Location?,
+        updateRadius : Int = 200
+    ): Boolean {
         if (currentLocation == null) {
             return false
         }
