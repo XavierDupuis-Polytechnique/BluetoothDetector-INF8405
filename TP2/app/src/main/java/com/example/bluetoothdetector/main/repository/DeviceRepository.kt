@@ -79,7 +79,7 @@ class DeviceRepository @Inject constructor(
 
     // Remove selected device from view and memory
     fun forgetDevice(device: Device) {
-        devices.remove(device.macAddress)
+        devices -= device.macAddress
         CoroutineScope(Dispatchers.IO).launch {
             deviceSource.delete(device)
         }
@@ -95,7 +95,7 @@ class DeviceRepository @Inject constructor(
 
     // Add selected device to view and memory
     fun addDevice(device: Device) {
-        devices[device.macAddress] = device
+        devices += device.macAddress to device
         CoroutineScope(Dispatchers.IO).launch {
             deviceSource.insert(device)
         }

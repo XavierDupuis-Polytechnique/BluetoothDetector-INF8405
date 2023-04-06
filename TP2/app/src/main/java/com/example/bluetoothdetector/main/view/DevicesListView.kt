@@ -35,7 +35,7 @@ fun DevicesListView(
 ) {
     // Sorts devices by priority (highlighted, favorites, others)
     val sortedDevices = remember(
-        // TODO : FIX NEXT LINE (SHOULD BE "viewModel.devices.size" BUT DOESN'T WORK)
+        viewModel.devices.values.toMutableList(),
         viewModel.devices.size,
         viewModel.favoriteDevices.value,
         viewModel.highlightedDevice.value
