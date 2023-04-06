@@ -110,7 +110,7 @@ class MainActivity : ComponentActivity() {
             bluetoothStarted = false
         }
         if (btReceiver != null) {
-        unregisterReceiver(btReceiver)
+            unregisterReceiver(btReceiver)
         }
     }
 
