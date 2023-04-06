@@ -17,6 +17,8 @@ import com.example.bluetoothdetector.ui.theme.accepted
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 
+// Internal permission modal content listing all permissions
+// per module and their current individual state
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun PermissionStatus(
@@ -27,6 +29,7 @@ fun PermissionStatus(
             Subtitle(module.moduleType.name)
             Text(stringResource(module.description))
             module.permissions.forEach { permission ->
+                // Find if permission is currently revoked
                 val isRevoked =
                     permissionsState.revokedPermissions.any { permissionState ->
                         permissionState.permission == permission

@@ -29,6 +29,8 @@ val Developers = listOf(
     "Mohammed Imade MEDDANE"
 )
 
+
+// Splash screen
 @Composable
 fun SplashScreen(
     navigateTo: (Page) -> Unit,

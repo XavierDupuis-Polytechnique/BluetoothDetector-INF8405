@@ -18,21 +18,30 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
+// Manages all operations related to devices
 @Singleton
 class DeviceRepository @Inject constructor(
     private val context: Context,
     private val deviceSource: DeviceSource
 ) {
+    // Holds the current device count
     val deviceCount: Flow<Int> = deviceSource.observeDeviceCount()
+
+    // Holds the current mac addresses mapped to the related device
     val devices: MutableMap<String, Device> = mutableStateMapOf()
+
+    // Holds the favorite devices
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
+
+    // Holds the highlighted device (none if null)
     val highlightedDevice = mutableStateOf<Device?>(null)
 
     init {
-        deviceSource.populateDevices(devices)
+        deviceSource.populateDevices(devices, favoriteDevices)
     }
 
 
+    // Launches an intent safely
     private fun safeLaunchIntent(
         intent: Intent,
         errorMessage: String = context.getString(R.string.start_intent_error),
@@ -41,11 +50,13 @@ class DeviceRepository @Inject constructor(
         try {
             startActivity(context, intent, null)
         } catch (exception: Exception) {
+            // Displays toast if exception is thrown
             Toast.makeText(context, errorMessage, duration).show()
             exception.printStackTrace()
         }
     }
 
+    // Launches the share device intent
     fun share(device: Device) {
         val intent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -59,6 +70,7 @@ class DeviceRepository @Inject constructor(
         )
     }
 
+    // Launches the external navigation activity intent from selected device
     fun getItinerary(device: Device, zoom: Int = 18) {
         device.location?.let {
             // https://developers.google.com/maps/documentation/urls/android-intents
@@ -75,13 +87,15 @@ class DeviceRepository @Inject constructor(
         }
     }
 
+    // Remove selected device from view and memory
     fun forgetDevice(device: Device) {
-        devices.remove(device.macAddress)
+        devices -= device.macAddress
         CoroutineScope(Dispatchers.IO).launch {
             deviceSource.delete(device)
         }
     }
 
+    // Remove all devices from view and memory
     fun forgetAll() {
         devices.clear()
         CoroutineScope(Dispatchers.IO).launch {
@@ -89,29 +103,37 @@ class DeviceRepository @Inject constructor(
         }
     }
 
+    // Add selected device to view and memory
     fun addDevice(device: Device) {
-        devices[device.macAddress] = device
+        devices += device.macAddress to device
         CoroutineScope(Dispatchers.IO).launch {
             deviceSource.insert(device)
         }
     }
 
+    // Checks if selected device is favorite
     fun isFavorite(device: Device): Boolean {
         return favoriteDevices.value.contains(device)
     }
 
+    // Toggles a device from the favorite set
     fun toggleFavorite(device: Device) {
-        if (isFavorite(device)) {
+        val wasFavorite = isFavorite(device)
+        device.isFavorite = !wasFavorite
+        addDevice(device)
+        if (wasFavorite) {
             favoriteDevices.value = favoriteDevices.value.minus(device)
         } else {
             favoriteDevices.value = favoriteDevices.value.plus(device)
         }
     }
 
+    // Highlights a device (none if null)
     fun highlight(device: Device?) {
         highlightedDevice.value = device
     }
 
+    // Check if selected device is highlighted
     fun isHighlighted(device: Device): Boolean {
         return highlightedDevice.value === device
     }

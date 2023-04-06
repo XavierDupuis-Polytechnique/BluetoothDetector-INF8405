@@ -10,6 +10,7 @@ import com.example.bluetoothdetector.common.view.languages.LanguagesHeader
 import com.example.bluetoothdetector.common.view.permissions.PermissionHeader
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 
+// Header container
 @Composable
 fun HeaderView(
     permissionsViewModel: PermissionsViewModel

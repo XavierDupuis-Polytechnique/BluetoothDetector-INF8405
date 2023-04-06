@@ -30,13 +30,15 @@ import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.viewmodel.DevicesListViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 
+// Device list view
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DevicesListView(
     viewModel: DevicesListViewModel = hiltViewModel()
 ) {
+    // Sorts devices by priority (highlighted, favorites, others)
     val sortedDevices = remember(
-        // TODO : FIX NEXT LINE (SHOULD BE "viewModel.devices.size" BUT DOESN'T WORK)
+        viewModel.devices.values.toMutableList(),
         viewModel.devices.size,
         viewModel.favoriteDevices.value,
         viewModel.highlightedDevice.value
