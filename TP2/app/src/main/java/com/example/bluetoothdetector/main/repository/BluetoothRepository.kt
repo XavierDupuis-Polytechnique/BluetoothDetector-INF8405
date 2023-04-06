@@ -105,20 +105,6 @@ class BluetoothRepository(
             return
         }
 
-        // Prevent duplicate device from being added
-        if (deviceRepository.devices.contains(device.address)) {
-            // Check if device is out of range and can be updated
-            if (isDeviceOutdated(
-                    deviceRepository.devices[device.address]?.location,
-                    locationRepository.currentLocation.value
-                )
-            ) {
-                deviceRepository.forceRefresh()
-            } else {
-                return
-            }
-        }
-
         // Get the device class name from the device class integer
         val className = classMap.getOrDefault(
             device.bluetoothClass.deviceClass,
@@ -145,8 +131,26 @@ class BluetoothRepository(
             parcelUuids = device.uuids?.toList()
         )
 
-        // Add the device to the device list
-        deviceRepository.addDevice(parsedDevice)
+        // Prevent duplicate device from being added
+        if (deviceRepository.devices.contains(device.address)) {
+            // Check if device is out of range and can be updated
+            if (isDeviceOutdated(
+                    deviceRepository.devices[device.address]?.location,
+                    locationRepository.currentLocation.value
+                )
+            ) {
+                // Add the device to the device list
+                deviceRepository.addDevice(parsedDevice)
+                deviceRepository.forceRefresh()
+            } else {
+                return
+            }
+        } else {
+            // Add the device to the device list
+            deviceRepository.addDevice(parsedDevice)
+        }
+
+
     }
 
     // Randomize the location of a gps point
@@ -161,7 +165,7 @@ class BluetoothRepository(
             return true
         }
         if (currentLocation == null) {
-            return false
+            return true
         }
         return deviceLocation.distanceTo(currentLocation) > updateRadius
     }
