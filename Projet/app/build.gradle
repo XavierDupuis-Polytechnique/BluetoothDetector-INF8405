@@ -63,6 +63,7 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    implementation 'androidx.appcompat:appcompat:1.6.0'
 
     // Navigation
     def navigation_version = "2.5.3"

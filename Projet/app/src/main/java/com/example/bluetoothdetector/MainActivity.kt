@@ -12,11 +12,14 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.bluetoothdetector.common.repository.LanguageRepository
 import androidx.core.app.ActivityCompat
+import androidx.core.os.LocaleListCompat
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
@@ -28,7 +31,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var locationRepository: LocationRepository
@@ -45,13 +48,17 @@ class MainActivity : ComponentActivity() {
     private var bluetoothStarted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
             MainContent(themeRepository)
         }
-        languageRepository.recreate = { recreate() }
         bluetoothStarted = false
         startBTScan()
+        languageRepository.getLocale = { AppCompatDelegate.getApplicationLocales() }
+        languageRepository.changeLocale =
+            { AppCompatDelegate.setApplicationLocales(
+                LocaleListCompat.forLanguageTags(it.toLanguageTag())) }
     }
 
     private val btReceiver = object : BroadcastReceiver() {

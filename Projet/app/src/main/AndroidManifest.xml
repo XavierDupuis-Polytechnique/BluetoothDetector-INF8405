@@ -28,15 +28,25 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.BluetoothDetector">
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+<!--            TODO : REMOVE                                  -->
+<!--            android:theme="@style/Theme.BluetoothDetector">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                     <category android:name="android.intent.category.LAUNCHER" />
                 </intent-filter>
-            </activity>
+        </activity>
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
             <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="${MAPS_API_KEY}" />
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
         </application>
     </manifest>
