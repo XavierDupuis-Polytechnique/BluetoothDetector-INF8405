@@ -14,6 +14,7 @@ import com.example.bluetoothdetector.common.view.containers.CenteredVerticalCont
 enum class Page {
     Splash,
     Main,
+    Settings,
 }
 
 // Full page component for main views
