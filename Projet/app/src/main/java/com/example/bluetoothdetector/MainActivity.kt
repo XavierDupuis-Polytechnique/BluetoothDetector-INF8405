@@ -14,6 +14,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.bluetoothdetector.common.repository.LanguageRepository
 import androidx.core.app.ActivityCompat
@@ -170,8 +172,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainContent(themeRepository: ThemeRepository) {
-    themeRepository.init(isSystemInDarkTheme())
+fun MainContent(
+    themeRepository: ThemeRepository,
+) {
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+    rememberSaveable {
+        mutableStateOf(isSystemInDarkTheme).apply {
+            themeRepository.isDarkTheme = this
+        }
+    }
+
     val permissionsViewModel = PermissionsViewModel()
     BluetoothDetectorTheme(themeRepository.isDarkTheme) {
         Navigation(
