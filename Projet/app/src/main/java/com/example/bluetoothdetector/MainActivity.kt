@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter.ACTION_DISCOVERY_FINISHED
 import android.bluetooth.BluetoothDevice
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -21,6 +20,7 @@ import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
+import com.example.bluetoothdetector.main.sources.BluetoothReceiver
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -37,52 +37,13 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var bluetoothRepository: BluetoothRepository
 
-    private var bluetoothStarted = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MainContent(themeRepository)
         }
-        bluetoothStarted = false
+        bluetoothRepository.bluetoothStarted = false
         startBTScan()
-    }
-
-    private val btReceiver = object : BroadcastReceiver() {
-        @SuppressLint("MissingPermission")
-        override fun onReceive(context: Context, intent: Intent) {
-            // Permission check
-            if (ActivityCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.BLUETOOTH_ADMIN
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
-            if (android.os.Build.VERSION.SDK_INT >= 31 && ActivityCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.BLUETOOTH_SCAN
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
-            when (intent.action) {
-                BluetoothDevice.ACTION_FOUND -> {
-                    // Discovery has found a device. Get the BluetoothDevice
-                    // object and its info from the Intent.
-                    val device: BluetoothDevice? =
-                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-
-                    bluetoothRepository.addDeviceToList(device)
-                }
-                ACTION_DISCOVERY_FINISHED -> {
-                    // When bluetooth scan ends, restart it
-                    if (bluetoothStarted) {
-                        bluetoothRepository.startDiscovery()
-                    }
-                }
-            }
-        }
     }
 
     override fun onResume() {
@@ -96,21 +57,21 @@ class MainActivity : ComponentActivity() {
         // Stop bluetooth scan when app is paused
         super.onPause()
         locationRepository.pauseLocationUpdatesAsync()
-        if (bluetoothStarted) {
+        if (bluetoothRepository.bluetoothStarted) {
             bluetoothRepository.stopDiscovery()
-            bluetoothStarted = false
+            bluetoothRepository.bluetoothStarted = false
         }
     }
 
     override fun onDestroy() {
         // Stop bluetooth scan and unregister the intent receiver when app is destroyed
         super.onDestroy()
-        if (bluetoothStarted) {
+        if (bluetoothRepository.bluetoothStarted) {
             bluetoothRepository.stopDiscovery()
-            bluetoothStarted = false
+            bluetoothRepository.bluetoothStarted = false
         }
-        if (btReceiver != null) {
-            unregisterReceiver(btReceiver)
+        if (bluetoothRepository.bluetoothReceiver != null) {
+            unregisterReceiver(bluetoothRepository.bluetoothReceiver)
         }
     }
 
@@ -147,16 +108,17 @@ class MainActivity : ComponentActivity() {
         }
 
         // Only starts  Bluetooth scan once
-        if (!bluetoothStarted) {
-            bluetoothStarted = true
+        if (!bluetoothRepository.bluetoothStarted) {
+            bluetoothRepository.bluetoothStarted = true
         } else {
             return
         }
         // Register for broadcasts when a device is discovered.
-        val filter = IntentFilter()
-        filter.addAction(BluetoothDevice.ACTION_FOUND)
-        filter.addAction(ACTION_DISCOVERY_FINISHED)
-        registerReceiver(btReceiver, filter)
+        val filter = IntentFilter().apply {
+            addAction(BluetoothDevice.ACTION_FOUND)
+            addAction(ACTION_DISCOVERY_FINISHED)
+        }
+        registerReceiver(bluetoothRepository.bluetoothReceiver, filter)
         bluetoothRepository.startDiscovery()
     }
 
