@@ -4,11 +4,10 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.view.typography.Title
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
-import com.example.bluetoothdetector.ui.theme.CLOSE
-import com.example.bluetoothdetector.ui.theme.GRANT_PERMISSIONS
-import com.example.bluetoothdetector.ui.theme.PERMISSIONS_STATUS
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 
@@ -30,7 +29,7 @@ fun PermissionLauncher(
     if (viewModel.isPermissionModalShown.value) {
         AlertDialog(
             onDismissRequest = {},
-            title = { Title(PERMISSIONS_STATUS) },
+            title = { Title(stringResource(R.string.permissions_status)) },
             text = {
                 PermissionStatus(
                     permissionsState,
@@ -41,14 +40,14 @@ fun PermissionLauncher(
                     onClick = confirm,
                     enabled = viewModel.canRequestPermission(permissionsState)
                 ) {
-                    Text(GRANT_PERMISSIONS)
+                    Text(stringResource(R.string.grant_permissions))
                 }
             },
             dismissButton = {
                 Button(
                     onClick = dismiss
                 ) {
-                    Text(CLOSE)
+                    Text(stringResource(R.string.close))
                 }
             }
         )

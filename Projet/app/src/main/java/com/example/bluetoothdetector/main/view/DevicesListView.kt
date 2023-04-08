@@ -14,21 +14,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bluetoothdetector.R
+import com.example.bluetoothdetector.common.domain.action.Action
+import com.example.bluetoothdetector.common.domain.action.ActionSeverity
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
-import com.example.bluetoothdetector.main.domain.Action
-import com.example.bluetoothdetector.main.domain.ActionSeverity
 import com.example.bluetoothdetector.main.domain.DeviceActions
 import com.example.bluetoothdetector.main.viewmodel.DevicesListViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
-import com.example.bluetoothdetector.ui.theme.RECORDED_DEVICES
 
 // Device list view
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DevicesListView(
     viewModel: DevicesListViewModel = hiltViewModel()
@@ -47,13 +50,12 @@ fun DevicesListView(
     }
     CenteredVerticalContainer {
         CenteredHorizontalContainer {
-            Text("${viewModel.deviceCount.collectAsState(initial = 0).value} $RECORDED_DEVICES")
+            val deviceCount = viewModel.deviceCount.collectAsState(initial = 0).value
+            Text(pluralStringResource(R.plurals.recorded_devices, deviceCount, deviceCount))
             Spacer(modifier = Modifier.padding(horizontal = 8.dp))
             DeviceButton(
                 button = Action(
-                    action = { viewModel.forgetAll() },
-                    label = { "" },
-                    canAction = { true },
+                    execute = { viewModel.forgetAll() },
                     icon = { Icons.Default.Delete },
                     actionSeverity = ActionSeverity.Danger
                 )

@@ -12,10 +12,18 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
+import androidx.core.os.LocaleListCompat
+import com.example.bluetoothdetector.common.domain.LanguageStateSaver
+import com.example.bluetoothdetector.common.repository.LanguageRepository
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
@@ -25,11 +33,15 @@ import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var locationRepository: LocationRepository
+
+    @Inject
+    lateinit var languageRepository: LanguageRepository
 
     @Inject
     lateinit var themeRepository: ThemeRepository
@@ -42,10 +54,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainContent(themeRepository)
+            MainContent(themeRepository, languageRepository)
         }
         bluetoothStarted = false
         startBTScan()
+        languageRepository.getLocale = { AppCompatDelegate.getApplicationLocales() }
+        languageRepository.changeLocale =
+            { AppCompatDelegate.setApplicationLocales(
+                LocaleListCompat.forLanguageTags(it.toLanguageTag())) }
     }
 
     private val btReceiver = object : BroadcastReceiver() {
@@ -88,6 +104,7 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         // Start bluetooth scan when app is resumed
         super.onResume()
+        // languageRepository.updateCurrentLanguage()
         locationRepository.resumeLocationUpdatesAsync()
         startBTScan()
     }
@@ -163,8 +180,24 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainContent(themeRepository: ThemeRepository) {
-    themeRepository.init(isSystemInDarkTheme())
+fun MainContent(
+    themeRepository: ThemeRepository,
+    languageRepository: LanguageRepository
+) {
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+    rememberSaveable {
+        mutableStateOf(isSystemInDarkTheme).apply {
+            themeRepository.isDarkTheme = this
+        }
+    }
+
+    val currentLanguage = languageRepository.getLanguageFromLocale()
+    rememberSaveable(saver = LanguageStateSaver) {
+        currentLanguage.apply {
+            languageRepository.currentLanguage = mutableStateOf(this)
+        }
+    }
+
     val permissionsViewModel = PermissionsViewModel()
     BluetoothDetectorTheme(themeRepository.isDarkTheme) {
         Navigation(

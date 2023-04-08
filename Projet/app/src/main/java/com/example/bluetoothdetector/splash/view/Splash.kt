@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bluetoothdetector.BuildConfig
@@ -42,7 +43,7 @@ fun SplashScreen(
             modifier = Modifier.padding(12.dp)
         ) {
             CenteredHorizontalContainer {
-                Text("Bluetooth Detector v${AppVersion}")
+                Text("${stringResource(R.string.app_name)} v${AppVersion}")
                 Spacer(modifier = Modifier.size(LogoSize.div(2)))
                 Image(
                     painter = painterResource(Logo),
