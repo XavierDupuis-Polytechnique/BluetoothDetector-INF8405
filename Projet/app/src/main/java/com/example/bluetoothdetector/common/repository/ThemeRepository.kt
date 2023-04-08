@@ -6,15 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 // Repository for theme
 class ThemeRepository(isDarkByDefault: Boolean = false) {
     // Stores the current theme value (true == dark, false == light)
-    var isDarkTheme: MutableState<Boolean> = mutableStateOf(isDarkByDefault)
+    lateinit var isDarkTheme: MutableState<Boolean>
 
     // Toggles theme from current value
     fun toggleTheme() {
         isDarkTheme.value = !isDarkTheme.value
-    }
-
-    // Initializes theme from current system preference
-    fun init(isSystemInDarkTheme: Boolean) {
-        isDarkTheme.value = isSystemInDarkTheme
     }
 }

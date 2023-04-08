@@ -1,6 +1,7 @@
 package com.example.bluetoothdetector.common.repository
 
 import android.content.Context
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.os.LocaleListCompat
 import com.example.bluetoothdetector.common.domain.English
@@ -21,18 +22,16 @@ class LanguageRepository @Inject constructor(
 
     lateinit var getLocale: () -> LocaleListCompat
     lateinit var changeLocale: (Locale) -> Unit
+    lateinit var currentLanguage: MutableState<Language>
 
-    val currentLanguage = mutableStateOf(DefaultLanguage)
-
-    fun updateCurrentLanguage() {
-        val a = getLocale()
-        val internalCurrentLanguage = getLocale()[0]?.language ?: DefaultLanguage
-        currentLanguage.value =
-            AvailableLanguages.find { it.locale.language == internalCurrentLanguage }
-                ?: DefaultLanguage
+    fun getLanguageFromLocale(
+        locale: Locale = getLocale()[0] ?: DefaultLanguage.locale
+    ): Language {
+        return AvailableLanguages.find { it.locale == locale } ?: DefaultLanguage
     }
 
     fun changeLanguage(language: Language) {
         changeLocale(language.locale)
+        currentLanguage.value = language
     }
 }
