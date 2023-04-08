@@ -21,7 +21,6 @@ const val LeftWeight = RightWeight * 2
 @Composable
 fun MainScreen(
     viewModel: MainViewModel = viewModel(),
-    navigateTo: (Page) -> Unit,
 ) {
     CenteredHorizontalContainer(
         modifier = Modifier
@@ -48,7 +47,7 @@ fun MainScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_C)
 @Composable
 fun MainPreview() {
-    MainScreen {}
+    MainScreen()
 }
 
 @SuppressLint("UnrememberedMutableState")
