@@ -43,16 +43,16 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onResume() {
-        // Start bluetooth scan when app is resumed
         super.onResume()
         locationRepository.resumeLocationUpdatesAsync()
+        // Start bluetooth scan when app is resumed
         startBTScan()
     }
 
     override fun onPause() {
-        // Stop bluetooth scan when app is paused
         super.onPause()
         locationRepository.pauseLocationUpdatesAsync()
+        // Stop bluetooth scan when app is paused
         if (bluetoothRepository.bluetoothStarted) {
             bluetoothRepository.stopDiscovery()
             bluetoothRepository.bluetoothStarted = false
@@ -60,8 +60,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onDestroy() {
-        // Stop bluetooth scan and unregister the intent receiver when app is destroyed
         super.onDestroy()
+        // Stop bluetooth scan and unregister the intent receiver when app is destroyed
         if (bluetoothRepository.bluetoothStarted) {
             bluetoothRepository.stopDiscovery()
             bluetoothRepository.bluetoothStarted = false
