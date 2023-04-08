@@ -1,4 +1,4 @@
-package com.example.bluetoothdetector.di
+package com.example.bluetoothdetector.main.di
 
 import android.content.Context
 import androidx.room.Room
