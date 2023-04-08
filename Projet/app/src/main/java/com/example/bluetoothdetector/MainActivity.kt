@@ -15,10 +15,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.bluetoothdetector.common.repository.LanguageRepository
 import androidx.core.app.ActivityCompat
+import com.example.bluetoothdetector.common.domain.LanguageStateSaver
+import com.example.bluetoothdetector.common.repository.LanguageRepository
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainContent(themeRepository)
+            MainContent(themeRepository, languageRepository)
         }
         languageRepository.recreate = { recreate() }
         bluetoothStarted = false
@@ -96,7 +98,7 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         // Start bluetooth scan when app is resumed
         super.onResume()
-        languageRepository.updateCurrentLanguage()
+        // languageRepository.updateCurrentLanguage()
         locationRepository.resumeLocationUpdatesAsync()
         startBTScan()
     }
@@ -174,11 +176,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainContent(
     themeRepository: ThemeRepository,
+    languageRepository: LanguageRepository
 ) {
     val isSystemInDarkTheme = isSystemInDarkTheme()
     rememberSaveable {
         mutableStateOf(isSystemInDarkTheme).apply {
             themeRepository.isDarkTheme = this
+        }
+    }
+
+    val currentLanguage = languageRepository.getLanguageFromLocale()
+    rememberSaveable(saver = LanguageStateSaver) {
+        currentLanguage.apply {
+            languageRepository.currentLanguage = mutableStateOf(this)
         }
     }
 
