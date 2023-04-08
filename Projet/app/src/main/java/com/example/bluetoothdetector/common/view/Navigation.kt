@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.main.view.MainScreen
+import com.example.bluetoothdetector.settings.view.SettingsScreen
 import com.example.bluetoothdetector.splash.view.SplashScreen
 
 
@@ -18,6 +19,7 @@ fun Navigation(
 ) {
     // function used to allow composable to navigate to other pages
     val navigateTo = { page: Page -> navController.navigate(page.name) }
+    val navigateBack = { navController.popBackStack() }
 
     NavHost(navController, startDestination.name) {
         composable(Page.Splash.name) {
@@ -27,13 +29,15 @@ fun Navigation(
         }
 
         composable(Page.Main.name) {
-            PageWithHeader(
-                headerContent = {
-                    HeaderView(permissionsViewModel)
-                }
-            ) {
-                MainScreen(
-                    navigateTo = navigateTo,
+            PageWithHeader(navController) {
+                MainScreen()
+            }
+        }
+
+        composable(Page.Settings.name) {
+            PageWithHeader(navController) {
+                SettingsScreen(
+                    permissionsViewModel
                 )
             }
         }

@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 
 enum class Page {
@@ -33,7 +34,8 @@ fun Page(content: @Composable () -> Unit) {
 // Full page component for main views with theme selection
 @Composable
 fun PageWithHeader(
-    headerContent: @Composable () -> Unit,
+    navController: NavHostController,
+    headerContent: @Composable () -> Unit = { HeaderView(navController) },
     content: @Composable () -> Unit
 ) {
     Page {

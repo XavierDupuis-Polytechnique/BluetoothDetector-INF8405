@@ -26,7 +26,6 @@ class PermissionsViewModel : ViewModel() {
         isPermissionModalShown.value = true
     }
 
-
     // Hides the permission modal
     fun closePermissions() {
         isPermissionModalShown.value = false
