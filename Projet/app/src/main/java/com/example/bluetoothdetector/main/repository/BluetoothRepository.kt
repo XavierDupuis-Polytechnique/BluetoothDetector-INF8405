@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import androidx.core.app.ActivityCompat
 import com.example.bluetoothdetector.main.model.Device
+import com.example.bluetoothdetector.main.sources.BluetoothReceiver
 import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
@@ -18,8 +19,13 @@ class BluetoothRepository(
     private val deviceRepository: DeviceRepository,
     private val locationRepository: LocationRepository
 ) {
+    var bluetoothStarted = false
+
     private val bluetoothManager: BluetoothManager =
         context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+
+    val bluetoothReceiver =
+        BluetoothReceiver(context, this)
 
     // Starts a bluetooth discovery scan
     fun startDiscovery() {
