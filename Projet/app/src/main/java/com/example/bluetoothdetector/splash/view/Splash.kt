@@ -12,9 +12,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.BuildConfig
 import com.example.bluetoothdetector.R
-import com.example.bluetoothdetector.common.view.Page
 import com.example.bluetoothdetector.common.view.SpinnerView
 import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
@@ -35,7 +35,7 @@ val Developers = listOf(
 // Splash screen
 @Composable
 fun SplashScreen(
-    navigateTo: (Page) -> Unit,
+    navController: NavHostController,
     viewModel: SplashViewModel = viewModel()
 ) {
     CardContainer {
@@ -58,5 +58,5 @@ fun SplashScreen(
             }
         }
     }
-    viewModel.launchDelayedNavigate(navigateTo)
+    viewModel.launchDelayedNavigate(navController)
 }
