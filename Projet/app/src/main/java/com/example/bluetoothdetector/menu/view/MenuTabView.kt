@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
@@ -20,8 +21,8 @@ fun MenuTabView(
 ) {
     ListItem(
         modifier = Modifier.clickable { viewModel.navigate(navController, menuState, menuScope, page) },
-        text = { Text(page.denomination) },
-        secondaryText = { Text(page.description) },
+        text = { Text(stringResource(page.denomination)) },
+        secondaryText = { Text(stringResource(page.description)) },
         icon = {
             Icon(
                 imageVector = page.icon,

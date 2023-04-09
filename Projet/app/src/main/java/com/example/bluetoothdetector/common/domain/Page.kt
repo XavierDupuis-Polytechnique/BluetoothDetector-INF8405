@@ -3,60 +3,61 @@ package com.example.bluetoothdetector.common.domain
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.bluetoothdetector.R
 
 enum class Page(
-    val denomination: String,
+    val denomination: Int,
     val route: String,
-    val description: String,
+    val description: Int,
     val icon: ImageVector = Icons.Default.BrokenImage,
     val inMenu: Boolean = true,
 ) {
     SPLASH(
-        denomination = "L-SPLASH",
+        denomination = R.string.splash_page_name,
         route = "SPLASH",
-        description = "L - SPLASH DESCRIPTION",
+        description = R.string.splash_page_description,
         inMenu = false
     ),
     MAIN(
-        denomination = "L-MAIN",
+        denomination = R.string.main_page_name,
         route = "MAIN",
-        description = "L - MAIN DESCRIPTION",
+        description = R.string.main_page_description,
         icon = Icons.Default.TravelExplore
     ),
     MAP(
-        denomination = "L-MAP",
+        denomination = R.string.map_page_name,
         route = "MAP",
-        description = "L - MAP DESCRIPTION",
+        description = R.string.map_page_description,
         icon = Icons.Default.Map
     ),
     DEVICES(
-        denomination = "L-DEVICES",
+        denomination = R.string.devices_page_name,
         route = "DEVICES",
-        description = "L - DEVICES DESCRIPTION",
+        description = R.string.devices_page_description,
         icon = Icons.Default.Devices
     ),
     ACCOUNT(
-        denomination = "L-ACCOUNT",
+        denomination = R.string.account_page_name,
         route = "ACCOUNT",
-        description = "L - ACCOUNT DESCRIPTION",
+        description = R.string.account_page_description,
         icon = Icons.Default.AccountCircle
     ),
     ENERGY(
-        denomination = "L-ENERGY",
+        denomination = R.string.energy_page_name,
         route = "ENERGY",
-        description = "L - ENERGY DESCRIPTION",
+        description = R.string.energy_page_description,
         icon = Icons.Default.Bolt
     ),
     NETWORK(
-        denomination = "L-NETWORK",
+        denomination = R.string.network_page_name,
         route = "NETWORK",
-        description = "L - NETWORK DESCRIPTION",
+        description = R.string.network_page_description,
         icon = Icons.Default.SignalCellularAlt
     ),
     PERMISSIONS(
-        denomination = "L-PERMISSIONS",
+        denomination = R.string.permissions_page_name,
         route = "PERMISSIONS",
-        description = "L - PERMISSIONS DESCRIPTION",
+        description = R.string.permissions_page_description,
         icon = Icons.Default.SettingsApplications
     );
 
