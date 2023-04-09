@@ -5,12 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Card
+import androidx.compose.material.DrawerState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
+import kotlinx.coroutines.CoroutineScope
 
 // Full page component for main views
 @Composable
@@ -28,8 +29,9 @@ fun Page(content: @Composable () -> Unit) {
 // Full page component for main views with theme selection
 @Composable
 fun PageWithHeader(
-    navController: NavHostController,
-    headerContent: @Composable () -> Unit = { HeaderView(navController) },
+    menuState: DrawerState,
+    menuScope: CoroutineScope,
+    headerContent: @Composable () -> Unit = { HeaderView(menuState, menuScope) },
     content: @Composable () -> Unit
 ) {
     Page {
