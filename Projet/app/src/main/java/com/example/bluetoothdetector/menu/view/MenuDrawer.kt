@@ -3,9 +3,7 @@ package com.example.bluetoothdetector.menu.view
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -29,13 +27,8 @@ fun MenuDrawer(
         gesturesEnabled = false,
         drawerContent = {
             Page.MenuPages.forEach {
-                TextButton(
-                    onClick = {
-                        viewModel.navigate(navController, menuState, menuScope, it)
-                    }
-                ) {
-                    Text(text = it.denomination)
-                }
+                MenuTabView(viewModel, navController, menuState, menuScope, it)
+                Divider()
             }
         },
         content = content
