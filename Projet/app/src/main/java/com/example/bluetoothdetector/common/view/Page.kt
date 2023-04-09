@@ -12,12 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 
-enum class Page {
-    Splash,
-    Main,
-    Settings,
-}
-
 // Full page component for main views
 @Composable
 fun Page(content: @Composable () -> Unit) {
