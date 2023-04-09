@@ -1,7 +1,6 @@
 package com.example.bluetoothdetector.common.domain
 
 import androidx.compose.runtime.saveable.listSaver
-import androidx.compose.runtime.saveable.mapSaver
 import com.example.bluetoothdetector.R
 import java.util.*
 
