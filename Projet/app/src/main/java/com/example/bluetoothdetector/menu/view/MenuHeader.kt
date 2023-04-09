@@ -4,6 +4,7 @@ import androidx.compose.material.DrawerState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MenuOpen
 import androidx.compose.runtime.Composable
@@ -19,7 +20,9 @@ fun MenuHeader(
 ) {
     IconButton(onClick = { viewModel.toggleMenu(menuState, menuScope) }) {
         val isMenuOpen = viewModel.isMenuOpened(menuState)
-        val icon = if (isMenuOpen) Icons.Default.Menu else Icons.Default.MenuOpen
+        // TODO : UX MAYBE
+        // val icon = if (isMenuOpen) Icons.Default.MenuOpen else Icons.Default.Menu
+        val icon = if (isMenuOpen) Icons.Default.Close else Icons.Default.Menu
         Icon(
             imageVector = icon,
             contentDescription = icon.toString()
