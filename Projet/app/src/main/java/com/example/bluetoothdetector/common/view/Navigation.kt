@@ -5,11 +5,13 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.bluetoothdetector.common.domain.Page
+import com.example.bluetoothdetector.common.view.page.ContentPage
 import com.example.bluetoothdetector.common.view.page.PageWithHeader
 import com.example.bluetoothdetector.common.view.permissions.PermissionsView
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
@@ -32,39 +34,49 @@ fun Navigation(
     PageWithHeader(menuState, menuScope) {
         MenuDrawer(menuState, menuScope, navController) {
             NavHost(navController, startDestination.route) {
-
-                composable(Page.SPLASH.route) {
+                pageComposable(Page.SPLASH) {
                     SplashScreen(navController)
                 }
 
-                composable(Page.MAIN.route) {
+                pageComposable(Page.MAIN) {
                     MainScreen()
                 }
 
-                composable(Page.MAP.route) {
+                pageComposable(Page.MAP) {
                     MapView()
                 }
 
-                composable(Page.DEVICES.route) {
+                pageComposable(Page.DEVICES) {
                     DevicesListView()
                 }
 
-                composable(Page.ACCOUNT.route) {
+                pageComposable(Page.ACCOUNT) {
                     Text("TODO Account")
                 }
 
-                composable(Page.ENERGY.route) {
+                pageComposable(Page.ENERGY) {
                     Text("TODO Energy")
                 }
 
-                composable(Page.NETWORK.route) {
+                pageComposable(Page.NETWORK) {
                     Text("TODO Network")
                 }
 
-                composable(Page.PERMISSIONS.route) {
+                pageComposable(Page.PERMISSIONS) {
                     PermissionsView(permissionsViewModel)
                 }
             }
+        }
+    }
+}
+
+private fun NavGraphBuilder.pageComposable(
+    page: Page,
+    content: @Composable () -> Unit,
+) {
+    composable(page.route) {
+        ContentPage {
+            content()
         }
     }
 }

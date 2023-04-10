@@ -38,24 +38,22 @@ fun SplashScreen(
     navController: NavHostController,
     viewModel: SplashViewModel = viewModel()
 ) {
-    CardContainer {
-        CenteredVerticalContainer(
-            modifier = Modifier.padding(12.dp)
-        ) {
-            CenteredHorizontalContainer {
-                Text("${stringResource(R.string.app_name)} v${AppVersion}")
-                Spacer(modifier = Modifier.size(LogoSize.div(2)))
-                Image(
-                    painter = painterResource(Logo),
-                    contentDescription = Logo.toString(),
-                    contentScale = ContentScale.Inside,
-                    modifier = Modifier.size(LogoSize)
-                )
-            }
-            SpinnerView()
-            Developers.forEach {
-                Text(it)
-            }
+    CenteredVerticalContainer(
+        modifier = Modifier.padding(12.dp)
+    ) {
+        CenteredHorizontalContainer {
+            Text("${stringResource(R.string.app_name)} v${AppVersion}")
+            Spacer(modifier = Modifier.size(LogoSize.div(2)))
+            Image(
+                painter = painterResource(Logo),
+                contentDescription = Logo.toString(),
+                contentScale = ContentScale.Inside,
+                modifier = Modifier.size(LogoSize)
+            )
+        }
+        SpinnerView()
+        Developers.forEach {
+            Text(it)
         }
     }
     viewModel.launchDelayedNavigate(navController)
