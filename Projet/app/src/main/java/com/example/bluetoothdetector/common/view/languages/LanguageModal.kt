@@ -1,8 +1,8 @@
 package com.example.bluetoothdetector.common.view.languages
 
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.domain.action.Action
 import com.example.bluetoothdetector.common.domain.modal.ModalActions
@@ -20,19 +20,8 @@ fun LanguagesModal(
         closeModal = { viewModel.closeModal() }
     ) {
         LanguageRepository.AvailableLanguages.forEach {
-            val colors =
-                if (viewModel.isSelectedLanguage(it))
-                    ButtonDefaults.outlinedButtonColors(
-                        contentColor = MaterialTheme.colors.onPrimary,
-                        backgroundColor = MaterialTheme.colors.primary
-                    )
-                else
-                    ButtonDefaults.outlinedButtonColors(
-                        contentColor = MaterialTheme.colors.onSurface,
-                        backgroundColor = MaterialTheme.colors.surface
-                    )
-
             SelectableListItem(
+                modifier = Modifier.fillMaxWidth(0.4f),
                 isSelected = { viewModel.isSelectedLanguage(it) },
                 select = { viewModel.selectLanguage(it) },
                 mainText = it.denomination,

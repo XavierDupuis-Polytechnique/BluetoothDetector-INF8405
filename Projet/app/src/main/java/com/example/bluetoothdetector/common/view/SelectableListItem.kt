@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SelectableListItem(
+    modifier: Modifier = Modifier,
     isSelected: () -> Boolean,
     select: () -> Unit,
     mainText: Int,
@@ -36,7 +37,7 @@ fun SelectableListItem(
 
     if (secondaryText !== null) {
         ListItem(
-            modifier = Modifier
+            modifier = modifier
                 .clickable { select() }
                 .background(color.copy(alpha = 0.2f)),
             text = {
@@ -55,7 +56,7 @@ fun SelectableListItem(
         )
     } else {
         ListItem(
-            modifier = Modifier
+            modifier = modifier
                 .clickable { select() }
                 .background(color.copy(alpha = 0.2f)),
             text = {
@@ -72,6 +73,7 @@ fun SelectableListItem(
 
 @Composable
 fun SelectableListItem(
+    modifier: Modifier = Modifier,
     isSelected: () -> Boolean,
     select: () -> Unit,
     mainText: Int,
@@ -79,6 +81,7 @@ fun SelectableListItem(
     icon: Int
 ) {
     SelectableListItem(
+        modifier = modifier,
         isSelected = isSelected,
         select = select,
         mainText = mainText,
@@ -93,6 +96,7 @@ fun SelectableListItem(
 
 @Composable
 fun SelectableListItem(
+    modifier: Modifier = Modifier,
     isSelected: () -> Boolean,
     select: () -> Unit,
     mainText: Int,
@@ -100,6 +104,7 @@ fun SelectableListItem(
     icon: ImageVector = Icons.Default.BrokenImage
 ) {
     SelectableListItem(
+        modifier = modifier,
         isSelected = isSelected,
         select = select,
         mainText = mainText,
