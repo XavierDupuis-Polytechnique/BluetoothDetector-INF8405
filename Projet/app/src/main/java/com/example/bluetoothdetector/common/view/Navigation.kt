@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.bluetoothdetector.common.domain.Page
+import com.example.bluetoothdetector.common.view.permissions.PermissionsView
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.main.view.DevicesListView
 import com.example.bluetoothdetector.main.view.MainScreen
@@ -60,15 +61,7 @@ fun Navigation(
                 }
 
                 composable(Page.PERMISSIONS.route) {
-                    Text("TODO Permissions")
-                    //    CenteredHorizontalContainer(
-                    //        modifier = Modifier
-                    //            .fillMaxSize()
-                    //    ) {
-                    //        CenteredVerticalContainer {
-                    //            PermissionHeader(permissionsViewModel)
-                    //        }
-                    //    }
+                    PermissionsView(permissionsViewModel)
                 }
             }
         }
