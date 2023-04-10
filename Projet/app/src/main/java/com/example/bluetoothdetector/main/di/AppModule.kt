@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
+import com.example.bluetoothdetector.main.repository.NetworkRepository
 import com.example.bluetoothdetector.main.sources.DeviceSource
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -66,5 +67,5 @@ object AppModule {
     @Singleton
     @Provides
     fun provideNetworkRepository() = NetworkRepository()
-//        @ApplicationContext context: Context,
+}
 
