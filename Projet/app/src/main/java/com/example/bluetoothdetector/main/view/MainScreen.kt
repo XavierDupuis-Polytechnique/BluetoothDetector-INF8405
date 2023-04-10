@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.bluetoothdetector.common.view.Page
 import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.main.viewmodel.MainViewModel
@@ -21,7 +20,6 @@ const val LeftWeight = RightWeight * 2
 @Composable
 fun MainScreen(
     viewModel: MainViewModel = viewModel(),
-    navigateTo: (Page) -> Unit,
 ) {
     CenteredHorizontalContainer(
         modifier = Modifier
@@ -48,7 +46,7 @@ fun MainScreen(
 @Preview(showBackground = true, device = Devices.PIXEL_C)
 @Composable
 fun MainPreview() {
-    MainScreen {}
+    MainScreen()
 }
 
 @SuppressLint("UnrememberedMutableState")

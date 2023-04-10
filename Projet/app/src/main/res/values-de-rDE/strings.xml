@@ -29,4 +29,20 @@
     <string name="start_intent_error">Intent-Aktivität konnte nicht gestartet werden</string>
     <string name="start_intent_google_maps_not_unavailable">Google Maps ist nicht installiert oder deaktiviert</string>
     <string name="start_intent_could_not_share_device">Gerät konnte nicht freigegeben werden</string>
+    <string name="splash_page_name">Laden</string>
+    <string name="splash_page_description">Ladefenster</string>
+    <string name="main_page_name">Global</string>
+    <string name="main_page_description">Karten- und Geräteansicht</string>
+    <string name="map_page_name">Karte</string>
+    <string name="map_page_description">Karte der registrierten Geräte</string>
+    <string name="devices_page_name">Geräte</string>
+    <string name="devices_page_description">Liste der registrierten Geräte</string>
+    <string name="account_page_name">Konto</string>
+    <string name="account_page_description">Kontoverwaltung</string>
+    <string name="energy_page_name">Energie</string>
+    <string name="energy_page_description">Energieverbrauch der Anwendung</string>
+    <string name="network_page_name">Netzwerk</string>
+    <string name="network_page_description">Verbrauch der Anwendungsbandbreite</string>
+    <string name="permissions_page_name">Berechtigungen</string>
+    <string name="permissions_page_description">Berechtigungsverwaltung</string>
 </resources>

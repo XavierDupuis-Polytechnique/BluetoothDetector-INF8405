@@ -30,7 +30,7 @@ class LanguageViewModel @Inject constructor(
     fun isCurrentLanguage(language: Language): Boolean {
         return languageRepository.currentLanguage.value === language
     }
-    
+
     fun isSelectedLanguage(language: Language): Boolean {
         return selectedLanguage.value === language
     }

@@ -1,4 +1,4 @@
-package com.example.bluetoothdetector.common
+package com.example.bluetoothdetector.common.di
 
 import android.content.Context
 import com.example.bluetoothdetector.common.repository.LanguageRepository

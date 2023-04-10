@@ -1,7 +1,6 @@
 package com.example.bluetoothdetector.common.repository
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 
 // Repository for theme
 class ThemeRepository(isDarkByDefault: Boolean = false) {

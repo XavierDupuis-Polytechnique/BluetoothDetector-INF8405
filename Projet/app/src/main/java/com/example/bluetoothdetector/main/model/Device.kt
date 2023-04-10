@@ -34,7 +34,7 @@ data class Device(
     var isFavorite: Boolean = false,
 ) {
     fun toString(context: Context): String {
-        return  "${context.getString(R.string.device_name)} : $name\n" +
+        return "${context.getString(R.string.device_name)} : $name\n" +
                 "${context.getString(R.string.device_mac_address)} : $macAddress\n" +
                 "${context.getString(R.string.date)} : $date\n" +
                 "${context.getString(R.string.device_class)} : $bluetoothClass\n" +

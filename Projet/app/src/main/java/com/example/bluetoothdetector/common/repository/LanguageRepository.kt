@@ -2,7 +2,6 @@ package com.example.bluetoothdetector.common.repository
 
 import android.content.Context
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.core.os.LocaleListCompat
 import com.example.bluetoothdetector.common.domain.English
 import com.example.bluetoothdetector.common.domain.Language

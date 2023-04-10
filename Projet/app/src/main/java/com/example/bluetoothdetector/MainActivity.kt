@@ -6,14 +6,12 @@ import android.bluetooth.BluetoothDevice
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
@@ -54,8 +52,11 @@ class MainActivity : AppCompatActivity() {
         startBTScan()
         languageRepository.getLocale = { AppCompatDelegate.getApplicationLocales() }
         languageRepository.changeLocale =
-            { AppCompatDelegate.setApplicationLocales(
-                LocaleListCompat.forLanguageTags(it.toLanguageTag())) }
+            {
+                AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(it.toLanguageTag())
+                )
+            }
     }
 
     override fun onResume() {
