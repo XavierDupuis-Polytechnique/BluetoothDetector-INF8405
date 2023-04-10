@@ -12,10 +12,15 @@ import kotlin.concurrent.schedule
 
 class SplashViewModel : ViewModel() {
     private val splashTime = 3000L
+
+    var navigateTask: TimerTask? = null
     fun launchDelayedNavigate(navController: NavHostController) {
-        Timer().schedule(splashTime) {
-            viewModelScope.launch(Dispatchers.Main) {
-                navController.navigate(Page.MAIN.route)
+        if (navigateTask == null) {
+            navigateTask = Timer().schedule(splashTime) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    navigateTask = null
+                    navController.navigate(Page.MAIN.route)
+                }
             }
         }
     }
