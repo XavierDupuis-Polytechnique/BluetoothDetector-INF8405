@@ -61,4 +61,10 @@ object AppModule {
         deviceRepository: DeviceRepository,
         locationRepository: LocationRepository
     ) = BluetoothRepository(context, deviceRepository, locationRepository)
-}
+
+    // Provides a single instance of the NetworkStatsManager
+    @Singleton
+    @Provides
+    fun provideNetworkRepository() = NetworkRepository()
+//        @ApplicationContext context: Context,
+

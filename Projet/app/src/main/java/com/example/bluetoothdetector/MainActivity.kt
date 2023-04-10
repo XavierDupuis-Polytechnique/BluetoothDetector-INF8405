@@ -23,6 +23,7 @@ import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
+import com.example.bluetoothdetector.main.repository.NetworkRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -43,6 +44,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var bluetoothRepository: BluetoothRepository
 
+    @Inject
+    lateinit var networkRepository: NetworkRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -57,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                     LocaleListCompat.forLanguageTags(it.toLanguageTag())
                 )
             }
+        networkRepository.updateCreatedBytes()
     }
 
     override fun onResume() {
@@ -65,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         locationRepository.resumeLocationUpdatesAsync()
         // Start bluetooth scan when app is resumed
         startBTScan()
+        networkRepository.updateResumedBytes()
     }
 
     override fun onPause() {

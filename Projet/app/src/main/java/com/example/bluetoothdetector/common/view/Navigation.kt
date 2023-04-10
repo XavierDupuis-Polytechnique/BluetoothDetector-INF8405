@@ -18,6 +18,7 @@ import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.main.view.DevicesListView
 import com.example.bluetoothdetector.main.view.MainScreen
 import com.example.bluetoothdetector.main.view.MapView
+import com.example.bluetoothdetector.main.view.NetworkView
 import com.example.bluetoothdetector.menu.view.MenuDrawer
 import com.example.bluetoothdetector.splash.view.SplashScreen
 
@@ -59,7 +60,7 @@ fun Navigation(
                 }
 
                 pageComposable(Page.NETWORK) {
-                    Text("TODO Network")
+                    NetworkView()
                 }
 
                 pageComposable(Page.PERMISSIONS) {
