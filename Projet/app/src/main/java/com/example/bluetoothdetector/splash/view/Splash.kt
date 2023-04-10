@@ -16,7 +16,6 @@ import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.BuildConfig
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.view.SpinnerView
-import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.splash.viewmodel.SplashViewModel
