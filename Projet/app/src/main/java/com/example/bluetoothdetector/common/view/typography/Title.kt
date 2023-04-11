@@ -17,7 +17,7 @@ fun Title(
         text = title,
         fontStyle = MaterialTheme.typography.h1.fontStyle,
         fontWeight = FontWeight.Bold,
-        fontSize = 25.sp,
+        fontSize = 24.sp,
         modifier = modifier
     )
 }

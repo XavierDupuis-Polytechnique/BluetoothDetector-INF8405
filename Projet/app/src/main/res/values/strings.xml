@@ -51,4 +51,14 @@
     <string name="network_page_description">Application bandwidth Consumption</string>
     <string name="permissions_page_name">Permissions</string>
     <string name="permissions_page_description">Permission management</string>
+    <string name="network_stats_disclaimer">Statistics are measured at the network layer, so they include both TCP and UDP usage</string>
+    <string name="network_mobile">Mobile</string>
+    <string name="network_network">WiFi &amp; LAN</string>
+    <string name="network_total">Total</string>
+    <string name="network_process">Process</string>
+    <string name="network_since_application_was">Since the application was</string>
+    <string name="launched">Launched</string>
+    <string name="resumed">Resumed</string>
+    <string name="network_percent_was_used_for_process">The process consumed %.2f %% of the device\'s total network usage</string>
+    <string name="refresh">Refresh</string>
 </resources>

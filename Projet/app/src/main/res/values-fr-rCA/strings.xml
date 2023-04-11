@@ -46,4 +46,14 @@
     <string name="network_page_description">Consommation de bande passante de de l\'application</string>
     <string name="permissions_page_name">Permissions</string>
     <string name="permissions_page_description">Gestions des autorisations</string>
+    <string name="network_stats_disclaimer">Les statistiques sont mesurées au niveau de la couche réseau, elles incluent donc à la fois l\'utilisation TCP et UDP</string>
+    <string name="network_mobile">Mobile</string>
+    <string name="network_network">WiFi &amp; LAN</string>
+    <string name="network_total">Total</string>
+    <string name="network_process">Processus</string>
+    <string name="network_since_application_was">Depuis que l\'application a été</string>
+    <string name="launched">Démarrée</string>
+    <string name="resumed">Reprise</string>
+    <string name="network_percent_was_used_for_process">Le processus a consommé %.2f %% de l\'utilisation totale du réseau de l\'appareil</string>
+    <string name="refresh">Rafraîchir</string>
 </resources>

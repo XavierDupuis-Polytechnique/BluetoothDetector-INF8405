@@ -6,6 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -18,10 +19,23 @@ fun Subtitle(
 ) {
     Text(
         text = subtitle,
-        fontStyle = MaterialTheme.typography.h1.fontStyle,
+        fontStyle = MaterialTheme.typography.h2.fontStyle,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
         color = color,
         modifier = modifier.then(Modifier.padding(5.dp))
+    )
+}
+
+@Composable
+fun Subtitle(
+    subtitle: Int,
+    modifier: Modifier = Modifier,
+    color: Color = Color.Unspecified,
+) {
+    Subtitle(
+        stringResource(subtitle),
+        modifier,
+        color
     )
 }
