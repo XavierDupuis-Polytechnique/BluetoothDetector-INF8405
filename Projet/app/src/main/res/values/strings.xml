@@ -51,4 +51,11 @@
     <string name="network_page_description">Application bandwidth Consumption</string>
     <string name="permissions_page_name">Permissions</string>
     <string name="permissions_page_description">Permission management</string>
+    <string name="network_stats_disclaimer">Statistics are measured at the network layer, so they include both TCP and UDP usage</string>
+    <string name="network_mobile">Mobile</string>
+    <string name="network_network">WiFi &amp; LAN</string>
+    <string name="network_total">Total</string>
+    <string name="network_process">Process</string>
+    <string name="network_since_activity_created">Since the application was launched</string>
+    <string name="network_since_activity_resumed">Since the application was resumed</string>
 </resources>

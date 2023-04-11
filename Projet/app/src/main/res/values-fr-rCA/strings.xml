@@ -46,4 +46,11 @@
     <string name="network_page_description">Consommation de bande passante de de l\'application</string>
     <string name="permissions_page_name">Permissions</string>
     <string name="permissions_page_description">Gestions des autorisations</string>
+    <string name="network_stats_disclaimer">Les statistiques sont mesurées au niveau de la couche réseau, elles incluent donc à la fois l\'utilisation TCP et UDP</string>
+    <string name="network_mobile">Mobile</string>
+    <string name="network_network">WiFi &amp; LAN</string>
+    <string name="network_total">Total</string>
+    <string name="network_process">Processus</string>
+    <string name="network_since_activity_created">Depuis le lancement de l\'application</string>
+    <string name="network_since_activity_resumed">Depuis la reprise de l\'application</string>
 </resources>

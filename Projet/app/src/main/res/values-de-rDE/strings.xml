@@ -45,4 +45,11 @@
     <string name="network_page_description">Verbrauch der Anwendungsbandbreite</string>
     <string name="permissions_page_name">Berechtigungen</string>
     <string name="permissions_page_description">Berechtigungsverwaltung</string>
+    <string name="network_stats_disclaimer">Statistiken werden auf der Netzwerkebene gemessen, daher umfassen sie sowohl die TCP- als auch die UDP-Nutzung</string>
+    <string name="network_mobile">Mobil</string>
+    <string name="network_network">WLAN &amp; LAN</string>
+    <string name="network_total">Gesamt</string>
+    <string name="network_process">Prozess</string>
+    <string name="network_since_activity_created">Seit dem Start der Anwendung</string>
+    <string name="network_since_activity_resumed">Seit der Wiederaufnahme der Anwendung</string>
 </resources>
