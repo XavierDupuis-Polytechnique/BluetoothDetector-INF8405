@@ -3,8 +3,7 @@ package com.example.bluetoothdetector.main.repository
 import androidx.compose.runtime.mutableStateOf
 import com.example.bluetoothdetector.main.domain.BytesStats
 
-class NetworkRepository(
-) {
+class NetworkRepository {
 
     fun updateResumedBytes(bytesStats: BytesStats = BytesStats()) {
         activityResumedBytes = bytesStats

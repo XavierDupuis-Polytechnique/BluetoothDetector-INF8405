@@ -1,11 +1,11 @@
 package com.example.bluetoothdetector.main.view
 
-import android.widget.ToggleButton
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.Switch
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
@@ -13,19 +13,16 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
-import com.example.bluetoothdetector.common.view.containers.WeightedCard
 import com.example.bluetoothdetector.common.view.typography.Subtitle
 import com.example.bluetoothdetector.common.view.typography.Title
 import com.example.bluetoothdetector.main.domain.BidirectionalBytes
 import com.example.bluetoothdetector.main.domain.BytesStats
 import com.example.bluetoothdetector.main.viewmodel.NetworkViewModel
-import com.example.bluetoothdetector.ui.theme.accepted
 
 
 @Composable
