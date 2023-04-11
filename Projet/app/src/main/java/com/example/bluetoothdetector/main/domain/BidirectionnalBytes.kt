@@ -10,4 +10,9 @@ data class BidirectionalBytes(
             Rx - other.Rx,
         )
     }
+
+    val combined: Long
+        get() {
+            return Tx + Rx
+        }
 }

@@ -26,4 +26,9 @@ data class BytesStats(
             process - other.process,
         )
     }
+
+    val processRatio: Float
+        get() {
+            return process.combined.toFloat().div(total.combined)
+        }
 }

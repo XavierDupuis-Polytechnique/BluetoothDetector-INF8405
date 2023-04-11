@@ -50,6 +50,9 @@
     <string name="network_network">WLAN &amp; LAN</string>
     <string name="network_total">Gesamt</string>
     <string name="network_process">Prozess</string>
-    <string name="network_since_activity_created">Seit dem Start der Anwendung</string>
-    <string name="network_since_activity_resumed">Seit der Wiederaufnahme der Anwendung</string>
+    <string name="network_since_application_was">Seit der Anwendung war</string>
+    <string name="launched">Gestartet</string>
+    <string name="resumed">Fortgesetzt</string>
+    <string name="network_percent_was_used_for_process">Der Prozess verbrauchte %.2f %% der gesamten Netzwerknutzung des Geräts</string>
+    <string name="refresh">Aktualisierung</string>
 </resources>

@@ -1,16 +1,19 @@
 package com.example.bluetoothdetector.main.view
 
+import android.widget.ToggleButton
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.view.containers.CardContainer
@@ -18,9 +21,11 @@ import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalCo
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.common.view.containers.WeightedCard
 import com.example.bluetoothdetector.common.view.typography.Subtitle
+import com.example.bluetoothdetector.common.view.typography.Title
 import com.example.bluetoothdetector.main.domain.BidirectionalBytes
 import com.example.bluetoothdetector.main.domain.BytesStats
 import com.example.bluetoothdetector.main.viewmodel.NetworkViewModel
+import com.example.bluetoothdetector.ui.theme.accepted
 
 
 @Composable
@@ -29,37 +34,39 @@ fun NetworkView(
 ) {
     CenteredVerticalContainer {
 
-        IconButton(onClick = { viewModel.refresh() }) {
-            Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
+        Title(R.string.network_since_application_was)
+        CenteredHorizontalContainer {
+            Subtitle(R.string.resumed)
+            Switch(
+                checked = viewModel.isStatsSinceCreatedDisplayed.value,
+                onCheckedChange = { viewModel.toggleStatsDisplayed() }
+            )
+            Subtitle(R.string.launched)
         }
 
-        CenteredHorizontalContainer {
-            WeightedCard(weight = 0.5f) {
-                BytesStatsView(
-                    R.string.network_since_activity_created,
-                    viewModel.networkRepository.bytesSinceCreated.value
-                )
-            }
+        val bytesStats = if (viewModel.isStatsSinceCreatedDisplayed.value)
+            viewModel.networkRepository.bytesSinceCreated
+        else
+            viewModel.networkRepository.bytesSinceResumed
 
-            WeightedCard(weight = 0.5f) {
-                BytesStatsView(
-                    R.string.network_since_activity_resumed,
-                    viewModel.networkRepository.bytesSinceResumed.value
-                )
-            }
+        CardContainer {
+            BytesStatsView(bytesStats.value)
         }
 
         Subtitle(R.string.network_stats_disclaimer)
+
+        Button(onClick = { viewModel.refresh() }) {
+            Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
+            Text(stringResource(R.string.refresh))
+        }
     }
 }
 
 @Composable
 fun BytesStatsView(
-    bytesOrigin: Int,
     bytesStats: BytesStats
 ) {
     CenteredVerticalContainer {
-        Subtitle(bytesOrigin)
         BidirectionalBytesStatsView(
             R.string.network_mobile,
             bytesStats.mobile
@@ -76,6 +83,7 @@ fun BytesStatsView(
             R.string.network_process,
             bytesStats.process
         )
+        Text(stringResource(R.string.network_percent_was_used_for_process, bytesStats.processRatio))
     }
 }
 
