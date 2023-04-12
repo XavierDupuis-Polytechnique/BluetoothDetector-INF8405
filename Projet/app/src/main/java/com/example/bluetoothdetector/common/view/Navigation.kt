@@ -15,6 +15,7 @@ import com.example.bluetoothdetector.common.view.page.ContentPage
 import com.example.bluetoothdetector.common.view.page.PageWithHeader
 import com.example.bluetoothdetector.common.view.permissions.PermissionsView
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
+import com.example.bluetoothdetector.login.LoginScreen
 import com.example.bluetoothdetector.main.view.DevicesListView
 import com.example.bluetoothdetector.main.view.MainScreen
 import com.example.bluetoothdetector.main.view.MapView
@@ -52,7 +53,9 @@ fun Navigation(
                 }
 
                 pageComposable(Page.ACCOUNT) {
-                    Text("TODO Account")
+                    LoginScreen(onNavToHomePage = { /*TODO*/ }) {
+                        
+                    }
                 }
 
                 pageComposable(Page.ENERGY) {
