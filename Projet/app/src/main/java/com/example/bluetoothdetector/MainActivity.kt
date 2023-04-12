@@ -24,6 +24,7 @@ import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.repository.NetworkRepository
+import com.example.bluetoothdetector.main.repository.SensorRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -47,6 +48,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var networkRepository: NetworkRepository
 
+    @Inject
+    lateinit var sensorRepository: SensorRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -62,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         networkRepository.updateCreatedBytes()
+        sensorRepository.getSensorList()
     }
 
     override fun onResume() {
