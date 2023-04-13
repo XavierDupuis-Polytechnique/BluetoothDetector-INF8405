@@ -15,6 +15,7 @@ import com.example.bluetoothdetector.common.view.page.ContentPage
 import com.example.bluetoothdetector.common.view.page.PageWithHeader
 import com.example.bluetoothdetector.common.view.permissions.PermissionsView
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
+import com.example.bluetoothdetector.home.Home
 import com.example.bluetoothdetector.login.LoginScreen
 import com.example.bluetoothdetector.main.view.DevicesListView
 import com.example.bluetoothdetector.main.view.MainScreen
@@ -41,7 +42,7 @@ fun Navigation(
                 }
 
                 pageComposable(Page.MAIN) {
-                    MainScreen()
+                    Home()
                 }
 
                 pageComposable(Page.MAP) {

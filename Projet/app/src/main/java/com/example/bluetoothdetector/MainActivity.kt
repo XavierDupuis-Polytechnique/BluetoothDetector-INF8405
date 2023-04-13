@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -16,11 +17,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bluetoothdetector.common.domain.LanguageStateSaver
 import com.example.bluetoothdetector.common.repository.LanguageRepository
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
+import com.example.bluetoothdetector.login.LoginViewModel
 import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.repository.NetworkRepository
@@ -50,6 +53,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val loginViewModel = viewModel(modelClass = LoginViewModel::class.java)
+
+
+
             MainContent(themeRepository, languageRepository)
         }
         bluetoothRepository.bluetoothStarted = false
@@ -174,5 +181,6 @@ fun MainContent(
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    BluetoothDetectorTheme {}
+    BluetoothDetectorTheme {
+    }
 }

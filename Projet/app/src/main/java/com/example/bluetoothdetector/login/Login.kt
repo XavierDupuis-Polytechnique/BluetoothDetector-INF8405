@@ -13,12 +13,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bluetoothdetector.common.Navigation
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 
 
 @Composable
 fun LoginScreen(
-    LoginViewModel: LoginViewModel? = null,
+    LoginViewModel: LoginViewModel? = viewModel(),
     onNavToHomePage:() -> Unit,
     onNavToSignUpPage:() -> Unit,
 ) {
@@ -232,6 +234,7 @@ fun SignUpScreen(
             TextButton(onClick = { onNavToLoginPage.invoke()}) {
                 Text(text = "Sign Up" )
             }
+
         }
 
         if (loginUiState?.isLoading == true){
@@ -242,6 +245,8 @@ fun SignUpScreen(
                 onNavToHomePage.invoke()
             }
         }
+
+
 
 
     }
@@ -257,6 +262,7 @@ fun prevloginScreen(){
     BluetoothDetectorTheme(){
         LoginScreen(onNavToHomePage = { /*TODO*/ }) {
 
+
         }
     }
 }
@@ -269,10 +275,5 @@ fun prevSignUpScreen(){
 
         }
     }
-}
-@Preview(showSystemUi = true)
-@Composable
-fun test(){
-    Text(text = "firebase" )
 }
 
