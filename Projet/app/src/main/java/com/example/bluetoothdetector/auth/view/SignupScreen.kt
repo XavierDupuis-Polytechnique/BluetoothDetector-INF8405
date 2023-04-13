@@ -18,7 +18,7 @@ fun SignupScreen(
         Page.SIGNUP,
         navController,
         authViewModel,
-        { authViewModel.loginUser(it) },
+        { authViewModel.signup(it) },
         Page.LOGIN,
         R.string.auth_already_have_an_account
     ) {

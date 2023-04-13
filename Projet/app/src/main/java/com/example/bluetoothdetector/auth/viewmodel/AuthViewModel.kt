@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val repository: AuthRepository
-):ViewModel() {
+) : ViewModel() {
     val currentUser = repository.currentUser
 
     val hasUser: Boolean
@@ -27,19 +27,23 @@ class AuthViewModel @Inject constructor(
     var authState by mutableStateOf(AuthState())
         private set
 
-    fun onUserNameChange(userName: String){
+    fun onUserNameChange(userName: String) {
         authState = authState.copy(username = userName)
     }
-    fun onPasswordChange(password: String){
+
+    fun onPasswordChange(password: String) {
         authState = authState.copy(password = password)
     }
-    fun onUserNameChangeSignup(userName: String){
+
+    fun onUserNameChangeSignup(userName: String) {
         authState = authState.copy(userNameSignUp = userName)
     }
-    fun onPasswordChangeSignup(password: String){
+
+    fun onPasswordChangeSignup(password: String) {
         authState = authState.copy(passwordSignUp = password)
     }
-    fun onConfirmPasswordChange(password: String){
+
+    fun onConfirmPasswordChange(password: String) {
         authState = authState.copy(confirmPasswordSignUp = password)
     }
 
@@ -53,46 +57,46 @@ class AuthViewModel @Inject constructor(
                 authState.confirmPasswordSignUp.isNotBlank()
 
 
-
-    fun createUser(context: Context) = viewModelScope.launch {
+    fun signup(context: Context) = viewModelScope.launch {
         println(authState)
         try {
-            if (!validateSignupForm()){
+            if (!validateSignupForm()) {
                 throw java.lang.IllegalArgumentException("email and password can not be empty")
             }
             authState = authState.copy(isLoading = true)
             if (authState.passwordSignUp !=
-                    authState.confirmPasswordSignUp){
+                authState.confirmPasswordSignUp
+            ) {
                 throw IllegalArgumentException(
                     "Password do not match"
                 )
             }
             authState = authState.copy(signUpError = null)
-            repository.createUser(
+            repository.signup(
                 authState.userNameSignUp,
                 authState.passwordSignUp
-            ){ isSuccessful ->
+            ) { isSuccessful ->
                 authState = if (isSuccessful) {
-                    Toast.makeText(context, "success Login",Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "success Login", Toast.LENGTH_LONG).show()
                     authState.copy(isSuccessLogin = true)
-                }else{
-                    Toast.makeText(context, "Failed Login",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "Failed Login", Toast.LENGTH_LONG).show()
                     authState.copy(isSuccessLogin = false)
                 }
             }
 
 
-
-        }catch (e:Exception){
+        } catch (e: Exception) {
             authState = authState.copy(signUpError = e.localizedMessage)
             e.printStackTrace()
-        }finally {
+        } finally {
             authState = authState.copy(isLoading = false)
         }
     }
-    fun loginUser(context: Context)= viewModelScope.launch {
+
+    fun login(context: Context) = viewModelScope.launch {
         try {
-            if (!validateLoginForm()){
+            if (!validateLoginForm()) {
                 throw java.lang.IllegalArgumentException("email and password can not be empty")
             }
             authState = authState.copy(isLoading = true)
@@ -100,27 +104,27 @@ class AuthViewModel @Inject constructor(
             repository.login(
                 authState.username,
                 authState.password
-            ){ isSuccessful ->
-                if (isSuccessful){
-                    Toast.makeText(context, "success Login",Toast.LENGTH_LONG).show()
+            ) { isSuccessful ->
+                if (isSuccessful) {
+                    Toast.makeText(context, "success Login", Toast.LENGTH_LONG).show()
                     authState = authState.copy(isSuccessLogin = true)
-                }else{
-                    Toast.makeText(context, "Failed Login",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "Failed Login", Toast.LENGTH_LONG).show()
                     authState = authState.copy(isSuccessLogin = false)
                 }
             }
 
 
-
-        }catch (e:Exception){
+        } catch (e: Exception) {
             authState = authState.copy(loginError = e.localizedMessage)
             e.printStackTrace()
-        }finally {
+        } finally {
             authState = authState.copy(isLoading = false)
         }
     }
+
     fun logout() {
-        TODO("Not yet implemented")
+        // TODO
     }
 
     fun navigate(navController: NavHostController, page: Page) {

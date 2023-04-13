@@ -19,7 +19,7 @@ fun LoginScreen(
         Page.LOGIN,
         navController,
         authViewModel,
-        { authViewModel.createUser(it) },
+        { authViewModel.login(it) },
         Page.SIGNUP,
         R.string.auth_dont_have_an_account
     ) {

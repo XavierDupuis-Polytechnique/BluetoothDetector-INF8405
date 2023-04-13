@@ -19,7 +19,7 @@ class AuthRepository @Inject constructor(
 
     fun getUserId(): String = Firebase.auth.currentUser?.uid.orEmpty()
 
-    suspend fun createUser(
+    suspend fun signup(
         email: String,
         password: String,
         onComplete: (Boolean) -> Unit
