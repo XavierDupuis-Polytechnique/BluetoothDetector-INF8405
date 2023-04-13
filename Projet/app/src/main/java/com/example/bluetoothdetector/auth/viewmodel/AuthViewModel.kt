@@ -28,7 +28,7 @@ class AuthViewModel @Inject constructor(
         private set
 
     fun onUserNameChange(userName: String){
-        authState = authState.copy(userName = userName)
+        authState = authState.copy(username = userName)
     }
     fun onPasswordChange(password: String){
         authState = authState.copy(password = password)
@@ -44,7 +44,7 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun validateLoginForm() =
-        authState.userName.isNotBlank() &&
+        authState.username.isNotBlank() &&
                 authState.password.isNotBlank()
 
     private fun validateSignupForm() =
@@ -55,6 +55,7 @@ class AuthViewModel @Inject constructor(
 
 
     fun createUser(context: Context) = viewModelScope.launch {
+        println(authState)
         try {
             if (!validateSignupForm()){
                 throw java.lang.IllegalArgumentException("email and password can not be empty")
@@ -97,7 +98,7 @@ class AuthViewModel @Inject constructor(
             authState = authState.copy(isLoading = true)
             authState = authState.copy(loginError = null)
             repository.login(
-                authState.userName,
+                authState.username,
                 authState.password
             ){ isSuccessful ->
                 if (isSuccessful){

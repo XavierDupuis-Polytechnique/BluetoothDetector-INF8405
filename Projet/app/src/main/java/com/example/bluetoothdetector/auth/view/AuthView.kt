@@ -23,16 +23,16 @@ import com.example.bluetoothdetector.common.view.typography.Title
 
 @Composable
 fun AuthView(
-    title: String,
+    page: Page,
     navController: NavHostController,
     authViewModel: AuthViewModel,
     confirm: (Context) -> Unit,
     redirectPage: Page,
-    redirectMessage: String,
+    redirectMessage: Int,
     fields: @Composable () -> Unit,
 ) {
     CenteredVerticalContainer {
-        Title(title)
+        Title(page.denomination)
         authViewModel.authState.signUpError?.let {
             Subtitle(
                 subtitle = it,
@@ -41,17 +41,17 @@ fun AuthView(
         }
         fields()
         Spacer(modifier = Modifier.size(16.dp))
-        ConfirmButton(title, confirm)
+        ConfirmButton(page.description, confirm)
         Spacer(modifier = Modifier.size(16.dp))
         Redirect(navController, authViewModel, redirectPage, redirectMessage)
     }
 }
 
 @Composable
-fun ConfirmButton(title: String, confirm: (Context) -> Unit) {
+fun ConfirmButton(value: Int, confirm: (Context) -> Unit) {
     val context = LocalContext.current
     Button(onClick = { confirm(context) }) {
-        Text(text = title)
+        Text(stringResource(value))
     }
 }
 
@@ -61,13 +61,13 @@ fun Redirect(
     navController: NavHostController,
     authViewModel: AuthViewModel,
     redirectPage: Page,
-    redirectMessage: String
+    redirectMessage: Int
 ) {
     CenteredHorizontalContainer {
         Subtitle(redirectMessage)
         Spacer(modifier = Modifier.size(8.dp))
         TextButton(onClick = { authViewModel.navigate(navController, redirectPage)}) {
-            Text(stringResource(redirectPage.denomination))
+            Text(stringResource(redirectPage.description))
         }
 
     }

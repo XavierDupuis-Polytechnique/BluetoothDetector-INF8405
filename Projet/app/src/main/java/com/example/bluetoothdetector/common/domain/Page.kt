@@ -61,16 +61,16 @@ enum class Page(
         icon = Icons.Default.SettingsApplications
     ),
     SIGNUP(
-        denomination = R.string.no_string, // R.string.signup_page_name,
+        denomination = R.string.auth_signup,
         route = "SIGNUP",
-        description = R.string.no_string, // R.string.signup_page_description,
+        description = R.string.auth_signup_description,
         icon = Icons.Default.PersonAdd,
         inMenu = false
     ),
     LOGIN(
-        denomination = R.string.no_string, // R.string.login_page_name,
+        denomination = R.string.auth_login,
         route = "LOGIN",
-        description = R.string.no_string, // R.string.login_page_description,
+        description = R.string.auth_login_description,
         icon = Icons.Default.Login,
         inMenu = false
     );
