@@ -13,7 +13,12 @@ class SensorRepository(private val context: Context) {
 
     fun getSensorList() {
         println("----------------------------------------------------------------AAA----------------------------------------------------------------")
-        println(mSensorManager.getSensorList(android.hardware.Sensor.TYPE_ALL))
+        var a = mSensorManager.getSensorList(android.hardware.Sensor.TYPE_ALL)
+        for (i in a) {
+            println(i.name)
+        }
+
+
         println("----------------------------------------------------------------BBB----------------------------------------------------------------")
 
     }
