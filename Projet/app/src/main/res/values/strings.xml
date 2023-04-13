@@ -61,4 +61,16 @@
     <string name="resumed">Resumed</string>
     <string name="network_percent_was_used_for_process">The process consumed %.2f %% of the device\'s total network usage</string>
     <string name="refresh">Refresh</string>
+    <string name="auth_username">Username</string>
+    <string name="auth_password">Password</string>
+    <string name="auth_confirm_password">Confirm password</string>
+    <string name="auth_hidden_password" translatable="false">********</string>
+    <string name="auth_change_account">Want to switch account?</string>
+    <string name="auth_account">Account</string>
+    <string name="auth_signup">Sign up</string>
+    <string name="auth_already_have_an_account">Already have an account?</string>
+    <string name="auth_login">Login</string>
+    <string name="auth_dont_have_an_account">Don\'t have an account?</string>
+    <string name="auth_signup_description">Sign up</string>
+    <string name="auth_login_description">Login</string>
 </resources>

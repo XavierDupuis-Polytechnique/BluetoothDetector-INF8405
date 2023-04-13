@@ -55,4 +55,15 @@
     <string name="resumed">Fortgesetzt</string>
     <string name="network_percent_was_used_for_process">Der Prozess verbrauchte %.2f %% der gesamten Netzwerknutzung des Geräts</string>
     <string name="refresh">Aktualisierung</string>
+    <string name="auth_username">Benutzername</string>
+    <string name="auth_password">Passwort</string>
+    <string name="auth_confirm_password">Passwort bestätigen</string>
+    <string name="auth_change_account">Willst du das Konto wechseln?</string>
+    <string name="auth_account">Konto</string>
+    <string name="auth_signup">Anmeldung</string>
+    <string name="auth_already_have_an_account">Du hast bereits ein Konto?</string>
+    <string name="auth_login">Anmelden</string>
+    <string name="auth_dont_have_an_account">Du hast kein Konto?</string>
+    <string name="auth_signup_description">Anmeldung</string>
+    <string name="auth_login_description">Anmelden</string>
 </resources>
