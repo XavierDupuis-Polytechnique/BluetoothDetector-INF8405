@@ -94,6 +94,8 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+
+
     fun login(context: Context) = viewModelScope.launch {
         try {
             if (!validateLoginForm()) {
@@ -124,7 +126,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun logout() {
-        // TODO
+        repository.signOut()
     }
 
     fun navigate(navController: NavHostController, page: Page) {

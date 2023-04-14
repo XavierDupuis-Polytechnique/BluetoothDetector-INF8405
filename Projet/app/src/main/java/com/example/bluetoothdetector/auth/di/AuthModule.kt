@@ -2,6 +2,9 @@ package com.example.bluetoothdetector.auth.di
 
 import android.content.Context
 import com.example.bluetoothdetector.auth.repository.AuthRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,10 +18,16 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AuthModule {
 
+    // Provides a single instance of the Firebase.auth
+    @Singleton
+    @Provides
+    fun provideFirebaseAuth() = Firebase.auth
+
     // Provides a single instance of the AuthRepository
     @Singleton
     @Provides
     fun provideAuthRepository(
-        @ApplicationContext context: Context
-    ) = AuthRepository(context)
+        @ApplicationContext context: Context,
+        firebaseAuth: FirebaseAuth
+    ) = AuthRepository(context, firebaseAuth)
 }
