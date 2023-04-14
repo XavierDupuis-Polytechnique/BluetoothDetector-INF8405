@@ -73,7 +73,7 @@ class AuthViewModel @Inject constructor(
             }
             authState = authState.copy(signUpError = null)
             repository.signup(
-                authState.userNameSignUp,
+                authState.userNameSignUp.appendEmail(),
                 authState.passwordSignUp
             ) { isSuccessful ->
                 authState = if (isSuccessful) {
@@ -102,7 +102,7 @@ class AuthViewModel @Inject constructor(
             authState = authState.copy(isLoading = true)
             authState = authState.copy(loginError = null)
             repository.login(
-                authState.username,
+                authState.username.appendEmail(),
                 authState.password
             ) { isSuccessful ->
                 if (isSuccessful) {
@@ -130,4 +130,8 @@ class AuthViewModel @Inject constructor(
     fun navigate(navController: NavHostController, page: Page) {
         navController.navigate(page.route)
     }
+}
+
+private fun String.appendEmail(): String {
+    return plus("@inf8405.com")
 }
