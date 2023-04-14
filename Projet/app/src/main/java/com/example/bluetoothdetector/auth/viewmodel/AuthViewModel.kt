@@ -57,7 +57,7 @@ class AuthViewModel @Inject constructor(
                 authState.confirmPasswordSignUp.isNotBlank()
 
 
-    fun signup(context: Context) = viewModelScope.launch {
+    fun signup(context: Context, navController: NavHostController) = viewModelScope.launch {
         println(authState)
         try {
             if (!validateSignupForm()) {
@@ -78,6 +78,7 @@ class AuthViewModel @Inject constructor(
             ) { isSuccessful ->
                 authState = if (isSuccessful) {
                     Toast.makeText(context, "success Login", Toast.LENGTH_LONG).show()
+                    navigate(navController, Page.ACCOUNT)
                     authState.copy(isSuccessLogin = true)
                 } else {
                     Toast.makeText(context, "Failed Login", Toast.LENGTH_LONG).show()
@@ -96,7 +97,7 @@ class AuthViewModel @Inject constructor(
 
 
 
-    fun login(context: Context) = viewModelScope.launch {
+    fun login(context: Context, navController: NavHostController) = viewModelScope.launch {
         try {
             if (!validateLoginForm()) {
                 throw java.lang.IllegalArgumentException("email and password can not be empty")
@@ -110,6 +111,7 @@ class AuthViewModel @Inject constructor(
                 if (isSuccessful) {
                     Toast.makeText(context, "success Login", Toast.LENGTH_LONG).show()
                     authState = authState.copy(isSuccessLogin = true)
+                    navigate(navController, Page.ACCOUNT)
                 } else {
                     Toast.makeText(context, "Failed Login", Toast.LENGTH_LONG).show()
                     authState = authState.copy(isSuccessLogin = false)
@@ -125,7 +127,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun logout() {
+    fun signOut() {
         repository.signOut()
     }
 
@@ -136,4 +138,8 @@ class AuthViewModel @Inject constructor(
 
 private fun String.appendEmail(): String {
     return plus("@inf8405.com")
+}
+
+fun String.removeEmail(): String {
+    return removeSuffix("@inf8405.com")
 }

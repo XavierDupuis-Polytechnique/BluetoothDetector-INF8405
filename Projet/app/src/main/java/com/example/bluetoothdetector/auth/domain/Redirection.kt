@@ -24,5 +24,5 @@ val SignupRedirection = Redirection(
 val AccountRedirection = Redirection(
     page = Page.LOGIN,
     message = R.string.auth_already_have_an_account,
-    action = { it.logout() }
+    action = { it.signOut() }
 )

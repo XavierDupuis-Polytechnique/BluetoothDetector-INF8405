@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.R
+import com.example.bluetoothdetector.auth.domain.SignupRedirection
 
 @Composable
 fun SignupScreen(
@@ -18,9 +19,8 @@ fun SignupScreen(
         Page.SIGNUP,
         navController,
         authViewModel,
-        { authViewModel.signup(it) },
-        Page.LOGIN,
-        R.string.auth_already_have_an_account
+        SignupRedirection,
+        { authViewModel.signup(it, navController) },
     ) {
         UsernameField(authViewModel)
         PasswordField(authViewModel)

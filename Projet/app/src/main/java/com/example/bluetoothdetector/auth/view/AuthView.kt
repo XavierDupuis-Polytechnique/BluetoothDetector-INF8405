@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.bluetoothdetector.auth.domain.Redirection
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.view.SpinnerView
@@ -26,24 +27,26 @@ fun AuthView(
     page: Page,
     navController: NavHostController,
     authViewModel: AuthViewModel,
-    confirm: (Context) -> Unit,
-    redirectPage: Page,
-    redirectMessage: Int,
-    fields: @Composable () -> Unit,
+    redirection: Redirection,
+    confirm: ((Context) -> Unit)? = null,
+    content: @Composable () -> Unit,
 ) {
     CenteredVerticalContainer {
         Title(page.denomination)
+        Spacer(modifier = Modifier.size(16.dp))
+        content()
         authViewModel.authState.signUpError?.let {
             Subtitle(
                 subtitle = it,
                 color = MaterialTheme.colors.error
             )
         }
-        fields()
         Spacer(modifier = Modifier.size(16.dp))
-        ConfirmButton(page.description, confirm)
+        confirm?.let {
+            ConfirmButton(page.description, confirm)
+        }
         Spacer(modifier = Modifier.size(16.dp))
-        Redirect(navController, authViewModel, redirectPage, redirectMessage)
+        Redirect(navController, authViewModel, redirection)
     }
 }
 
@@ -60,14 +63,16 @@ fun ConfirmButton(value: Int, confirm: (Context) -> Unit) {
 fun Redirect(
     navController: NavHostController,
     authViewModel: AuthViewModel,
-    redirectPage: Page,
-    redirectMessage: Int
+    redirection: Redirection,
 ) {
     CenteredHorizontalContainer {
-        Subtitle(redirectMessage)
+        Subtitle(redirection.message)
         Spacer(modifier = Modifier.size(8.dp))
-        TextButton(onClick = { authViewModel.navigate(navController, redirectPage)}) {
-            Text(stringResource(redirectPage.description))
+        TextButton(onClick = {
+            redirection.action?.let { it(authViewModel) }
+            authViewModel.navigate(navController, redirection.page)
+        }) {
+            Text(stringResource(redirection.label))
         }
 
     }
