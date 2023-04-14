@@ -1,6 +1,5 @@
 package com.example.bluetoothdetector.main.model
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.os.ParcelUuid
@@ -8,7 +7,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.bluetoothdetector.R
-import java.text.SimpleDateFormat
+import com.example.bluetoothdetector.common.domain.formatter.formatDate
+import com.example.bluetoothdetector.common.domain.formatter.formatLocation
 import java.util.*
 
 // Device with related/pertinent information
@@ -53,18 +53,13 @@ data class Device(
             return "${devicePrefix}${currentDeviceId++}"
         }
 
-        // Formats date (simplifies date & time)
-        @SuppressLint("SimpleDateFormat")
-        private val DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
         fun formatDate(device: Device): String {
-            return DateFormat.format(device.date)
+            return device.date.formatDate()
         }
 
         // Formats location (trims digits)
-        fun formatLocation(value: Double, digits: Int = 6): String {
-            return value.format(digits)
+        fun formatLocation(value: Double): String {
+            return value.formatLocation()
         }
     }
 }
-
-fun Double.format(digits: Int) = "%.${digits}f".format(this)
