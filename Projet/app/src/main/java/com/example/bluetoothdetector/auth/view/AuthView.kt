@@ -77,7 +77,7 @@ fun Redirect(
 
     }
 
-    if (authViewModel.authState.isLoading){
+    if (authViewModel.authState.isLoading) {
         SpinnerView()
     }
 

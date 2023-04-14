@@ -12,14 +12,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.bluetoothdetector.auth.view.AccountScreen
+import com.example.bluetoothdetector.auth.view.LoginScreen
+import com.example.bluetoothdetector.auth.view.SignupScreen
+import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.view.page.ContentPage
 import com.example.bluetoothdetector.common.view.page.PageWithHeader
 import com.example.bluetoothdetector.common.view.permissions.PermissionsView
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
-import com.example.bluetoothdetector.auth.view.LoginScreen
-import com.example.bluetoothdetector.auth.view.SignupScreen
-import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.main.view.DevicesListView
 import com.example.bluetoothdetector.main.view.MainScreen
 import com.example.bluetoothdetector.main.view.MapView

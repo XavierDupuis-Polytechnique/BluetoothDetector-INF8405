@@ -96,7 +96,6 @@ class AuthViewModel @Inject constructor(
     }
 
 
-
     fun login(context: Context, navController: NavHostController) = viewModelScope.launch {
         try {
             if (!validateLoginForm()) {

@@ -1,13 +1,8 @@
 package com.example.bluetoothdetector.auth.view
 
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Fingerprint
-import androidx.compose.material.icons.filled.Password
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
-import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.auth.domain.AccountRedirection
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.auth.viewmodel.removeEmail
@@ -15,7 +10,7 @@ import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.domain.formatter.formatDate
 import com.example.bluetoothdetector.common.view.typography.Subtitle
 import com.google.firebase.auth.FirebaseUser
-import java.util.Date
+import java.util.*
 
 @Composable
 fun AccountScreen(
