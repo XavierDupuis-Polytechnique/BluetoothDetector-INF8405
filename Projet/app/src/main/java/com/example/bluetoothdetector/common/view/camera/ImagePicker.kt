@@ -19,7 +19,7 @@ import com.example.bluetoothdetector.common.viewmodel.ImagePickerViewModel
 @Composable
 fun ImagePicker(
     viewModel: ImagePickerViewModel = hiltViewModel(),
-    imageContent: @Composable (Uri) -> Unit
+    imageContent: @Composable (Uri) -> Unit = { ImagePreview(it) }
 ) {
     val pickImageLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
