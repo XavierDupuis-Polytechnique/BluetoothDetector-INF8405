@@ -14,10 +14,6 @@
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
     <uses-feature android:name="android.hardware.camera.any" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
 
     <application
         android:name=".BluetoothDetector"
@@ -30,6 +26,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BluetoothDetector"
         tools:targetApi="31">
+
+        <provider
+            android:name="com.example.bluetoothdetector.common.sources.ImageFileProvider"
+            android:authorities="com.example.bluetoothdetector"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths" />
+        </provider>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
