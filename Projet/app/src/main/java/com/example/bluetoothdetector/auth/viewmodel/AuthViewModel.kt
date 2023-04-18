@@ -9,19 +9,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.auth.model.AuthState
-import com.example.bluetoothdetector.auth.repository.AuthRepository
+import com.example.bluetoothdetector.auth.repository.AccountRepository
 import com.example.bluetoothdetector.common.domain.Page
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val repository: AuthRepository
+    private val accountRepository: AccountRepository
 ) : ViewModel() {
-    val currentUser = repository.currentUser
+    val currentUser = accountRepository.currentUser
 
-    val hasUser = repository.hasUser
+    val hasUser = accountRepository.hasUser
 
     var authState by mutableStateOf(AuthState())
         private set
@@ -71,7 +73,7 @@ class AuthViewModel @Inject constructor(
                 )
             }
             authState = authState.copy(signUpError = null)
-            repository.signup(
+            accountRepository.signup(
                 authState.userNameSignUp.appendEmail(),
                 authState.passwordSignUp
             ) { isSuccessful ->
@@ -102,7 +104,7 @@ class AuthViewModel @Inject constructor(
             }
             authState = authState.copy(isLoading = true)
             authState = authState.copy(loginError = null)
-            repository.login(
+            accountRepository.login(
                 authState.username.appendEmail(),
                 authState.password
             ) { isSuccessful ->
@@ -125,8 +127,8 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun signOut() {
-        repository.signOut()
+    fun signOut() = viewModelScope.launch {
+        accountRepository.signOut()
     }
 
     fun navigate(navController: NavHostController, page: Page) {
