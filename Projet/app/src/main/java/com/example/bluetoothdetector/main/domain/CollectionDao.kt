@@ -10,7 +10,7 @@ interface CollectionDao<T> {
     suspend fun insertAll(vararg instances: T)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(device: T)
+    suspend fun insert(instance: T)
 
     @Update
     suspend fun update(instance: T)
