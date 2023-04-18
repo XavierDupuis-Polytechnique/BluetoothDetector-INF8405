@@ -66,4 +66,7 @@
     <string name="auth_dont_have_an_account">Du hast kein Konto?</string>
     <string name="auth_signup_description">Anmeldung</string>
     <string name="auth_login_description">Anmelden</string>
+    <string name="auth_welcome_back">Willkommen zurück %s !</string>
+    <string name="auth_account_created">Konto erstellt : %s</string>
+    <string name="auth_last_sign_in">Letztes Verbindung : %s</string>
 </resources>
