@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.startActivity
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.main.model.Device
-import com.example.bluetoothdetector.main.sources.DeviceSource
+import com.example.bluetoothdetector.main.sources.CollectionSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -22,10 +22,10 @@ import javax.inject.Singleton
 @Singleton
 class DeviceRepository @Inject constructor(
     private val context: Context,
-    private val deviceSource: DeviceSource
+    private val collectionSource: CollectionSource<Device, String>
 ) {
     // Holds the current device count
-    val deviceCount: Flow<Int> = deviceSource.observeDeviceCount()
+    val deviceCount: Flow<Int> = collectionSource.observeInstanceCount()
 
     // Holds the current mac addresses mapped to the related device
     val devices: MutableMap<String, Device> = mutableStateMapOf()
@@ -37,7 +37,12 @@ class DeviceRepository @Inject constructor(
     val highlightedDevice = mutableStateOf<Device?>(null)
 
     init {
-        deviceSource.populateDevices(devices, favoriteDevices)
+        collectionSource.populate(
+            devices,
+            favoriteDevices,
+            { it.macAddress },
+            { it.isFavorite },
+        )
     }
 
 
@@ -91,7 +96,7 @@ class DeviceRepository @Inject constructor(
     fun forgetDevice(device: Device) {
         devices -= device.macAddress
         CoroutineScope(Dispatchers.IO).launch {
-            deviceSource.delete(device)
+            collectionSource.delete(device)
         }
     }
 
@@ -99,7 +104,7 @@ class DeviceRepository @Inject constructor(
     fun forgetAll() {
         devices.clear()
         CoroutineScope(Dispatchers.IO).launch {
-            deviceSource.deleteAll()
+            collectionSource.deleteAll()
         }
     }
 
@@ -107,7 +112,7 @@ class DeviceRepository @Inject constructor(
     fun addDevice(device: Device) {
         devices += device.macAddress to device
         CoroutineScope(Dispatchers.IO).launch {
-            deviceSource.insert(device)
+            collectionSource.insert(device)
         }
     }
 
