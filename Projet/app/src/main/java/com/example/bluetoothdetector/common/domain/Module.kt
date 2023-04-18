@@ -34,6 +34,7 @@ val DetectorModule = Module(
         listOf(
             Manifest.permission.BLUETOOTH,
             Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
         )
     } else {
         listOf(
@@ -41,6 +42,7 @@ val DetectorModule = Module(
             Manifest.permission.BLUETOOTH_ADMIN,
             Manifest.permission.BLUETOOTH_CONNECT, // API 31+
             Manifest.permission.BLUETOOTH_SCAN, // API 31+
+            Manifest.permission.ACCESS_COARSE_LOCATION,
         )
     }
 )
