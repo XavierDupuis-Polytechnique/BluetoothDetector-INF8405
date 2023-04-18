@@ -74,7 +74,7 @@ fun Location.toLatLng(): LatLng {
 fun LatLng.toLocation(): Location {
     val other = this
     return Location("").apply {
-            latitude = other.latitude
-            longitude = other.longitude
-        }
+        latitude = other.latitude
+        longitude = other.longitude
+    }
 }
