@@ -49,7 +49,7 @@ fun DevicesListView(
     }
     CenteredVerticalContainer {
         CenteredHorizontalContainer {
-            val deviceCount = viewModel.deviceCount
+            val deviceCount = sortedDevices.size
             Text(pluralStringResource(R.plurals.recorded_devices, deviceCount, deviceCount))
             Spacer(modifier = Modifier.padding(horizontal = 8.dp))
             DeviceButton(
