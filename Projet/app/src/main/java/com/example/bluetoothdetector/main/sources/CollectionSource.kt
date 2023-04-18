@@ -1,11 +1,8 @@
 package com.example.bluetoothdetector.main.sources
 
 import androidx.compose.runtime.MutableState
-import androidx.room.Dao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 interface CollectionSource<InstanceType, IdType> {
@@ -21,7 +18,11 @@ interface CollectionSource<InstanceType, IdType> {
             CoroutineScope(Dispatchers.IO).launch {
                 safeOperation {
                     instances.putAll(savedInstances.associateBy { association(it) })
-                    favorites.value += favorites.value.plus(savedInstances.filter { favoriteFilter(it) })
+                    favorites.value += favorites.value.plus(savedInstances.filter {
+                        favoriteFilter(
+                            it
+                        )
+                    })
                 }
             }
         }

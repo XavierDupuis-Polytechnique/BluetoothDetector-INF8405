@@ -14,7 +14,7 @@ import com.google.firebase.firestore.Exclude
 import java.util.*
 
 // Device with related/pertinent information
- @Entity(tableName = "devices")
+@Entity(tableName = "devices")
 data class Device(
     @PrimaryKey
     var macAddress: String = "",
@@ -57,6 +57,7 @@ data class Device(
         location?.longitude,
         isFavorite
     )
+
     constructor(
         macAddress: String = "",
         name: String = generateDeviceName(),
@@ -79,6 +80,9 @@ data class Device(
     )
 
     @get:Exclude
+    val id: String get() = macAddress
+
+    @get:Exclude
     val latLng: LatLng?
         get() {
             latitude?.let { lat ->
@@ -91,9 +95,7 @@ data class Device(
 
     @get:Exclude
     val location: Location?
-        get() {
-            return latLng?.toLocation()
-        }
+        get() = latLng?.toLocation()
 
     fun toString(context: Context): String {
         return "${context.getString(R.string.device_name)} : $name\n" +
