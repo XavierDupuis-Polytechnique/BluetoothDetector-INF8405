@@ -2,13 +2,13 @@ package com.example.bluetoothdetector.main.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.bluetoothdetector.auth.repository.AuthRepository
+import com.example.bluetoothdetector.auth.repository.AccountRepository
 import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.DeviceRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.repository.NetworkRepository
-import com.example.bluetoothdetector.main.sources.LocalDeviceSource
 import com.example.bluetoothdetector.main.sources.DistributedDeviceSource
+import com.example.bluetoothdetector.main.sources.LocalDeviceSource
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.firestore.FirebaseFirestore
@@ -89,7 +89,7 @@ object AppModule {
     @Provides
     fun provideDistributedDeviceSource(
         firebaseFirestore: FirebaseFirestore,
-        authRepository: AuthRepository
-    ) = DistributedDeviceSource(firebaseFirestore, authRepository)
+        accountRepository: AccountRepository
+    ) = DistributedDeviceSource(firebaseFirestore, accountRepository)
 }
 
