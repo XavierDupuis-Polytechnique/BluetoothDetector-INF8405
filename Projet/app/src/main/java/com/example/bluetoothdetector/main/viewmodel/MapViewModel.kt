@@ -60,12 +60,21 @@ class MapViewModel @Inject constructor(
     //  3. Default position (Polytechnique), if previous not available
     fun getStartPosition(): LatLng {
         return location.value?.toLatLng()
-            ?: devices.values.firstOrNull { it.location !== null }?.location?.toLatLng()
+            ?: devices.values.firstOrNull { it.location !== null }?.latLng
             ?: LocationRepository.DefaultLocation.toLatLng()
     }
 }
 
 // Converts Location to LatLng
-private fun Location.toLatLng(): LatLng {
+fun Location.toLatLng(): LatLng {
     return LatLng(latitude, longitude)
+}
+
+// Converts LatLng to Location
+fun LatLng.toLocation(): Location {
+    val other = this
+    return Location("").apply {
+            latitude = other.latitude
+            longitude = other.longitude
+        }
 }
