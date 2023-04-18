@@ -29,10 +29,6 @@ interface CollectionSource<InstanceType, IdType> {
 
     fun savedInstancesProvider(caller: (List<InstanceType>) -> Unit)
 
-
-    // Observes the stored instance count
-    fun observeInstanceCount(): Flow<Int>
-
     // Retrieves all stored instances
     suspend fun getAll(): List<InstanceType>
 
