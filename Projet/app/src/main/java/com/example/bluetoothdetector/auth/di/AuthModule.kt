@@ -5,6 +5,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,11 +24,17 @@ object AuthModule {
     @Provides
     fun provideFirebaseAuth() = Firebase.auth
 
+    // Provides a single instance of the Firebase.storage
+    @Singleton
+    @Provides
+    fun provideFirebaseStorage() = Firebase.storage
+
     // Provides a single instance of the AccountRepository
     @Singleton
     @Provides
     fun provideAccountRepository(
         firebaseAuth: FirebaseAuth,
-        firebaseFirestore: FirebaseFirestore
-    ) = AccountRepository(firebaseAuth, firebaseFirestore)
+        firebaseFirestore: FirebaseFirestore,
+        firebaseStorage: FirebaseStorage
+    ) = AccountRepository(firebaseAuth, firebaseFirestore, firebaseStorage)
 }
