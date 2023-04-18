@@ -7,15 +7,16 @@ import androidx.room.TypeConverters
 import com.example.bluetoothdetector.main.domain.DeviceConverter
 import com.example.bluetoothdetector.main.domain.DeviceDao
 import com.example.bluetoothdetector.main.model.Device
+import com.example.bluetoothdetector.main.sources.CollectionSource.Companion.safeOperation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 // Holds persistent devices data
-@Database(entities = [Device::class], version = 6)
+@Database(entities = [Device::class], version = 7)
 @TypeConverters(DeviceConverter::class)
-abstract class LocalDeviceSource : /*CollectionSource<Device, String>,*/ RoomDatabase() {
+abstract class LocalDeviceSource : /* CollectionSource<Device, String>,*/ RoomDatabase() {
 
     protected abstract val collectionDao: DeviceDao
 
@@ -23,24 +24,6 @@ abstract class LocalDeviceSource : /*CollectionSource<Device, String>,*/ RoomDat
         val Name: String = LocalDeviceSource::javaClass.name
     }
 
-    // Fills requested map with stored devices data
-     fun populate(
-        instances: MutableMap<String, Device>,
-        favorites: MutableState<Set<Device>>
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val savedDevices = getAll()
-            val favoriteSavedDevices = savedDevices.filter { it.isFavorite }
-            safeOperation {
-                instances.putAll(
-                    savedDevices.associateBy { device ->
-                        device.macAddress
-                    }
-                )
-                favorites.value = favorites.value.plus(favoriteSavedDevices)
-            }
-        }
-    }
 
     // Observes the stored device count
      fun observeInstanceCount(): Flow<Int> {
@@ -75,18 +58,6 @@ abstract class LocalDeviceSource : /*CollectionSource<Device, String>,*/ RoomDat
      suspend fun insert(instance: Device) {
         safeOperation {
             collectionDao.insert(instance)
-        }
-    }
-
-    // Execute a store operation safely
-    private suspend fun safeOperation(
-        operation: suspend () -> Unit
-    ) {
-        try {
-            operation()
-        } catch (exception: Exception) {
-            println("COULD NOT EXECUTE $operation")
-            exception.printStackTrace()
         }
     }
 }

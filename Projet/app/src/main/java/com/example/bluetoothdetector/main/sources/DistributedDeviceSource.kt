@@ -1,12 +1,15 @@
 package com.example.bluetoothdetector.main.sources
 
-import androidx.compose.runtime.MutableState
 import com.example.bluetoothdetector.auth.repository.AuthRepository
 import com.example.bluetoothdetector.main.model.Device
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -34,13 +37,9 @@ class DistributedDeviceSource @Inject constructor(
 //
 //        }
 
-    override fun populate(
-        instances: MutableMap<String, Device>,
-        favorites: MutableState<Set<Device>>
-    ) {
+    override fun savedInstancesProvider(caller: (List<Device>) -> Unit) {
         currentCollection()?.get()?.addOnSuccessListener {
-            println("POPULATE")
-            println(it)
+            caller(it.toObjects())
         }
     }
 
@@ -59,7 +58,7 @@ class DistributedDeviceSource @Inject constructor(
     }
 
     override suspend fun delete(instance: Device) {
-        currentCollection()?.document(instance.id)?.delete()?.await()
+        currentCollection()?.document(instance.macAddress)?.delete()?.await()
     }
 
     override suspend fun deleteAll() {
@@ -67,10 +66,10 @@ class DistributedDeviceSource @Inject constructor(
     }
 
     override suspend fun insert(instance: Device) {
-        currentCollection()?.document(instance.id)?.set(instance, SetOptions.merge())
+        currentCollection()?.document(instance.macAddress)?.set(instance, SetOptions.merge())
     }
 
-    private fun currentCollection(uid: String? = authRepository.currentUser?.uid): CollectionReference? =
+    private fun currentCollection(uid: String? = authRepository.userId): CollectionReference? =
         uid?.let {
             firebaseFirestore
                 .collection(UserCollectionName)
