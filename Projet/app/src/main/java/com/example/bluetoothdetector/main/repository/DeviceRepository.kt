@@ -10,10 +10,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.startActivity
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.main.model.Device
-import com.example.bluetoothdetector.main.sources.CollectionSource
+import com.example.bluetoothdetector.main.sources.DistributedDeviceSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,13 +22,13 @@ import javax.inject.Singleton
 @Singleton
 class DeviceRepository @Inject constructor(
     private val context: Context,
-    private val collectionSource: CollectionSource<Device, String>
+    private val collectionSource: /*CollectionSource<Device, String>*/ DistributedDeviceSource
 ) {
-    // Holds the current device count
-    val deviceCount: Flow<Int> = collectionSource.observeInstanceCount()
-
     // Holds the current mac addresses mapped to the related device
     val devices: MutableMap<String, Device> = mutableStateMapOf()
+
+    // Holds the current device count
+    val deviceCount: Int = devices.size
 
     // Holds the favorite devices
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
@@ -37,6 +37,21 @@ class DeviceRepository @Inject constructor(
     val highlightedDevice = mutableStateOf<Device?>(null)
 
     init {
+        registerDeviceSourceChange()
+    }
+
+    private fun registerDeviceSourceChange() {
+        CoroutineScope(Dispatchers.IO).launch {
+            collectionSource.onDeviceCollectionChange.collectLatest {
+                onDeviceSourceChange()
+            }
+        }
+        onDeviceSourceChange()
+    }
+
+    private fun onDeviceSourceChange() {
+        devices.clear()
+        favoriteDevices.value = setOf()
         collectionSource.populate(
             devices,
             favoriteDevices,
@@ -44,7 +59,6 @@ class DeviceRepository @Inject constructor(
             { it.isFavorite },
         )
     }
-
 
     // Launches an intent safely
     private fun safeLaunchIntent(
