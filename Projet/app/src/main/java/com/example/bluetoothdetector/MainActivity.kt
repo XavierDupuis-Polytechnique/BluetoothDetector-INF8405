@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothAdapter.ACTION_DISCOVERY_FINISHED
 import android.bluetooth.BluetoothDevice
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -67,6 +69,10 @@ class MainActivity : AppCompatActivity() {
             }
         networkRepository.updateCreatedBytes()
         sensorRepository.getSensorList()
+
+        // Start listening for significant motion event
+        sensorRepository.registerSignificantMotion()
+        sensorRepository.shakeResume()
     }
 
     override fun onResume() {
@@ -76,6 +82,9 @@ class MainActivity : AppCompatActivity() {
         // Start bluetooth scan when app is resumed
         startBTScan()
         networkRepository.updateResumedBytes()
+        // Start listening for significant motion event when app is resumed
+        sensorRepository.registerSignificantMotion()
+        sensorRepository.shakeResume()
     }
 
     override fun onPause() {
@@ -86,6 +95,10 @@ class MainActivity : AppCompatActivity() {
             bluetoothRepository.stopDiscovery()
             bluetoothRepository.bluetoothStarted = false
         }
+        // Stop listening for significant motion when app is paused
+        sensorRepository.unregisterSignificantMotion()
+        sensorRepository.shakePause()
+
     }
 
     override fun onDestroy() {
@@ -98,6 +111,9 @@ class MainActivity : AppCompatActivity() {
         if (bluetoothRepository.bluetoothReceiver != null) {
             unregisterReceiver(bluetoothRepository.bluetoothReceiver)
         }
+        // Stop listening for significant motion when app is destroyed
+        sensorRepository.unregisterSignificantMotion()
+        sensorRepository.shakePause()
     }
 
     // Start bluetooth scan
@@ -145,6 +161,17 @@ class MainActivity : AppCompatActivity() {
         }
         registerReceiver(bluetoothRepository.bluetoothReceiver, filter)
         bluetoothRepository.startDiscovery()
+    }
+
+    // Start listening for significant motion event
+    // TODO
+    private fun registerSignificantMotionSensor() {
+//        val filter = IntentFilter().apply {
+//            addAction(Sensor.TYPE_SIGNIFICANT_MOTION)
+//        }
+
+
+
     }
 
 }
