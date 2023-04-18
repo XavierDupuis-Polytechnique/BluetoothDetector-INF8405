@@ -63,8 +63,8 @@ class AccountRepository @Inject constructor(
             .await()
     }
 
-    suspend fun signOut(): AuthResult = withContext(Dispatchers.IO) {
+    /*suspend*/ fun signOut() /*: AuthResult = withContext(Dispatchers.IO)*/ {
         firebaseAuth.signOut()
-        firebaseAuth.signInAnonymously().await()
+        // firebaseAuth.signInAnonymously().await()
     }
 }
