@@ -135,7 +135,7 @@ class BluetoothRepository(
             bondStateMap.getOrDefault(device.bondState, device.bondState.toString())
 
         // Prevent multiple devices from having the same location
-        val newLocation = locationRepository.currentLocation.value?.let { randomizeGps(it) }
+        val location = locationRepository.currentLocation.value?.let { randomizeGps(it) }
 
         // Create a device from the bluetooth device
         val parsedDevice = Device(
@@ -144,8 +144,8 @@ class BluetoothRepository(
             bluetoothClass = className,
             type = typeName,
             bondState = bondedStateName,
-            location = newLocation,
-            parcelUuids = device.uuids?.toList()
+            location = location,
+            // parcelUuids = device.uuids?.toList()
         )
 
         // Add the device to the device list
