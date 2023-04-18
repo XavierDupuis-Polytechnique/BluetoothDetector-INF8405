@@ -14,11 +14,11 @@ interface DeviceDao : CollectionDao<Device> {
     @Query("SELECT * FROM devices")
     fun observeAll(): Flow<List<Device>>
 
-    @Query("SELECT * FROM devices WHERE id IN (:ids)")
+    @Query("SELECT * FROM devices WHERE macAddress IN (:ids)")
     suspend fun getInstancesByIds(ids: List<String>): List<Device>
 
-    @Query("SELECT * FROM devices WHERE id LIKE :id LIMIT 1")
-    suspend fun getInstanceById(id: String): Device
+    @Query("SELECT * FROM devices WHERE macAddress LIKE :id LIMIT 1")
+    suspend fun getInstanceById(id: String): Device?
 
     @Query("SELECT COUNT() FROM devices")
     fun observeInstanceCount(): Flow<Int>
