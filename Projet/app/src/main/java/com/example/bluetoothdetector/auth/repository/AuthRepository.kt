@@ -1,22 +1,35 @@
 package com.example.bluetoothdetector.auth.repository
 
-import android.content.Context
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
-    private val context: Context,
     private val firebaseAuth: FirebaseAuth
 ) {
-    val currentUser: FirebaseUser? = firebaseAuth.currentUser
-    fun hasUser(): Boolean = currentUser != null
+    val currentUser: Flow<FirebaseUser?>
+        get() = callbackFlow {
+            val listener =
+                FirebaseAuth.AuthStateListener { auth ->
+                    auth.currentUser.let { this.trySend(it) }
+                }
+            firebaseAuth.addAuthStateListener(listener)
+            awaitClose { firebaseAuth.removeAuthStateListener(listener) }
+        }
 
-    fun getUserId(): String = currentUser?.uid.orEmpty()
+
+    val hasUser: Boolean
+        get () = firebaseAuth.currentUser != null
+
+    val userId: String?
+        get () = firebaseAuth.currentUser?.uid
 
     suspend fun signup(
         email: String,

@@ -27,7 +27,6 @@ object AuthModule {
     @Singleton
     @Provides
     fun provideAuthRepository(
-        @ApplicationContext context: Context,
         firebaseAuth: FirebaseAuth
-    ) = AuthRepository(context, firebaseAuth)
+    ) = AuthRepository(firebaseAuth)
 }

@@ -2,6 +2,7 @@ package com.example.bluetoothdetector.auth.view
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.auth.domain.AccountRedirection
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
@@ -26,7 +27,7 @@ fun AccountScreen(
             authViewModel,
             AccountRedirection
         ) {
-            authViewModel.currentUser?.let {
+            authViewModel.currentUser.collectAsState(null).value?.let {
                 WelcomeBackView(it)
                 LastSignInView(it)
                 AccountCreatedView(it)

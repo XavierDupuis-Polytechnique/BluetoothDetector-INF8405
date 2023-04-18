@@ -21,8 +21,7 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     val currentUser = repository.currentUser
 
-    val hasUser: Boolean
-        get() = repository.hasUser()
+    val hasUser = repository.hasUser
 
     var authState by mutableStateOf(AuthState())
         private set
