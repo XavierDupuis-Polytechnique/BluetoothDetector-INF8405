@@ -15,61 +15,66 @@ import kotlinx.coroutines.launch
 // Holds persistent devices data
 @Database(entities = [Device::class], version = 6)
 @TypeConverters(DeviceConverter::class)
-abstract class DeviceSource : RoomDatabase() {
+abstract class LocalDeviceSource : /*CollectionSource<Device, String>,*/ RoomDatabase() {
 
-    protected abstract val deviceDao: DeviceDao
+    protected abstract val collectionDao: DeviceDao
 
     companion object {
-        val Name: String = DeviceSource::javaClass.name
+        val Name: String = LocalDeviceSource::javaClass.name
     }
 
     // Fills requested map with stored devices data
-    fun populateDevices(
-        devices: MutableMap<String, Device>,
-        favoriteDevices: MutableState<Set<Device>>
+     fun populate(
+        instances: MutableMap<String, Device>,
+        favorites: MutableState<Set<Device>>
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             val savedDevices = getAll()
             val favoriteSavedDevices = savedDevices.filter { it.isFavorite }
             safeOperation {
-                devices.putAll(
+                instances.putAll(
                     savedDevices.associateBy { device ->
                         device.macAddress
                     }
                 )
-                favoriteDevices.value = favoriteDevices.value.plus(favoriteSavedDevices)
+                favorites.value = favorites.value.plus(favoriteSavedDevices)
             }
         }
     }
 
     // Observes the stored device count
-    fun observeDeviceCount(): Flow<Int> {
-        return deviceDao.observeDeviceCount()
+     fun observeInstanceCount(): Flow<Int> {
+        return collectionDao.observeInstanceCount()
     }
 
     // Retrieves all stored devices
-    suspend fun getAll(): List<Device> {
-        return deviceDao.getAll()
+     suspend fun getAll(): List<Device> {
+        return collectionDao.getAll()
+    }
+
+    // Retrieves selected instance
+     suspend fun get(id: String): Device? {
+        return collectionDao.getInstanceById(id)
     }
 
     // Deletes selected device from memory
-    suspend fun delete(device: Device) {
+     suspend fun delete(instance: Device) {
         safeOperation {
-            deviceDao.delete(device)
+            collectionDao.delete(instance)
         }
     }
 
     // Deletes all devices from memory
-    suspend fun deleteAll() {
+     suspend fun deleteAll() {
         safeOperation {
-            deviceDao.deleteAll()
+            collectionDao.deleteAll()
         }
     }
 
     // Inserts selected device from memory
-    suspend fun insert(device: Device) {
+     suspend fun insert(instance: Device) {
         safeOperation {
-            deviceDao.insert(device)
+            collectionDao.insert(instance)
         }
     }
 
