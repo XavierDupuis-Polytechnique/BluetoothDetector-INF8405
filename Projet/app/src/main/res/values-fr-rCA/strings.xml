@@ -70,4 +70,8 @@
     <string name="auth_welcome_back">Bon retour %s !</string>
     <string name="auth_account_created">Création du compte : %s</string>
     <string name="auth_last_sign_in">Dernière connexion : %s</string>
+    <string name="auth_username_content_error">Le nom d\'utilisateur ne peut pas être vide</string>
+    <string name="auth_password_content_error">Le mot de passe ne peut pas être vide</string>
+    <string name="auth_password_size_error">Le mot de passe ne peut pas comporter moins de %1$d caractères</string>
+    <string name="auth_password_match_error">Les mots de passe ne correspondent pas</string>
 </resources>

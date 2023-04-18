@@ -35,7 +35,7 @@ private fun UsernameField(authViewModel: AuthViewModel) {
         label = R.string.auth_username,
         icon = Icons.Default.Fingerprint
     ) {
-        authViewModel.onUserNameChange(it)
+        authViewModel.onUsernameChange(it)
     }
 }
 

@@ -1,19 +1,17 @@
 package com.example.bluetoothdetector.auth.viewmodel
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.auth.model.AuthState
 import com.example.bluetoothdetector.auth.repository.AccountRepository
 import com.example.bluetoothdetector.common.domain.Page
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,100 +26,118 @@ class AuthViewModel @Inject constructor(
     var authState by mutableStateOf(AuthState())
         private set
 
-    fun onUserNameChange(userName: String) {
-        authState = authState.copy(username = userName)
+
+    fun onUsernameChange(username: String) {
+        authState = authState.copy(username = username)
     }
 
     fun onPasswordChange(password: String) {
         authState = authState.copy(password = password)
     }
 
-    fun onUserNameChangeSignup(userName: String) {
-        authState = authState.copy(userNameSignUp = userName)
+    fun onUsernameSignupChange(usernameSignup: String) {
+        authState = authState.copy(usernameSignup = usernameSignup)
     }
 
-    fun onPasswordChangeSignup(password: String) {
-        authState = authState.copy(passwordSignUp = password)
+    fun onPasswordSignupChange(passwordSignUp: String) {
+        authState = authState.copy(passwordSignUp = passwordSignUp)
     }
 
-    fun onConfirmPasswordChange(password: String) {
-        authState = authState.copy(confirmPasswordSignUp = password)
+    fun onConfirmPasswordChange(confirmPassword: String) {
+        authState = authState.copy(confirmPassword = confirmPassword)
     }
 
-    private fun validateLoginForm() =
-        authState.username.isNotBlank() &&
-                authState.password.isNotBlank()
+    private fun validateLoginForm(context: Context): String? {
+        if (authState.username.isEmpty() || authState.username.isBlank()) {
+            return context.getString(R.string.auth_username_content_error)
+        }
+        if (authState.password.isEmpty() || authState.password.isBlank()) {
+            return context.getString(R.string.auth_password_content_error)
+        }
+        if (authState.password.length < MinPasswordLength) {
+            return context.getString(R.string.auth_password_size_error, MinPasswordLength)
+        }
+        return null
+    }
 
-    private fun validateSignupForm() =
-        authState.userNameSignUp.isNotBlank() &&
-                authState.passwordSignUp.isNotBlank() &&
-                authState.confirmPasswordSignUp.isNotBlank()
+    private fun validateSignupForm(context: Context): String?  {
+        if (authState.usernameSignup.isEmpty() || authState.usernameSignup.isBlank()) {
+            return context.getString(R.string.auth_username_content_error)
+        }
+        if (authState.passwordSignUp.isEmpty() || authState.passwordSignUp.isBlank()) {
+            return context.getString(R.string.auth_password_content_error)
+        }
+        if (authState.passwordSignUp.length < MinPasswordLength) {
+            return context.getString(R.string.auth_password_size_error, MinPasswordLength)
+        }
+        if (authState.passwordSignUp != authState.confirmPassword) {
+            return context.getString(R.string.auth_password_match_error)
+        }
+        return null
+    }
 
+    fun signup(
+        context: Context,
+        navController: NavHostController
+    ) = viewModelScope.launch {
+        authState = authState.copy(isLoading = true)
+        authState = authState.copy(error = null)
 
-    fun signup(context: Context, navController: NavHostController) = viewModelScope.launch {
-        println(authState)
-        try {
-            if (!validateSignupForm()) {
-                throw java.lang.IllegalArgumentException("email and password can not be empty")
-            }
-            authState = authState.copy(isLoading = true)
-            if (authState.passwordSignUp !=
-                authState.confirmPasswordSignUp
-            ) {
-                throw IllegalArgumentException(
-                    "Password do not match"
-                )
-            }
-            authState = authState.copy(signUpError = null)
+        val signupError = validateSignupForm(context)
+        if (signupError != null) {
+            authState = authState.copy(isLoading = false)
+            authState = authState.copy(error = signupError)
+            return@launch
+        }
+
+        executeAuthOperation {
             accountRepository.signup(
-                authState.userNameSignUp.appendEmail(),
+                authState.usernameSignup.appendEmail(),
                 authState.passwordSignUp
-            ) { isSuccessful ->
-                authState = if (isSuccessful) {
-                    Toast.makeText(context, "success Login", Toast.LENGTH_LONG).show()
+            ) {
+                authState = authState.copy(isSuccess = it)
+                if (it) {
+                    authState = AuthState()
                     navigate(navController, Page.ACCOUNT)
-                    authState.copy(isSuccessLogin = true)
-                } else {
-                    Toast.makeText(context, "Failed Login", Toast.LENGTH_LONG).show()
-                    authState.copy(isSuccessLogin = false)
                 }
             }
-
-
-        } catch (e: Exception) {
-            authState = authState.copy(signUpError = e.localizedMessage)
-            e.printStackTrace()
-        } finally {
-            authState = authState.copy(isLoading = false)
         }
     }
 
+    fun login(
+        context: Context,
+        navController: NavHostController
+    ) = viewModelScope.launch {
+        authState = authState.copy(isLoading = true)
+        authState = authState.copy(error = null)
 
-    fun login(context: Context, navController: NavHostController) = viewModelScope.launch {
-        try {
-            if (!validateLoginForm()) {
-                throw java.lang.IllegalArgumentException("email and password can not be empty")
-            }
-            authState = authState.copy(isLoading = true)
-            authState = authState.copy(loginError = null)
+        val loginError = validateLoginForm(context)
+        if (loginError != null) {
+            authState = authState.copy(isLoading = false)
+            authState = authState.copy(error = loginError)
+            return@launch
+        }
+
+        executeAuthOperation {
             accountRepository.login(
                 authState.username.appendEmail(),
                 authState.password
-            ) { isSuccessful ->
-                if (isSuccessful) {
-                    Toast.makeText(context, "success Login", Toast.LENGTH_LONG).show()
-                    authState = authState.copy(isSuccessLogin = true)
+            ) {
+                authState = authState.copy(isSuccess = it)
+                if (it) {
+                    authState = AuthState()
                     navigate(navController, Page.ACCOUNT)
-                } else {
-                    Toast.makeText(context, "Failed Login", Toast.LENGTH_LONG).show()
-                    authState = authState.copy(isSuccessLogin = false)
                 }
             }
+        }
+    }
 
-
-        } catch (e: Exception) {
-            authState = authState.copy(loginError = e.localizedMessage)
-            e.printStackTrace()
+    private suspend fun executeAuthOperation(authOperation: suspend () -> Unit) {
+        try {
+            authOperation()
+        } catch (exception: Exception) {
+            authState = authState.copy(error = exception.localizedMessage)
+            exception.printStackTrace()
         } finally {
             authState = authState.copy(isLoading = false)
         }
@@ -133,6 +149,10 @@ class AuthViewModel @Inject constructor(
 
     fun navigate(navController: NavHostController, page: Page) {
         navController.navigate(page.route)
+    }
+
+    companion object  {
+        const val MinPasswordLength = 6
     }
 }
 

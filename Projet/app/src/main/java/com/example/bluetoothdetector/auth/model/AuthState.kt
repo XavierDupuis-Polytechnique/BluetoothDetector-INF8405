@@ -3,11 +3,10 @@ package com.example.bluetoothdetector.auth.model
 data class AuthState(
     val username: String = "",
     val password: String = "",
-    val userNameSignUp: String = "",
+    val usernameSignup: String = "",
     val passwordSignUp: String = "",
-    val confirmPasswordSignUp: String = "",
+    val confirmPassword: String = "",
     val isLoading: Boolean = false,
-    val isSuccessLogin: Boolean = false,
-    val signUpError: String? = null,
-    val loginError: String? = null
+    val isSuccess: Boolean = false,
+    val error: String? = null,
 )

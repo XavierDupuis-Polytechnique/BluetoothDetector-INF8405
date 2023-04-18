@@ -35,7 +35,7 @@ fun AuthView(
         Title(page.denomination)
         Spacer(modifier = Modifier.size(16.dp))
         content()
-        authViewModel.authState.signUpError?.let {
+        authViewModel.authState.error?.let {
             Subtitle(
                 subtitle = it,
                 color = MaterialTheme.colors.error

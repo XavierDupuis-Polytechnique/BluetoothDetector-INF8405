@@ -31,11 +31,11 @@ fun SignupScreen(
 @Composable
 private fun UsernameField(authViewModel: AuthViewModel) {
     AuthField(
-        value = authViewModel.authState.userNameSignUp,
+        value = authViewModel.authState.usernameSignup,
         label = R.string.auth_username,
         icon = Icons.Default.Fingerprint
     ) {
-        authViewModel.onUserNameChangeSignup(it)
+        authViewModel.onUsernameSignupChange(it)
     }
 }
 
@@ -46,14 +46,14 @@ private fun PasswordField(authViewModel: AuthViewModel) {
         label = R.string.auth_password,
         icon = Icons.Default.Password
     ) {
-        authViewModel.onPasswordChangeSignup(it)
+        authViewModel.onPasswordSignupChange(it)
     }
 }
 
 @Composable
 private fun ConfirmPasswordField(authViewModel: AuthViewModel) {
     AuthField(
-        value = authViewModel.authState.confirmPasswordSignUp,
+        value = authViewModel.authState.confirmPassword,
         label = R.string.auth_confirm_password,
         icon = Icons.Default.Password
     ) {
