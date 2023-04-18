@@ -20,8 +20,9 @@ fun AccountScreen(
     navController: NavHostController,
     authViewModel: AuthViewModel
 ) {
-    if (!authViewModel.hasUser) {
-        authViewModel.navigate(navController, Page.LOGIN)
+    val currentUser = authViewModel.currentUser.collectAsState(null).value
+    if (currentUser == null) {
+        LoginScreen(navController, authViewModel)
     } else {
         AuthView(
             Page.ACCOUNT,
@@ -29,11 +30,9 @@ fun AccountScreen(
             authViewModel,
             AccountRedirection
         ) {
-            authViewModel.currentUser.collectAsState(null).value?.let {
-                WelcomeBackView(it)
-                LastSignInView(it)
-                AccountCreatedView(it)
-            }
+            WelcomeBackView(currentUser)
+            LastSignInView(currentUser)
+            AccountCreatedView(currentUser)
         }
     }
 }
