@@ -24,6 +24,7 @@ import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.repository.NetworkRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var networkRepository: NetworkRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
         setContent {
             MainContent(themeRepository, languageRepository)
