@@ -3,17 +3,18 @@ package com.example.bluetoothdetector.common.view.camera
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bluetoothdetector.R
-import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.common.viewmodel.ImagePickerViewModel
@@ -43,6 +44,7 @@ fun ImagePicker(
             }) {
                 Text(stringResource(R.string.select_image))
             }
+            Spacer(modifier = Modifier.size(8.dp))
             OutlinedButton(onClick = {
                 viewModel.takePicture(context, takePictureLauncher)
             }) {

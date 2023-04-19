@@ -1,6 +1,5 @@
 package com.example.bluetoothdetector.common.view
 
-import android.net.Uri
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +16,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.bluetoothdetector.common.view.camera.ImageView
 
 
 // FROM https://semicolonspace.com/jetpack-compose-circle-animation-gradient/
@@ -83,9 +81,10 @@ fun StaticSpinnerView(
     if (isLoading) {
         SpinnerView(size, padding, slowness, circleColors)
     } else {
-        Spacer(modifier = Modifier
-            .size(size)
-            .padding(padding)
+        Spacer(
+            modifier = Modifier
+                .size(size)
+                .padding(padding)
         )
     }
 }

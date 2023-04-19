@@ -1,7 +1,6 @@
 package com.example.bluetoothdetector.common.view.camera
 
 import android.net.Uri
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,7 +15,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.example.bluetoothdetector.common.view.SpinnerView
-import com.google.maps.android.compose.Circle
 
 @Composable
 fun ImageView(
@@ -49,7 +47,7 @@ fun StaticImageView(
     size: Dp = 200.dp,
     padding: Dp = 12.dp,
 ) {
-    val color = MaterialTheme.colors.primary.copy(0.2f)
+    val color = MaterialTheme.colors.secondary.copy(0.2f)
     if (source == null) {
         Spacer(modifier = Modifier
             .size(size)
@@ -57,7 +55,7 @@ fun StaticImageView(
             .drawBehind {
                 drawCircle(
                     color = color,
-                    radius = size.toPx() / 2
+                    radius = size.toPx() / 2 - padding.toPx() / 2
                 )
             }
         )
