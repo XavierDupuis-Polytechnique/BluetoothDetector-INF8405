@@ -124,7 +124,6 @@ class AuthViewModel @Inject constructor(
         accountRepository.setProfilePicture(uri, authState.usernameSignup) { imageUploaded ->
             if (imageUploaded) {
                 navigate(navController, Page.ACCOUNT)
-                clearState()
             }
         }
     }
@@ -151,7 +150,6 @@ class AuthViewModel @Inject constructor(
                 authState = authState.copy(isSuccess = isSuccess)
                 if (isSuccess) {
                     navigate(navController, Page.ACCOUNT)
-                    clearState()
                 }
             }
         }
@@ -171,6 +169,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun navigate(navController: NavHostController, page: Page) {
+        clearState()
         navController.navigate(page.route)
     }
 

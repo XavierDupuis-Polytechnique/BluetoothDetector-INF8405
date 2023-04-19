@@ -1,7 +1,6 @@
 package com.example.bluetoothdetector.auth.view
 
 import android.content.Context
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
@@ -17,7 +16,6 @@ import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.auth.domain.Redirection
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
-import com.example.bluetoothdetector.common.view.SpinnerView
 import com.example.bluetoothdetector.common.view.StaticSpinnerView
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
@@ -72,7 +70,6 @@ fun Redirect(
         Spacer(modifier = Modifier.size(8.dp))
         TextButton(onClick = {
             redirection.action?.let { it(authViewModel) }
-            authViewModel.clearState()
             authViewModel.navigate(navController, redirection.page)
         }) {
             Text(stringResource(redirection.label))
