@@ -80,4 +80,6 @@
     <string name="auth_password_content_error">Password cannot be blank</string>
     <string name="auth_password_size_error">Password cannot be less than %1$d characters</string>
     <string name="auth_password_match_error">Passwords do not match</string>
+    <string name="select_image">Select image</string>
+    <string name="take_picture">Take picture</string>
 </resources>
