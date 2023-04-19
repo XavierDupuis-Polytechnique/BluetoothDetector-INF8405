@@ -1,6 +1,8 @@
 package com.example.bluetoothdetector.auth.viewmodel
 
 import android.content.Context
+import android.net.Uri
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,6 +13,7 @@ import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.auth.model.AuthState
 import com.example.bluetoothdetector.auth.repository.AccountRepository
 import com.example.bluetoothdetector.common.domain.Page
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +29,7 @@ class AuthViewModel @Inject constructor(
     var authState by mutableStateOf(AuthState())
         private set
 
+    val profilePictureUri: MutableState<Uri?> = mutableStateOf(null)
 
     fun onUsernameChange(username: String) {
         authState = authState.copy(username = username)
@@ -60,7 +64,7 @@ class AuthViewModel @Inject constructor(
         return null
     }
 
-    private fun validateSignupForm(context: Context): String?  {
+    private fun validateSignupForm(context: Context): String? {
         if (authState.usernameSignup.isEmpty() || authState.usernameSignup.isBlank()) {
             return context.getString(R.string.auth_username_content_error)
         }
@@ -94,9 +98,14 @@ class AuthViewModel @Inject constructor(
             accountRepository.signup(
                 authState.usernameSignup.appendEmail(),
                 authState.passwordSignUp
-            ) {
-                authState = authState.copy(isSuccess = it)
-                if (it) {
+            ) { isSuccess ->
+                authState = authState.copy(isSuccess = isSuccess)
+                if (isSuccess) {
+                    profilePictureUri.value?.let {
+                        viewModelScope.launch {
+                            accountRepository.setProfilePicture(it, authState.usernameSignup, null)
+                        }
+                    }
                     authState = AuthState()
                     navigate(navController, Page.ACCOUNT)
                 }
@@ -122,9 +131,9 @@ class AuthViewModel @Inject constructor(
             accountRepository.login(
                 authState.username.appendEmail(),
                 authState.password
-            ) {
-                authState = authState.copy(isSuccess = it)
-                if (it) {
+            ) { isSuccess ->
+                authState = authState.copy(isSuccess = isSuccess)
+                if (isSuccess) {
                     authState = AuthState()
                     navigate(navController, Page.ACCOUNT)
                 }
@@ -151,7 +160,17 @@ class AuthViewModel @Inject constructor(
         navController.navigate(page.route)
     }
 
-    companion object  {
+    fun getProfilePictureUri(
+        currentUser: FirebaseUser,
+        context: Context,
+        onComplete: (Uri?) -> Unit
+    ) {
+        currentUser.email?.removeEmail()?.let {
+            accountRepository.getProfilePicture(it, context, onComplete)
+        }
+    }
+
+    companion object {
         const val MinPasswordLength = 6
     }
 }

@@ -1,8 +1,9 @@
 package com.example.bluetoothdetector.auth.view
 
+import android.net.Uri
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.R
@@ -11,6 +12,7 @@ import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.auth.viewmodel.removeEmail
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.domain.formatter.formatDate
+import com.example.bluetoothdetector.common.view.camera.ImagePreview
 import com.example.bluetoothdetector.common.view.typography.Subtitle
 import com.google.firebase.auth.FirebaseUser
 import java.util.*
@@ -31,9 +33,26 @@ fun AccountScreen(
             AccountRedirection
         ) {
             WelcomeBackView(currentUser)
+            ProfilePictureView(authViewModel, currentUser)
             LastSignInView(currentUser)
             AccountCreatedView(currentUser)
         }
+    }
+}
+
+@Composable
+fun ProfilePictureView(
+    authViewModel: AuthViewModel,
+    currentUser: FirebaseUser
+) {
+    var uri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+    authViewModel.getProfilePictureUri(currentUser, LocalContext.current) {
+        uri = it
+    }
+    uri?.let {
+        ImagePreview(it)
     }
 }
 

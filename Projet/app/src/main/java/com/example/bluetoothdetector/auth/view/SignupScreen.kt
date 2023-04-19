@@ -9,6 +9,7 @@ import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.auth.domain.SignupRedirection
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
+import com.example.bluetoothdetector.common.view.camera.ImagePicker
 
 @Composable
 fun SignupScreen(
@@ -25,6 +26,7 @@ fun SignupScreen(
         UsernameField(authViewModel)
         PasswordField(authViewModel)
         ConfirmPasswordField(authViewModel)
+        PictureField(authViewModel)
     }
 }
 
@@ -61,3 +63,7 @@ private fun ConfirmPasswordField(authViewModel: AuthViewModel) {
     }
 }
 
+@Composable
+fun PictureField(authViewModel: AuthViewModel) {
+    ImagePicker(authViewModel.profilePictureUri)
+}
