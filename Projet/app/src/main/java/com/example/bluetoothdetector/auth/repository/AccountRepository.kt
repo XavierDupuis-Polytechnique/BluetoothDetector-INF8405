@@ -62,13 +62,15 @@ class AccountRepository @Inject constructor(
             }
     }
 
-    fun getProfilePicture(username: String, context: Context, onComplete: (Uri?) -> Unit) {
-//        TODO
-//        val profilePictureCachedUri = ImageFileProvider.(find cached file)
-//        if (profilePictureCachedUri !== null) {
-//            return profilePictureCachedUri
-//        }
-        return downloadImage(username, context, onComplete)
+    fun getProfilePicture(username: String, onComplete: (Uri?) -> Unit) {
+        val imageReference = firebaseStorage.reference.child("images//${username}.jpg")
+        val downloadUrl = imageReference.downloadUrl
+            .addOnFailureListener {
+                onComplete(null)
+            }
+            .addOnSuccessListener {
+                onComplete(it)
+            }
     }
 
     private fun downloadImage(filename: String, context: Context, onComplete: (Uri?) -> Unit) {

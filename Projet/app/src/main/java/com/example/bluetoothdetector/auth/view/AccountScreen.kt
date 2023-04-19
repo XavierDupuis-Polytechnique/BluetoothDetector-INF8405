@@ -12,7 +12,7 @@ import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.auth.viewmodel.removeEmail
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.domain.formatter.formatDate
-import com.example.bluetoothdetector.common.view.camera.ImagePreview
+import com.example.bluetoothdetector.common.view.camera.ImageView
 import com.example.bluetoothdetector.common.view.typography.Subtitle
 import com.google.firebase.auth.FirebaseUser
 import java.util.*
@@ -48,12 +48,10 @@ fun ProfilePictureView(
     var uri by remember {
         mutableStateOf<Uri?>(null)
     }
-    authViewModel.getProfilePictureUri(currentUser, LocalContext.current) {
+    authViewModel.getProfilePictureUri(currentUser) {
         uri = it
     }
-    uri?.let {
-        ImagePreview(it)
-    }
+    ImageView(uri)
 }
 
 @Composable

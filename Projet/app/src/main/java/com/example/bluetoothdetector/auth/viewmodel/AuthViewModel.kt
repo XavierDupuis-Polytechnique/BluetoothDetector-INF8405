@@ -102,13 +102,21 @@ class AuthViewModel @Inject constructor(
                 authState = authState.copy(isSuccess = isSuccess)
                 if (isSuccess) {
                     profilePictureUri.value?.let {
-                        viewModelScope.launch {
-                            accountRepository.setProfilePicture(it, authState.usernameSignup, null)
-                        }
+                        uploadProfilePicture(it, navController)
                     }
-                    authState = AuthState()
-                    navigate(navController, Page.ACCOUNT)
                 }
+            }
+        }
+    }
+
+    private fun uploadProfilePicture(
+        uri: Uri,
+        navController: NavHostController
+    ) = viewModelScope.launch {
+        accountRepository.setProfilePicture(uri, authState.usernameSignup) { imageUploaded ->
+            if (imageUploaded) {
+                navigate(navController, Page.ACCOUNT)
+                authState = AuthState()
             }
         }
     }
@@ -147,8 +155,6 @@ class AuthViewModel @Inject constructor(
         } catch (exception: Exception) {
             authState = authState.copy(error = exception.localizedMessage)
             exception.printStackTrace()
-        } finally {
-            authState = authState.copy(isLoading = false)
         }
     }
 
@@ -162,11 +168,10 @@ class AuthViewModel @Inject constructor(
 
     fun getProfilePictureUri(
         currentUser: FirebaseUser,
-        context: Context,
         onComplete: (Uri?) -> Unit
     ) {
         currentUser.email?.removeEmail()?.let {
-            accountRepository.getProfilePicture(it, context, onComplete)
+            accountRepository.getProfilePicture(it, onComplete)
         }
     }
 
