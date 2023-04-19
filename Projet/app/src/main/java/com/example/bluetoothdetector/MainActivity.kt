@@ -162,18 +162,6 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(bluetoothRepository.bluetoothReceiver, filter)
         bluetoothRepository.startDiscovery()
     }
-
-    // Start listening for significant motion event
-    // TODO
-    private fun registerSignificantMotionSensor() {
-//        val filter = IntentFilter().apply {
-//            addAction(Sensor.TYPE_SIGNIFICANT_MOTION)
-//        }
-
-
-
-    }
-
 }
 
 @Composable
