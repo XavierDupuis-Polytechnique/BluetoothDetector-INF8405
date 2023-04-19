@@ -24,15 +24,13 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     val currentUser = accountRepository.currentUser
 
-    val hasUser = accountRepository.hasUser
-
     var authState by mutableStateOf(AuthState())
         private set
 
     val profilePictureUri: MutableState<Uri?> = mutableStateOf(null)
 
-    fun clearState() {
-        authState = authState.copy()
+    private fun clearState() {
+        authState = AuthState()
         profilePictureUri.value = null
     }
 
