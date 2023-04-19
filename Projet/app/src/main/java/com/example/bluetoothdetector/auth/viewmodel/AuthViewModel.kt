@@ -31,6 +31,11 @@ class AuthViewModel @Inject constructor(
 
     val profilePictureUri: MutableState<Uri?> = mutableStateOf(null)
 
+    fun clearState() {
+        authState = authState.copy()
+        profilePictureUri.value = null
+    }
+
     fun onUsernameChange(username: String) {
         authState = authState.copy(username = username)
     }
@@ -119,7 +124,7 @@ class AuthViewModel @Inject constructor(
         accountRepository.setProfilePicture(uri, authState.usernameSignup) { imageUploaded ->
             if (imageUploaded) {
                 navigate(navController, Page.ACCOUNT)
-                authState = AuthState()
+                clearState()
             }
         }
     }
@@ -145,8 +150,8 @@ class AuthViewModel @Inject constructor(
             ) { isSuccess ->
                 authState = authState.copy(isSuccess = isSuccess)
                 if (isSuccess) {
-                    authState = AuthState()
                     navigate(navController, Page.ACCOUNT)
+                    clearState()
                 }
             }
         }

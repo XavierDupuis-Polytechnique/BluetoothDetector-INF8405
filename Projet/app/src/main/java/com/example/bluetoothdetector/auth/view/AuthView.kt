@@ -72,6 +72,7 @@ fun Redirect(
         Spacer(modifier = Modifier.size(8.dp))
         TextButton(onClick = {
             redirection.action?.let { it(authViewModel) }
+            authViewModel.clearState()
             authViewModel.navigate(navController, redirection.page)
         }) {
             Text(stringResource(redirection.label))
