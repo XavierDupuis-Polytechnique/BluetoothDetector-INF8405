@@ -4,7 +4,9 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.Button
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalContext
@@ -20,7 +22,7 @@ import com.example.bluetoothdetector.common.viewmodel.ImagePickerViewModel
 fun ImagePicker(
     displayedImageUri: MutableState<Uri?>,
     viewModel: ImagePickerViewModel = hiltViewModel(),
-    imageContent: @Composable (Uri) -> Unit = { ImageView(it) }
+    imageContent: @Composable (Uri?) -> Unit = { StaticImageView(it) }
 ) {
     val pickImageLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
@@ -33,21 +35,17 @@ fun ImagePicker(
     )
 
     val context = LocalContext.current
-    CenteredHorizontalContainer {
-        CardContainer {
-            CenteredVerticalContainer {
-                Text(viewModel.storedImageUri.value.toString())
-                Text(displayedImageUri.value.toString())
-                displayedImageUri.value?.let {
-                    imageContent(it)
-                }
-            }
-        }
-        CenteredVerticalContainer {
-            Button(onClick = { viewModel.pickImage(pickImageLauncher) }) {
+    CenteredVerticalContainer {
+        imageContent(displayedImageUri.value)
+        CenteredHorizontalContainer {
+            OutlinedButton(onClick = {
+                viewModel.pickImage(pickImageLauncher)
+            }) {
                 Text(stringResource(R.string.select_image))
             }
-            Button(onClick = { viewModel.takePicture(context, takePictureLauncher) }) {
+            OutlinedButton(onClick = {
+                viewModel.takePicture(context, takePictureLauncher)
+            }) {
                 Text(stringResource(R.string.take_picture))
             }
         }
