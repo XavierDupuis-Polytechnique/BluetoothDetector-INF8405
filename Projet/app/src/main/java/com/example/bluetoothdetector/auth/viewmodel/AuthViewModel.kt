@@ -77,6 +77,9 @@ class AuthViewModel @Inject constructor(
         if (authState.passwordSignUp != authState.confirmPassword) {
             return context.getString(R.string.auth_password_match_error)
         }
+        if (profilePictureUri.value == null) {
+            return context.getString(R.string.auth_image_content_error)
+        }
         return null
     }
 

@@ -1,6 +1,7 @@
 package com.example.bluetoothdetector.auth.view
 
 import android.content.Context
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
@@ -17,6 +18,7 @@ import com.example.bluetoothdetector.auth.domain.Redirection
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.view.SpinnerView
+import com.example.bluetoothdetector.common.view.StaticSpinnerView
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.common.view.typography.Subtitle
@@ -74,16 +76,7 @@ fun Redirect(
         }) {
             Text(stringResource(redirection.label))
         }
-
     }
 
-    if (authViewModel.authState.isLoading) {
-        SpinnerView()
-    }
-
-//    LaunchedEffect(key1 = AuthViewModel?.hasUser){
-//        if (AuthViewModel?.hasUser == true){
-//            onNavToHomePage.invoke()
-//        }
-//    }
+    StaticSpinnerView(authViewModel.authState.isLoading)
 }

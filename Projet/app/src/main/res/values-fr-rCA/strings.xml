@@ -74,6 +74,7 @@
     <string name="auth_password_content_error">Le mot de passe ne peut pas être vide</string>
     <string name="auth_password_size_error">Le mot de passe ne peut pas comporter moins de %1$d caractères</string>
     <string name="auth_password_match_error">Les mots de passe ne correspondent pas</string>
+    <string name="auth_image_content_error">Aucune photo de profil sélectionnée</string>
 	<string name="select_image">Sélectionner une image</string>
     <string name="take_picture">Prendre une photo</string>
 </resources>

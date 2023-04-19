@@ -3,7 +3,6 @@ package com.example.bluetoothdetector.auth.view
 import android.net.Uri
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.R
