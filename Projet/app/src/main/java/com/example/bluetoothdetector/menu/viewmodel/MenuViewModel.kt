@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MenuViewModel @Inject constructor() : ViewModel() {
 
-    val selectedTab = mutableStateOf(Page.MAIN)
+    val currentPage = mutableStateOf(Page.StartPage)
 
     fun isMenuOpened(menuState: DrawerState): Boolean {
         return menuState.isOpen
@@ -50,12 +50,12 @@ class MenuViewModel @Inject constructor() : ViewModel() {
         menuScope: CoroutineScope,
         page: Page
     ) {
-        selectedTab.value = page
+        currentPage.value = page
         navController.navigate(page.route)
         closeMenu(menuState, menuScope)
     }
 
     fun isSelectedTab(page: Page): Boolean {
-        return page == selectedTab.value
+        return page == currentPage.value
     }
 }

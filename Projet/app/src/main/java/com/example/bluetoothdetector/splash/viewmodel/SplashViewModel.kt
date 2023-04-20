@@ -24,7 +24,7 @@ class SplashViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.Main) {
                     navigateTask = null
                     val isLoggedIn = accountRepository.hasUser
-                    val page = if (isLoggedIn) Page.MAIN else Page.LOGIN
+                    val page = if (isLoggedIn) Page.LoggedInPage else Page.LoggedOutPage
                     navigate(page)
                 }
             }

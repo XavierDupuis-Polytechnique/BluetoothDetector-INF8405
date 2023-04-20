@@ -26,7 +26,7 @@ fun MenuHeader(
 ) {
     CenteredHorizontalContainer {
         MenuHamburger(viewModel, menuState, menuScope)
-        Subtitle(stringResource(viewModel.selectedTab.value.denomination).uppercase())
+        Subtitle(stringResource(viewModel.currentPage.value.denomination).uppercase())
     }
 }
 

@@ -33,7 +33,6 @@ import com.example.bluetoothdetector.splash.view.SplashScreen
 @Composable
 fun Navigation(
     permissionsViewModel: PermissionsViewModel,
-    startDestination: Page = Page.SPLASH,
     navController: NavHostController = rememberNavController()
 ) {
     val menuState = rememberDrawerState(DrawerValue.Closed)
@@ -46,7 +45,7 @@ fun Navigation(
 
     PageWithHeader(menuState, menuScope, menuViewModel) {
         MenuDrawer(menuState, navigate, menuViewModel) {
-            NavHost(navController, startDestination.route) {
+            NavHost(navController, Page.StartPage.route) {
                 pageComposable(Page.SPLASH) {
                     SplashScreen(navigate)
                 }
