@@ -156,8 +156,9 @@ class AuthViewModel @Inject constructor(
         try {
             authOperation()
         } catch (exception: Exception) {
-            authState = authState.copy(error = exception.localizedMessage)
             exception.printStackTrace()
+            authState = authState.copy(error = exception.localizedMessage)
+            authState = authState.copy(isLoading = false)
         }
     }
 
