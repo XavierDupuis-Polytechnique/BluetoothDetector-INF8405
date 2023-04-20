@@ -40,6 +40,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 <!--            TODO : REMOVE                                  -->
 <!--            android:theme="@style/Theme.BluetoothDetector">-->
