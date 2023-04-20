@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.bluetoothdetector.common.view.HeaderView
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
+import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
 import kotlinx.coroutines.CoroutineScope
 
 // Full page component for main views with theme selection
@@ -14,7 +15,8 @@ import kotlinx.coroutines.CoroutineScope
 fun PageWithHeader(
     menuState: DrawerState,
     menuScope: CoroutineScope,
-    headerContent: @Composable () -> Unit = { HeaderView(menuState, menuScope) },
+    menuViewModel: MenuViewModel,
+    headerContent: @Composable () -> Unit = { HeaderView(menuState, menuScope, menuViewModel) },
     content: @Composable () -> Unit
 ) {
     Page {

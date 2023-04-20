@@ -6,6 +6,7 @@ import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,6 +26,7 @@ import com.example.bluetoothdetector.main.view.MainScreen
 import com.example.bluetoothdetector.main.view.MapView
 import com.example.bluetoothdetector.main.view.NetworkView
 import com.example.bluetoothdetector.menu.view.MenuDrawer
+import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
 import com.example.bluetoothdetector.splash.view.SplashScreen
 
 
@@ -37,12 +39,16 @@ fun Navigation(
     val menuState = rememberDrawerState(DrawerValue.Closed)
     val menuScope = rememberCoroutineScope()
     val authViewModel: AuthViewModel = hiltViewModel()
+    val menuViewModel: MenuViewModel = viewModel()
+    val navigate: (Page) -> Unit = {
+        menuViewModel.navigate(navController, menuState, menuScope, it)
+    }
 
-    PageWithHeader(menuState, menuScope) {
-        MenuDrawer(menuState, menuScope, navController) {
+    PageWithHeader(menuState, menuScope, menuViewModel) {
+        MenuDrawer(menuState, navigate, menuViewModel) {
             NavHost(navController, startDestination.route) {
                 pageComposable(Page.SPLASH) {
-                    SplashScreen(navController)
+                    SplashScreen(navigate)
                 }
 
                 pageComposable(Page.MAIN) {
@@ -58,15 +64,15 @@ fun Navigation(
                 }
 
                 pageComposable(Page.LOGIN) {
-                    LoginScreen(navController, authViewModel)
+                    LoginScreen(navigate, authViewModel)
                 }
 
                 pageComposable(Page.SIGNUP) {
-                    SignupScreen(navController, authViewModel)
+                    SignupScreen(navigate, authViewModel)
                 }
 
                 pageComposable(Page.ACCOUNT) {
-                    AccountScreen(navController, authViewModel)
+                    AccountScreen(navigate, authViewModel)
                 }
 
                 pageComposable(Page.ENERGY) {

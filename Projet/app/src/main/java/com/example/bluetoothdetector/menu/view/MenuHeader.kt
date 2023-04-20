@@ -7,7 +7,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
+import com.example.bluetoothdetector.common.view.typography.Subtitle
 import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
 import kotlinx.coroutines.CoroutineScope
 
@@ -17,10 +20,23 @@ fun MenuHeader(
     menuScope: CoroutineScope,
     viewModel: MenuViewModel = hiltViewModel(),
 ) {
-    IconButton(onClick = { viewModel.toggleMenu(menuState, menuScope) }) {
+    CenteredHorizontalContainer {
+        MenuHamburger(viewModel, menuState, menuScope)
+        Subtitle(stringResource(viewModel.selectedTab.value.denomination).uppercase())
+    }
+}
+
+@Composable
+private fun MenuHamburger(
+    viewModel: MenuViewModel,
+    menuState: DrawerState,
+    menuScope: CoroutineScope
+) {
+    IconButton(
+        enabled = viewModel.selectedTab.value.inMenu,
+        onClick = { viewModel.toggleMenu(menuState, menuScope) }
+    ) {
         val isMenuOpen = viewModel.isMenuOpened(menuState)
-        // TODO : UX MAYBE
-        // val icon = if (isMenuOpen) Icons.Default.MenuOpen else Icons.Default.Menu
         val icon = if (isMenuOpen) Icons.Default.Close else Icons.Default.Menu
         Icon(
             imageVector = icon,

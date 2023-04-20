@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.auth.domain.AccountRedirection
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
@@ -18,16 +17,16 @@ import java.util.*
 
 @Composable
 fun AccountScreen(
-    navController: NavHostController,
+    navigate: (Page) -> Unit,
     authViewModel: AuthViewModel
 ) {
     val currentUser = authViewModel.currentUser.collectAsState(null).value
     if (currentUser == null) {
-        LoginScreen(navController, authViewModel)
+        LoginScreen(navigate, authViewModel)
     } else {
         AuthView(
             Page.ACCOUNT,
-            navController,
+            navigate,
             authViewModel,
             AccountRedirection
         ) {
