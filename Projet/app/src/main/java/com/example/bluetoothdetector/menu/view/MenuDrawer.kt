@@ -2,6 +2,8 @@ package com.example.bluetoothdetector.menu.view
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Devices
@@ -22,9 +24,11 @@ fun MenuDrawer(
         drawerState = menuState,
         gesturesEnabled = false,
         drawerContent = {
-            Page.MenuPages.forEach {
-                MenuTabView(viewModel, navigate, it)
-                Divider()
+            LazyColumn {
+                items(Page.MenuPages) {
+                    MenuTabView(viewModel, navigate, it)
+                    Divider()
+                }
             }
         },
         content = content
