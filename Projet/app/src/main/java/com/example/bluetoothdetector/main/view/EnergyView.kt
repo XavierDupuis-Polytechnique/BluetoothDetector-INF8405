@@ -34,8 +34,15 @@ fun EnergyView(
 ){
     CenteredVerticalContainer() {
         Title("allo")
+        val bpc = viewModel.energyRepository.batteryPct
+        Subtitle(subtitle = bpc.toString() )
 
-        Text(text = viewModel.energyRepository.batteryPct)
+        val lev: Int = viewModel.energyRepository.lev?.toInt() ?: 0
+        val sca: Int = viewModel.energyRepository.sca?.toInt() ?: 0
+
+        Text(lev.toString())
+        Text(sca.toString())
+
         viewModel.energyRepository.batteryPct
 
 

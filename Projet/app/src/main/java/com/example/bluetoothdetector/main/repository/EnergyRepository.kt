@@ -23,6 +23,10 @@ class EnergyRepository @Inject constructor(
         level * 100 / scale.toFloat()
     }
 
+    val lev = batteryStatus?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+    val sca = batteryStatus?.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+    val count = BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER
+
     var activityCreatedBatteryPct: Float = 0.0f
     var activityResumedBatteryPct: Float = 0.0f
 
