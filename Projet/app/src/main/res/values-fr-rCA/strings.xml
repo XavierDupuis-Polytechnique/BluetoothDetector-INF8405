@@ -56,4 +56,25 @@
     <string name="resumed">Reprise</string>
     <string name="network_percent_was_used_for_process">Le processus a consommé %.2f %% de l\'utilisation totale du réseau de l\'appareil</string>
     <string name="refresh">Rafraîchir</string>
+    <string name="auth_username">Nom d\'utilisateur</string>
+    <string name="auth_password">Mot de passe</string>
+    <string name="auth_confirm_password">Confirmer le mot de passe</string>
+    <string name="auth_change_account">Vous voulez changer de compte ?</string>
+    <string name="auth_account">Compte</string>
+    <string name="auth_signup">Inscription</string>
+    <string name="auth_already_have_an_account">Vous avez déjà un compte ?</string>
+    <string name="auth_login">Connexion</string>
+    <string name="auth_dont_have_an_account">Vous n\'avez pas de compte ?</string>
+    <string name="auth_signup_description">S\'inscrire</string>
+    <string name="auth_login_description">Se connecter</string>
+    <string name="auth_welcome_back">Bon retour %s !</string>
+    <string name="auth_account_created">Création du compte : %s</string>
+    <string name="auth_last_sign_in">Dernière connexion : %s</string>
+    <string name="auth_username_content_error">Le nom d\'utilisateur ne peut pas être vide</string>
+    <string name="auth_password_content_error">Le mot de passe ne peut pas être vide</string>
+    <string name="auth_password_size_error">Le mot de passe ne peut pas comporter moins de %1$d caractères</string>
+    <string name="auth_password_match_error">Les mots de passe ne correspondent pas</string>
+    <string name="auth_image_content_error">Aucune photo de profil sélectionnée</string>
+	<string name="select_image">Sélectionner une image</string>
+    <string name="take_picture">Prendre une photo</string>
 </resources>

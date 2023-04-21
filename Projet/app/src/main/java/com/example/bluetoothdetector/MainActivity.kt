@@ -13,7 +13,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.os.LocaleListCompat
 import com.example.bluetoothdetector.common.domain.LanguageStateSaver
@@ -26,6 +25,7 @@ import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.repository.NetworkRepository
 import com.example.bluetoothdetector.main.repository.SensorRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var sensorRepository: SensorRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
         setContent {
             MainContent(themeRepository, languageRepository)
@@ -181,10 +182,4 @@ fun MainContent(
             permissionsViewModel
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    BluetoothDetectorTheme {}
 }

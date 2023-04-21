@@ -11,7 +11,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -50,7 +49,7 @@ fun DevicesListView(
     }
     CenteredVerticalContainer {
         CenteredHorizontalContainer {
-            val deviceCount = viewModel.deviceCount.collectAsState(initial = 0).value
+            val deviceCount = sortedDevices.size
             Text(pluralStringResource(R.plurals.recorded_devices, deviceCount, deviceCount))
             Spacer(modifier = Modifier.padding(horizontal = 8.dp))
             DeviceButton(

@@ -5,8 +5,19 @@ import androidx.room.Room
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.main.repository.*
 import com.example.bluetoothdetector.main.sources.DeviceSource
+import com.example.bluetoothdetector.auth.repository.AccountRepository
+import com.example.bluetoothdetector.main.repository.BluetoothRepository
+import com.example.bluetoothdetector.main.repository.DeviceRepository
+import com.example.bluetoothdetector.main.repository.LocationRepository
+import com.example.bluetoothdetector.main.repository.NetworkRepository
+import com.example.bluetoothdetector.main.sources.DistributedDeviceSource
+import com.example.bluetoothdetector.main.sources.LocalDeviceSource
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.firestoreSettings
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +35,7 @@ object AppModule {
     @Provides
     fun provideDeviceRepository(
         @ApplicationContext context: Context,
-        deviceSource: DeviceSource
+        deviceSource: DistributedDeviceSource
     ) = DeviceRepository(context, deviceSource)
 
     // Provides a single instance of the FusedLocationProviderClient
@@ -41,15 +52,15 @@ object AppModule {
         fusedLocationProviderClient: FusedLocationProviderClient
     ) = LocationRepository(fusedLocationProviderClient)
 
-    // Provides a single instance of the DeviceSource
+    // Provides a single instance of the LocalDeviceSource
     @Singleton
     @Provides
     fun provideDeviceSource(
         @ApplicationContext context: Context
     ) = Room.databaseBuilder(
         context,
-        DeviceSource::class.java,
-        DeviceSource.Name
+        LocalDeviceSource::class.java,
+        LocalDeviceSource.Name
     ).fallbackToDestructiveMigration().build()
 
     // Provides a single instance of the BluetoothRepository
@@ -74,5 +85,23 @@ object AppModule {
     @Singleton
     @Provides
     fun provideNetworkRepository() = NetworkRepository()
+
+    // Provides a single instance of the FirebaseFirestore
+    @Singleton
+    @Provides
+    fun provideFirebaseFirestore() =
+        Firebase.firestore.apply {
+            firestoreSettings = firestoreSettings {
+                isPersistenceEnabled = true
+            }
+        }
+
+    // Provides a single instance of the DistributedDeviceSource
+    @Singleton
+    @Provides
+    fun provideDistributedDeviceSource(
+        firebaseFirestore: FirebaseFirestore,
+        accountRepository: AccountRepository
+    ) = DistributedDeviceSource(firebaseFirestore, accountRepository)
 }
 

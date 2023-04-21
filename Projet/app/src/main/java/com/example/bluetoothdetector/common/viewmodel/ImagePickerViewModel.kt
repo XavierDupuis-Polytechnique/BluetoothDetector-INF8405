@@ -3,6 +3,7 @@ package com.example.bluetoothdetector.common.viewmodel
 import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bluetoothdetector.common.sources.ImageFileProvider
@@ -14,7 +15,6 @@ class ImagePickerViewModel @Inject constructor(
 
 ) : ViewModel() {
     val storedImageUri = mutableStateOf<Uri?>(null)
-    val displayedImageUri = mutableStateOf<Uri?>(null)
 
     fun takePicture(
         context: Context,
@@ -24,7 +24,7 @@ class ImagePickerViewModel @Inject constructor(
         takePicture.launch(storedImageUri.value)
     }
 
-    fun onTakePictureResult(result: Boolean) {
+    fun onTakePictureResult(result: Boolean, displayedImageUri: MutableState<Uri?>) {
         if (!result) {
             return
         }
@@ -35,7 +35,7 @@ class ImagePickerViewModel @Inject constructor(
         pickImageLauncher.launch("image/*")
     }
 
-    fun onPickImageResult(uri: Uri?) {
+    fun onPickImageResult(uri: Uri?, displayedImageUri: MutableState<Uri?>) {
         storedImageUri.value = uri
         displayedImageUri.value = uri
     }
