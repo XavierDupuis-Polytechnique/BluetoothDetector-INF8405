@@ -5,11 +5,13 @@ import android.hardware.*
 import android.widget.Toast
 
 
-open class SensorRepository(private val context: Context) : TriggerEventListener(),
+open class SensorRepository(private val context: Context, private val deviceRepository: DeviceRepository) : /*TriggerEventListener(),*/
     SensorEventListener {
     private val mSensorManager: SensorManager =
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-    private val mSigMotion: Sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_SIGNIFICANT_MOTION)
+
+
+//    private val mSigMotion: Sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_SIGNIFICANT_MOTION)
 
 //    private val mListener: TriggerEventListener = mSigMotionTrigger : TriggerEventListener() {
 //        override fun onTrigger(event: SensorEvent) {
@@ -17,44 +19,44 @@ open class SensorRepository(private val context: Context) : TriggerEventListener
 //        }
 //    }
 
-    fun getSensorList() {
-        println("----------------------------------------------------------------AAA----------------------------------------------------------------")
-        var a = mSensorManager.getSensorList(Sensor.TYPE_ALL)
-        for (i in a) {
-            println(i.name)
-        }
+//    fun getSensorList() {
+//        println("----------------------------------------------------------------AAA----------------------------------------------------------------")
+//        var a = mSensorManager.getSensorList(Sensor.TYPE_ALL)
+//        for (i in a) {
+//            println(i.name)
+//        }
+//
+//
+//        println("----------------------------------------------------------------BBB----------------------------------------------------------------")
+//        println(mSensorManager.getSensorList(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR))
+//        println(mSensorManager.getSensorList(Sensor.TYPE_MAGNETIC_FIELD))
+//    }
 
+//    fun registerSignificantMotion() {
+//        mSensorManager.requestTriggerSensor(this, mSigMotion)
+//    }
+//
+//    fun unregisterSignificantMotion() {
+//        mSensorManager.cancelTriggerSensor(this, mSigMotion)
+//    }
 
-        println("----------------------------------------------------------------BBB----------------------------------------------------------------")
-        println(mSensorManager.getSensorList(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR))
-        println(mSensorManager.getSensorList(Sensor.TYPE_MAGNETIC_FIELD))
-    }
-
-    fun registerSignificantMotion() {
-        mSensorManager.requestTriggerSensor(this, mSigMotion)
-    }
-
-    fun unregisterSignificantMotion() {
-        mSensorManager.cancelTriggerSensor(this, mSigMotion)
-    }
-
-    override fun onTrigger(event: TriggerEvent?) {
-//        TODO("Not yet implemented")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-        // Register significant motion again because it is a one-shot trigger
-        registerSignificantMotion()
-    }
+//    override fun onTrigger(event: TriggerEvent?) {
+////        TODO("Not yet implemented")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
+//        // Register significant motion again because it is a one-shot trigger
+//        registerSignificantMotion()
+//    }
 
 
     private var mLastX = -1.0f
@@ -74,6 +76,8 @@ open class SensorRepository(private val context: Context) : TriggerEventListener
     private fun onShake() {
         println("ShakeListener onShake invoked---->")
         println("----------------------------------------------------------------Shake Detected----------------------------------------------------------------")
+        deviceRepository.highlight(null)
+        println(mSensorManager.getSensorList(Sensor.TYPE_GYROSCOPE))
     }
 
     init {

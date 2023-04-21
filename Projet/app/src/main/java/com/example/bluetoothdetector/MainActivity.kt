@@ -68,10 +68,12 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         networkRepository.updateCreatedBytes()
-        sensorRepository.getSensorList()
+        // TODO remove this
+//         sensorRepository.getSensorList()
 
         // Start listening for significant motion event
-        sensorRepository.registerSignificantMotion()
+        // TODO remove this
+//        sensorRepository.registerSignificantMotion()
         sensorRepository.shakeResume()
     }
 
@@ -83,7 +85,8 @@ class MainActivity : AppCompatActivity() {
         startBTScan()
         networkRepository.updateResumedBytes()
         // Start listening for significant motion event when app is resumed
-        sensorRepository.registerSignificantMotion()
+        // TODO remove this
+//        sensorRepository.registerSignificantMotion()
         sensorRepository.shakeResume()
     }
 
@@ -96,7 +99,8 @@ class MainActivity : AppCompatActivity() {
             bluetoothRepository.bluetoothStarted = false
         }
         // Stop listening for significant motion when app is paused
-        sensorRepository.unregisterSignificantMotion()
+        // TODO remove this
+//        sensorRepository.unregisterSignificantMotion()
         sensorRepository.shakePause()
 
     }
@@ -112,7 +116,8 @@ class MainActivity : AppCompatActivity() {
             unregisterReceiver(bluetoothRepository.bluetoothReceiver)
         }
         // Stop listening for significant motion when app is destroyed
-        sensorRepository.unregisterSignificantMotion()
+        // TODO remove this
+//        sensorRepository.unregisterSignificantMotion()
         sensorRepository.shakePause()
     }
 

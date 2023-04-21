@@ -65,7 +65,8 @@ object AppModule {
     @Provides
     fun provideSensorRepository(
         @ApplicationContext context: Context,
-    ) = SensorRepository(context)
+        deviceRepository: DeviceRepository,
+    ) = SensorRepository(context, deviceRepository)
 
     // Provides a single instance of the NetworkStatsManager
     @Singleton
