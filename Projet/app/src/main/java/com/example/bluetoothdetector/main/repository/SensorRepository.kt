@@ -1,152 +1,109 @@
 package com.example.bluetoothdetector.main.repository
 
 import android.content.Context
-import android.hardware.*
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.widget.Toast
+import com.example.bluetoothdetector.common.repository.ThemeRepository
+import kotlin.math.abs
 
 
-open class SensorRepository(private val context: Context, private val deviceRepository: DeviceRepository) : /*TriggerEventListener(),*/
-    SensorEventListener {
+open class SensorRepository(
+    private val context: Context,
+    private val deviceRepository: DeviceRepository,
+    private val themeRepository: ThemeRepository
+) : SensorEventListener {
     private val mSensorManager: SensorManager =
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-
-//    private val mSigMotion: Sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_SIGNIFICANT_MOTION)
-
-//    private val mListener: TriggerEventListener = mSigMotionTrigger : TriggerEventListener() {
-//        override fun onTrigger(event: SensorEvent) {
-//            // Do work.
-//        }
-//    }
-
-//    fun getSensorList() {
-//        println("----------------------------------------------------------------AAA----------------------------------------------------------------")
-//        var a = mSensorManager.getSensorList(Sensor.TYPE_ALL)
-//        for (i in a) {
-//            println(i.name)
-//        }
-//
-//
-//        println("----------------------------------------------------------------BBB----------------------------------------------------------------")
-//        println(mSensorManager.getSensorList(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR))
-//        println(mSensorManager.getSensorList(Sensor.TYPE_MAGNETIC_FIELD))
-//    }
-
-//    fun registerSignificantMotion() {
-//        mSensorManager.requestTriggerSensor(this, mSigMotion)
-//    }
-//
-//    fun unregisterSignificantMotion() {
-//        mSensorManager.cancelTriggerSensor(this, mSigMotion)
-//    }
-
-//    override fun onTrigger(event: TriggerEvent?) {
-////        TODO("Not yet implemented")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        println("----------------------------------------------------------------Significant Motion Detected----------------------------------------------------------------")
-//        // Register significant motion again because it is a one-shot trigger
-//        registerSignificantMotion()
-//    }
-
-
+    // Param for shake detection
     private var mLastX = -1.0f
     private var mLastY = -1.0f
     private var mLastZ = -1.0f
     private var mLastTime: Long = 0
-
-    //    private var mShakeListener: OnShakeListener? = null
-    private val mContext: Context
     private var mShakeCount = 0
     private var mLastShake: Long = 0
     private var mLastForce: Long = 0
 
-//    interface OnShakeListener {
-//    }
+    // Param for tilt detection
+    private val tiltSensorCode = 22
+    private var isFaceDown: Boolean = false
 
-    //
-    private fun onShake() {
-        // TODO remove println
-        println("ShakeListener onShake invoked---->")
-        println("----------------------------------------------------------------Shake Detected----------------------------------------------------------------")
-        val selectedDevice = deviceRepository.highlightedDevice.value
-        if (selectedDevice != null) {
-            deviceRepository.share(selectedDevice)
-        }
-        println("TYPE_GYROSCOPE")
-        println(mSensorManager.getSensorList(Sensor.TYPE_GYROSCOPE))
-        println("TYPE_ROTATION_VECTOR")
-        println(mSensorManager.getSensorList(Sensor.TYPE_ROTATION_VECTOR))
-        println("TYPE_MOTION_DETECT")
-        println(mSensorManager.getSensorList(Sensor.TYPE_MOTION_DETECT))
-        println("TYPE_PROXIMITY")
-        println(mSensorManager.getSensorList(Sensor.TYPE_PROXIMITY))
-        println("TYPE_GAME_ROTATION_VECTOR")
-        println(mSensorManager.getSensorList(Sensor.TYPE_GAME_ROTATION_VECTOR))
-        println("TYPE_STATIONARY_DETECT")
-        println(mSensorManager.getSensorList(Sensor.TYPE_STATIONARY_DETECT))
-
-
-    }
-
+    // Initialize sensors
     init {
-        println("ShakeListener invoked---->")
-        mContext = context
-        shakeResume()
+        sensorResume()
     }
 
-//    fun setOnShakeListener(listener: OnShakeListener?) {
-//        println("ShakeListener setOnShakeListener invoked---->")
-//        mShakeListener = listener
-//    }
-
-    fun shakeResume() {
+    // Resume the sensor listener
+    fun sensorResume() {
         println("ShakeListener shakeResume invoked---->")
         if (mSensorManager == null) {
             throw UnsupportedOperationException("Sensors not supported")
         }
-        var supported = false
+
         try {
-            supported = mSensorManager.registerListener(
+            mSensorManager.registerListener(
                 this,
                 mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_GAME
+
             )
         } catch (e: Exception) {
-            Toast.makeText(mContext, "Shaking not supported", Toast.LENGTH_LONG)
+            Toast.makeText(context, "Shaking not supported", Toast.LENGTH_LONG)
                 .show()
         }
-//        if (!supported) {
-//            mSensorManager.unregisterListener(this)
-//            println("ShakeListener shaking not supported---->")
-//        }
+
+        try {
+            mSensorManager.registerListener(
+                this,
+                mSensorManager.getDefaultSensor(tiltSensorCode),
+                SensorManager.SENSOR_DELAY_NORMAL
+
+            )
+        } catch (e: Exception) {
+            Toast.makeText(context, "Tilt not supported", Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
-    fun shakePause() {
+    // Stop the sensor listener
+    fun sensorPause() {
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(this)
         }
     }
 
+    // Do nothing on accuracy changed
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+
+    // Sensor events are received here
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor.type != Sensor.TYPE_ACCELEROMETER) return
+        if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+            shakeSensorEvent(event)
+        }
+
+        if (event.sensor.type == tiltSensorCode) {
+            tiltSensorEvent(event)
+        }
+        return
+
+    }
+
+    // Check accelerometer for shake event
+    private fun shakeSensorEvent(event: SensorEvent) {
+        // Check if the device is upside down
+        isFaceDown = event.values[SensorManager.DATA_Z] < -9f
+
+        // Check for shake action
         val now = System.currentTimeMillis()
         if (now - mLastForce > SHAKE_TIMEOUT) {
             mShakeCount = 0
         }
         if (now - mLastTime > TIME_THRESHOLD) {
             val diff = now - mLastTime
-            val speed = Math.abs(
+            val speed = abs(
                 (event.values[SensorManager.DATA_X]
                         + event.values[SensorManager.DATA_Y]
                         + event.values[SensorManager.DATA_Z]) - mLastX - mLastY
@@ -158,10 +115,7 @@ open class SensorRepository(private val context: Context, private val deviceRepo
                 ) {
                     mLastShake = now
                     mShakeCount = 0
-                    println("ShakeListener mShakeListener---->")
-//                    if (mShakeListener != null) {
                     onShake()
-//                    }
                 }
                 mLastForce = now
             }
@@ -172,6 +126,22 @@ open class SensorRepository(private val context: Context, private val deviceRepo
         }
     }
 
+    // Action when shake event is detected
+    private fun onShake() {
+        val selectedDevice = deviceRepository.highlightedDevice.value
+        if (selectedDevice != null) {
+            deviceRepository.share(selectedDevice)
+        }
+    }
+
+    // Action when tilt event is detected
+    private fun tiltSensorEvent(event: SensorEvent) {
+        if (isFaceDown) {
+            themeRepository.toggleTheme()
+        }
+    }
+
+    // Parameters for shake detection
     companion object {
         private const val FORCE_THRESHOLD = 800
         private const val TIME_THRESHOLD = 100
@@ -179,5 +149,4 @@ open class SensorRepository(private val context: Context, private val deviceRepo
         private const val SHAKE_DURATION = 1000
         private const val SHAKE_COUNT = 5
     }
-
 }

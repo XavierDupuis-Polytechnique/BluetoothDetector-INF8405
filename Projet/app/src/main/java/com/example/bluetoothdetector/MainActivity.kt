@@ -5,8 +5,6 @@ import android.bluetooth.BluetoothAdapter.ACTION_DISCOVERY_FINISHED
 import android.bluetooth.BluetoothDevice
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.hardware.Sensor
-import android.hardware.SensorManager
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -68,13 +66,9 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         networkRepository.updateCreatedBytes()
-        // TODO remove this
-//         sensorRepository.getSensorList()
 
-        // Start listening for significant motion event
-        // TODO remove this
-//        sensorRepository.registerSignificantMotion()
-        sensorRepository.shakeResume()
+        // Start listening for sensors event when app is created
+        sensorRepository.sensorResume()
     }
 
     override fun onResume() {
@@ -84,10 +78,8 @@ class MainActivity : AppCompatActivity() {
         // Start bluetooth scan when app is resumed
         startBTScan()
         networkRepository.updateResumedBytes()
-        // Start listening for significant motion event when app is resumed
-        // TODO remove this
-//        sensorRepository.registerSignificantMotion()
-        sensorRepository.shakeResume()
+        // Start listening for sensors event when app is resumed
+        sensorRepository.sensorResume()
     }
 
     override fun onPause() {
@@ -98,11 +90,8 @@ class MainActivity : AppCompatActivity() {
             bluetoothRepository.stopDiscovery()
             bluetoothRepository.bluetoothStarted = false
         }
-        // Stop listening for significant motion when app is paused
-        // TODO remove this
-//        sensorRepository.unregisterSignificantMotion()
-        sensorRepository.shakePause()
-
+        // Stop listening for sensors when app is paused
+        sensorRepository.sensorPause()
     }
 
     override fun onDestroy() {
@@ -115,10 +104,8 @@ class MainActivity : AppCompatActivity() {
         if (bluetoothRepository.bluetoothReceiver != null) {
             unregisterReceiver(bluetoothRepository.bluetoothReceiver)
         }
-        // Stop listening for significant motion when app is destroyed
-        // TODO remove this
-//        sensorRepository.unregisterSignificantMotion()
-        sensorRepository.shakePause()
+        // Stop listening for sensors when app is destroyed
+        sensorRepository.sensorPause()
     }
 
     // Start bluetooth scan
