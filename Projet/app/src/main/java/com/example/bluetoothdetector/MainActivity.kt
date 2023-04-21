@@ -23,6 +23,7 @@ import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.repository.NetworkRepository
+import com.example.bluetoothdetector.main.repository.SensorRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +48,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var networkRepository: NetworkRepository
 
+    @Inject
+    lateinit var sensorRepository: SensorRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
@@ -63,6 +67,9 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         networkRepository.updateCreatedBytes()
+
+        // Start listening for sensors event when app is created
+        sensorRepository.sensorResume()
     }
 
     override fun onResume() {
@@ -72,6 +79,8 @@ class MainActivity : AppCompatActivity() {
         // Start bluetooth scan when app is resumed
         startBTScan()
         networkRepository.updateResumedBytes()
+        // Start listening for sensors event when app is resumed
+        sensorRepository.sensorResume()
     }
 
     override fun onPause() {
@@ -82,6 +91,8 @@ class MainActivity : AppCompatActivity() {
             bluetoothRepository.stopDiscovery()
             bluetoothRepository.bluetoothStarted = false
         }
+        // Stop listening for sensors when app is paused
+        sensorRepository.sensorPause()
     }
 
     override fun onDestroy() {
@@ -94,6 +105,8 @@ class MainActivity : AppCompatActivity() {
         if (bluetoothRepository.bluetoothReceiver != null) {
             unregisterReceiver(bluetoothRepository.bluetoothReceiver)
         }
+        // Stop listening for sensors when app is destroyed
+        sensorRepository.sensorPause()
     }
 
     // Start bluetooth scan
@@ -142,7 +155,6 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(bluetoothRepository.bluetoothReceiver, filter)
         bluetoothRepository.startDiscovery()
     }
-
 }
 
 @Composable

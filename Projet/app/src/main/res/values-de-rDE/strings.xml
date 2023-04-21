@@ -76,4 +76,5 @@
     <string name="auth_image_content_error">Kein Profilbild ausgewählt</string>
     <string name="select_image">Bild auswählen</string>
     <string name="take_picture">Foto machen</string>
+    <string name="no_device_selected">Kein Gerät ausgewählt</string>
 </resources>

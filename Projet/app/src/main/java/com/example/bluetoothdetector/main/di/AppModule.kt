@@ -3,10 +3,8 @@ package com.example.bluetoothdetector.main.di
 import android.content.Context
 import androidx.room.Room
 import com.example.bluetoothdetector.auth.repository.AccountRepository
-import com.example.bluetoothdetector.main.repository.BluetoothRepository
-import com.example.bluetoothdetector.main.repository.DeviceRepository
-import com.example.bluetoothdetector.main.repository.LocationRepository
-import com.example.bluetoothdetector.main.repository.NetworkRepository
+import com.example.bluetoothdetector.common.repository.ThemeRepository
+import com.example.bluetoothdetector.main.repository.*
 import com.example.bluetoothdetector.main.sources.DistributedDeviceSource
 import com.example.bluetoothdetector.main.sources.LocalDeviceSource
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -68,6 +66,15 @@ object AppModule {
         deviceRepository: DeviceRepository,
         locationRepository: LocationRepository
     ) = BluetoothRepository(context, deviceRepository, locationRepository)
+
+    // Provides a single instance of the SensorRepository
+    @Singleton
+    @Provides
+    fun provideSensorRepository(
+        @ApplicationContext context: Context,
+        deviceRepository: DeviceRepository,
+        themeRepository: ThemeRepository,
+    ) = SensorRepository(context, deviceRepository, themeRepository)
 
     // Provides a single instance of the NetworkStatsManager
     @Singleton
