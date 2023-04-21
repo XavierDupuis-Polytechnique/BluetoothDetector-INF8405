@@ -6,6 +6,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.widget.Toast
+import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import kotlin.math.abs
 
@@ -131,6 +132,10 @@ open class SensorRepository(
         val selectedDevice = deviceRepository.highlightedDevice.value
         if (selectedDevice != null) {
             deviceRepository.share(selectedDevice)
+        } else {
+            val noDeviceMessage = context.getString(
+                R.string.no_device_selected)
+            Toast.makeText(context, noDeviceMessage, Toast.LENGTH_SHORT).show()
         }
     }
 
