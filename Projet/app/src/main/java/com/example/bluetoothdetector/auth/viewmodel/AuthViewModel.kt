@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.auth.model.AuthState
 import com.example.bluetoothdetector.auth.repository.AccountRepository
@@ -88,7 +87,7 @@ class AuthViewModel @Inject constructor(
 
     fun signup(
         context: Context,
-        navController: NavHostController
+        navigate: (Page) -> Unit
     ) = viewModelScope.launch {
         authState = authState.copy(isLoading = true)
         authState = authState.copy(error = null)
@@ -108,7 +107,7 @@ class AuthViewModel @Inject constructor(
                 authState = authState.copy(isSuccess = isSuccess)
                 if (isSuccess) {
                     profilePictureUri.value?.let {
-                        uploadProfilePicture(it, navController)
+                        uploadProfilePicture(it, navigate)
                     }
                 }
             }
@@ -117,18 +116,18 @@ class AuthViewModel @Inject constructor(
 
     private fun uploadProfilePicture(
         uri: Uri,
-        navController: NavHostController
+        navigate: (Page) -> Unit
     ) = viewModelScope.launch {
         accountRepository.setProfilePicture(uri, authState.usernameSignup) { imageUploaded ->
             if (imageUploaded) {
-                navigate(navController, Page.ACCOUNT)
+                navigate(navigate, Page.ACCOUNT)
             }
         }
     }
 
     fun login(
         context: Context,
-        navController: NavHostController
+        navigate: (Page) -> Unit
     ) = viewModelScope.launch {
         authState = authState.copy(isLoading = true)
         authState = authState.copy(error = null)
@@ -147,7 +146,7 @@ class AuthViewModel @Inject constructor(
             ) { isSuccess ->
                 authState = authState.copy(isSuccess = isSuccess)
                 if (isSuccess) {
-                    navigate(navController, Page.ACCOUNT)
+                    navigate(navigate, Page.ACCOUNT)
                 }
             }
         }
@@ -157,8 +156,9 @@ class AuthViewModel @Inject constructor(
         try {
             authOperation()
         } catch (exception: Exception) {
-            authState = authState.copy(error = exception.localizedMessage)
             exception.printStackTrace()
+            authState = authState.copy(error = exception.localizedMessage)
+            authState = authState.copy(isLoading = false)
         }
     }
 
@@ -166,9 +166,9 @@ class AuthViewModel @Inject constructor(
         accountRepository.signOut()
     }
 
-    fun navigate(navController: NavHostController, page: Page) {
+    fun navigate(navigate: (Page) -> Unit, page: Page) {
         clearState()
-        navController.navigate(page.route)
+        navigate(page)
     }
 
     fun getProfilePictureUri(

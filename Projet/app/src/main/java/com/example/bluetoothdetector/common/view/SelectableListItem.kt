@@ -68,7 +68,6 @@ fun SelectableListItem(
             icon = { icon(isSelected) }
         )
     }
-
 }
 
 @Composable
