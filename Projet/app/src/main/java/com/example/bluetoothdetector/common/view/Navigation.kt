@@ -5,11 +5,16 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.bluetoothdetector.auth.view.AccountScreen
+import com.example.bluetoothdetector.auth.view.LoginScreen
+import com.example.bluetoothdetector.auth.view.SignupScreen
+import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.view.page.ContentPage
 import com.example.bluetoothdetector.common.view.page.PageWithHeader
@@ -31,6 +36,7 @@ fun Navigation(
 ) {
     val menuState = rememberDrawerState(DrawerValue.Closed)
     val menuScope = rememberCoroutineScope()
+    val authViewModel: AuthViewModel = hiltViewModel()
 
     PageWithHeader(menuState, menuScope) {
         MenuDrawer(menuState, menuScope, navController) {
@@ -51,8 +57,16 @@ fun Navigation(
                     DevicesListView()
                 }
 
+                pageComposable(Page.LOGIN) {
+                    LoginScreen(navController, authViewModel)
+                }
+
+                pageComposable(Page.SIGNUP) {
+                    SignupScreen(navController, authViewModel)
+                }
+
                 pageComposable(Page.ACCOUNT) {
-                    Text("TODO Account")
+                    AccountScreen(navController, authViewModel)
                 }
 
                 pageComposable(Page.ENERGY) {

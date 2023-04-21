@@ -1,7 +1,6 @@
 package com.example.bluetoothdetector.main.view
 
 import android.annotation.SuppressLint
-import android.location.Location
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -135,16 +134,14 @@ fun DevicePreview() {
     }
     DeviceView(
         device = Device(
-            name = "MyDevice",
             macAddress = "12:23:34:45:67:AB",
+            name = "MyDevice",
             date = Date(),
             bluetoothClass = "AUDIO_VIDEO_CAMCORDER",
             type = "DEVICE_TYPE_UNKNOWN",
             bondState = "BOND_NONE",
-            location = Location("1").apply {
-                latitude = 12.345678912345656
-                longitude = 67.345678912345656
-            }
+            latitude = 12.345678912345656,
+            longitude = 67.345678912345656,
         ),
         isFavorite = isFavorite,
         isHighlighted = isHighlighted,

@@ -59,6 +59,20 @@ enum class Page(
         route = "PERMISSIONS",
         description = R.string.permissions_page_description,
         icon = Icons.Default.SettingsApplications
+    ),
+    SIGNUP(
+        denomination = R.string.auth_signup,
+        route = "SIGNUP",
+        description = R.string.auth_signup_description,
+        icon = Icons.Default.PersonAdd,
+        inMenu = false
+    ),
+    LOGIN(
+        denomination = R.string.auth_login,
+        route = "LOGIN",
+        description = R.string.auth_login_description,
+        icon = Icons.Default.Login,
+        inMenu = false
     );
 
     companion object {
