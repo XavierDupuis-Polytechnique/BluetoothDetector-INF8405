@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.auth.domain.Redirection
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
@@ -25,7 +24,7 @@ import com.example.bluetoothdetector.common.view.typography.Title
 @Composable
 fun AuthView(
     page: Page,
-    navController: NavHostController,
+    navigate: (Page) -> Unit,
     authViewModel: AuthViewModel,
     redirection: Redirection,
     confirm: ((Context) -> Unit)? = null,
@@ -46,7 +45,7 @@ fun AuthView(
             ConfirmButton(page.description, confirm)
         }
         Spacer(modifier = Modifier.size(16.dp))
-        Redirect(navController, authViewModel, redirection)
+        Redirect(navigate, authViewModel, redirection)
     }
 }
 
@@ -61,7 +60,7 @@ fun ConfirmButton(value: Int, confirm: (Context) -> Unit) {
 
 @Composable
 fun Redirect(
-    navController: NavHostController,
+    navigate: (Page) -> Unit,
     authViewModel: AuthViewModel,
     redirection: Redirection,
 ) {
@@ -70,7 +69,7 @@ fun Redirect(
         Spacer(modifier = Modifier.size(8.dp))
         TextButton(onClick = {
             redirection.action?.let { it(authViewModel) }
-            authViewModel.navigate(navController, redirection.page)
+            authViewModel.navigate(navigate, redirection.page)
         }) {
             Text(stringResource(redirection.label))
         }

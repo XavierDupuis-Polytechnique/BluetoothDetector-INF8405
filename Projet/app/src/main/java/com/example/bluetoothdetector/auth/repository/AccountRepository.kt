@@ -50,7 +50,8 @@ class AccountRepository @Inject constructor(
         uploadImage(path, username, onComplete)
     }
 
-    private fun uploadImage(path: Uri, filename: String, onComplete: ((Boolean) -> Unit)?) {
+    private fun uploadImage(path: Uri, username: String, onComplete: ((Boolean) -> Unit)?) {
+        val filename = username.lowercase()
         val imageReference = firebaseStorage.reference.child("images//${filename}.jpg")
         val uploadTask = imageReference.putFile(path)
         uploadTask
@@ -63,7 +64,8 @@ class AccountRepository @Inject constructor(
     }
 
     fun getProfilePicture(username: String, onComplete: (Uri?) -> Unit) {
-        val imageReference = firebaseStorage.reference.child("images//${username}.jpg")
+        val filename = username.lowercase()
+        val imageReference = firebaseStorage.reference.child("images//${filename}.jpg")
         val downloadUrl = imageReference.downloadUrl
             .addOnFailureListener {
                 onComplete(null)

@@ -78,5 +78,8 @@ enum class Page(
     companion object {
         val Pages = Page.values()
         val MenuPages = Pages.filter { it.inMenu }
+        val StartPage = SPLASH
+        val LoggedInPage = MAIN
+        val LoggedOutPage = LOGIN
     }
 }

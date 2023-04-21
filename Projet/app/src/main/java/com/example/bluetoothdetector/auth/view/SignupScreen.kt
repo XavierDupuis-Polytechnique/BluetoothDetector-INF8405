@@ -4,7 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Password
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.auth.domain.SignupRedirection
 import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
@@ -13,15 +12,15 @@ import com.example.bluetoothdetector.common.view.camera.ImagePicker
 
 @Composable
 fun SignupScreen(
-    navController: NavHostController,
+    navigate: (Page) -> Unit,
     authViewModel: AuthViewModel
 ) {
     AuthView(
         Page.SIGNUP,
-        navController,
+        navigate,
         authViewModel,
         SignupRedirection,
-        { authViewModel.signup(it, navController) },
+        { authViewModel.signup(it, navigate) },
     ) {
         UsernameField(authViewModel)
         PasswordField(authViewModel)
