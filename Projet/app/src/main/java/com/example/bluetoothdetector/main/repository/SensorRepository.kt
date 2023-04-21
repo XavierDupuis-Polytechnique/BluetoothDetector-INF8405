@@ -73,11 +73,29 @@ open class SensorRepository(private val context: Context, private val deviceRepo
 //    interface OnShakeListener {
 //    }
 
+    //
     private fun onShake() {
+        // TODO remove println
         println("ShakeListener onShake invoked---->")
         println("----------------------------------------------------------------Shake Detected----------------------------------------------------------------")
-        deviceRepository.highlight(null)
+        val selectedDevice = deviceRepository.highlightedDevice.value
+        if (selectedDevice != null) {
+            deviceRepository.share(selectedDevice)
+        }
+        println("TYPE_GYROSCOPE")
         println(mSensorManager.getSensorList(Sensor.TYPE_GYROSCOPE))
+        println("TYPE_ROTATION_VECTOR")
+        println(mSensorManager.getSensorList(Sensor.TYPE_ROTATION_VECTOR))
+        println("TYPE_MOTION_DETECT")
+        println(mSensorManager.getSensorList(Sensor.TYPE_MOTION_DETECT))
+        println("TYPE_PROXIMITY")
+        println(mSensorManager.getSensorList(Sensor.TYPE_PROXIMITY))
+        println("TYPE_GAME_ROTATION_VECTOR")
+        println(mSensorManager.getSensorList(Sensor.TYPE_GAME_ROTATION_VECTOR))
+        println("TYPE_STATIONARY_DETECT")
+        println(mSensorManager.getSensorList(Sensor.TYPE_STATIONARY_DETECT))
+
+
     }
 
     init {
