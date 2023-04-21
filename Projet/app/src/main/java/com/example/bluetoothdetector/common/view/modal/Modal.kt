@@ -12,6 +12,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.bluetoothdetector.common.domain.modal.ModalActions
 import com.example.bluetoothdetector.common.domain.modal.ModalResult
+import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.typography.Title
 
 
@@ -30,40 +31,37 @@ fun Modal(
         properties = DialogProperties(usePlatformDefaultWidth = false),
         onDismissRequest = { },
         content = {
-            Card {
-                Surface {
-                    Column(
-                        modifier = Modifier
-                            .padding(18.dp)
-                    ) {
-                        if (title != null) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(bottom = 18.dp)
-                            ) {
-                                Title(stringResource(title))
-                            }
+            CardContainer {
+                Column(
+                    modifier = Modifier
+                        .padding(18.dp)
+                ) {
+                    title?.let {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(bottom = 18.dp)
+                        ) {
+                            Title(stringResource(it))
                         }
+                    }
 
+                    content { modalActions ->
+                        Spacer(modifier = Modifier.padding(vertical = 18.dp))
+                        Row(
+                            horizontalArrangement = Arrangement.Start,
+                        ) {
+                            ModalButton(
+                                { closeModal(ModalResult.Cancel) },
+                                modalActions.cancel,
+                                backgroundColor = MaterialTheme.colors.secondary,
+                                contentColor = MaterialTheme.colors.onSecondary,
+                            )
 
-                        content { modalActions ->
-                            Spacer(modifier = Modifier.padding(vertical = 18.dp))
-                            Row(
-                                horizontalArrangement = Arrangement.Start,
-                            ) {
+                            modalActions.primary?.let {
                                 ModalButton(
-                                    { closeModal(ModalResult.Cancel) },
-                                    modalActions.cancel,
-                                    backgroundColor = MaterialTheme.colors.secondary,
-                                    contentColor = MaterialTheme.colors.onSecondary,
+                                    { closeModal(ModalResult.Primary) },
+                                    it
                                 )
-
-                                modalActions.primary?.let {
-                                    ModalButton(
-                                        { closeModal(ModalResult.Primary) },
-                                        it
-                                    )
-                                }
                             }
                         }
                     }
