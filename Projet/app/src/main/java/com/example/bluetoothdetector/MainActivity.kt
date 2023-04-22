@@ -21,6 +21,7 @@ import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.main.repository.BluetoothRepository
+import com.example.bluetoothdetector.main.repository.EnergyRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.repository.NetworkRepository
 import com.example.bluetoothdetector.main.repository.SensorRepository
@@ -49,6 +50,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var networkRepository: NetworkRepository
 
     @Inject
+    lateinit var energyRepository: EnergyRepository
+
+    @Inject
     lateinit var sensorRepository: SensorRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         networkRepository.updateCreatedBytes()
-
+        energyRepository.updateCreatedLevel()
         // Start listening for sensors event when app is created
         sensorRepository.sensorResume()
     }
@@ -79,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         // Start bluetooth scan when app is resumed
         startBTScan()
         networkRepository.updateResumedBytes()
+        energyRepository.updateResumedLevel()
         // Start listening for sensors event when app is resumed
         sensorRepository.sensorResume()
     }

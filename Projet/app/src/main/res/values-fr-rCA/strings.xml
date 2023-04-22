@@ -43,7 +43,7 @@
     <string name="energy_page_name">Énergie</string>
     <string name="energy_page_description">Consommation énergétique de l\'application</string>
     <string name="network_page_name">Réseau</string>
-    <string name="network_page_description">Consommation de bande passante de de l\'application</string>
+    <string name="network_page_description">Consommation de bande passante de l\'application</string>
     <string name="permissions_page_name">Permissions</string>
     <string name="permissions_page_description">Gestions des autorisations</string>
     <string name="network_stats_disclaimer">Les statistiques sont mesurées au niveau de la couche réseau, elles incluent donc à la fois l\'utilisation TCP et UDP</string>
@@ -56,6 +56,9 @@
     <string name="resumed">Reprise</string>
     <string name="network_percent_was_used_for_process">Le processus a consommé %.2f %% de l\'utilisation totale du réseau de l\'appareil</string>
     <string name="refresh">Rafraîchir</string>
+    <string name="energy_title">Utilisation de la batterie</string>
+    <string name="battery_level_used">%.2f %% utilisé</string>
+    <string name="battery_level_current">La charge actuelle de la batterie est %.2f %% !</string>
     <string name="auth_username">Nom d\'utilisateur</string>
     <string name="auth_password">Mot de passe</string>
     <string name="auth_confirm_password">Confirmer le mot de passe</string>

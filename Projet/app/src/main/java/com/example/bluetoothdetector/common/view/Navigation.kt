@@ -21,6 +21,7 @@ import com.example.bluetoothdetector.common.view.page.ContentPage
 import com.example.bluetoothdetector.common.view.page.PageWithHeader
 import com.example.bluetoothdetector.common.view.permissions.PermissionsView
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
+import com.example.bluetoothdetector.main.view.*
 import com.example.bluetoothdetector.main.view.DevicesListView
 import com.example.bluetoothdetector.main.view.GlobalScreen
 import com.example.bluetoothdetector.main.view.MapView
@@ -75,7 +76,7 @@ fun Navigation(
                 }
 
                 pageComposable(Page.ENERGY) {
-                    Text("TODO Energy")
+                    EnergyView()
                 }
 
                 pageComposable(Page.NETWORK) {

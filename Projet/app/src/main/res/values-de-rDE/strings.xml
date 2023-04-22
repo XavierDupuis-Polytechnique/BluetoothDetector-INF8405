@@ -55,6 +55,9 @@
     <string name="resumed">Fortgesetzt</string>
     <string name="network_percent_was_used_for_process">Der Prozess verbrauchte %.2f %% der gesamten Netzwerknutzung des Geräts</string>
     <string name="refresh">Aktualisierung</string>
+    <string name="energy_title">Batterieverbrauch</string>
+    <string name="battery_level_used">%.2f %% gebraucht</string>
+    <string name="battery_level_current">Die tatsächliche Ladung der Batterie beträgt %.2f %% !</string>
     <string name="auth_username">Benutzername</string>
     <string name="auth_password">Passwort</string>
     <string name="auth_confirm_password">Passwort bestätigen</string>

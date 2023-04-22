@@ -2,6 +2,8 @@ package com.example.bluetoothdetector.main.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.bluetoothdetector.main.repository.*
+import com.example.bluetoothdetector.main.sources.DeviceSource
 import com.example.bluetoothdetector.auth.repository.AccountRepository
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.main.repository.*
@@ -80,6 +82,13 @@ object AppModule {
     @Singleton
     @Provides
     fun provideNetworkRepository() = NetworkRepository()
+
+    // Provides a single instance of the EnergyRepository
+    @Singleton
+    @Provides
+    fun provideEnergyRepository(
+        @ApplicationContext context: Context,
+    ) = EnergyRepository(context)
 
     // Provides a single instance of the FirebaseFirestore
     @Singleton
