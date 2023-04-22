@@ -5,6 +5,7 @@ import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.view.SelectableListItem
 import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
 
+// Page menu option view
 @Composable
 fun MenuTabView(
     viewModel: MenuViewModel,

@@ -37,8 +37,8 @@
     <string name="start_intent_could_not_share_device">Could not share device</string>
     <string name="splash_page_name">Loading</string>
     <string name="splash_page_description">Splash screen</string>
-    <string name="main_page_name">Global</string>
-    <string name="main_page_description">Map and Devices View</string>
+    <string name="global_page_name">Global</string>
+    <string name="global_page_description">Map and Devices View</string>
     <string name="map_page_name">Map</string>
     <string name="map_page_description">Map of registered devices</string>
     <string name="devices_page_name">Devices</string>

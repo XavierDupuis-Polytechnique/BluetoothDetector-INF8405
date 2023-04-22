@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.example.bluetoothdetector.R
 
+// Custom TextField for Authentication pages
 @Composable
 fun AuthField(
     value: String,

@@ -13,6 +13,7 @@ import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 
+// Displays the menu drawer with page selection
 @Composable
 fun MenuDrawer(
     menuState: DrawerState,

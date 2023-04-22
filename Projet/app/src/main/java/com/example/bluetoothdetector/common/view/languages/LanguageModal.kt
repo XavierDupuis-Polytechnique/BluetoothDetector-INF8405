@@ -14,13 +14,14 @@ import com.example.bluetoothdetector.common.view.SelectableListItem
 import com.example.bluetoothdetector.common.view.modal.Modal
 import com.example.bluetoothdetector.common.viewmodel.LanguageViewModel
 
+// Displays the current language and other available languages
 @Composable
 fun LanguagesModal(
     viewModel: LanguageViewModel
 ) {
     Modal(
         title = R.string.choose_language,
-        closeModal = { viewModel.closeModal() }
+        closeModal = { viewModel.hideLanguages() }
     ) {
         LazyColumn {
             items(LanguageRepository.AvailableLanguages) {
@@ -38,8 +39,6 @@ fun LanguagesModal(
                 primary = Action(
                     label = { R.string.confirm },
                     execute = { viewModel.confirmSelectedLanguage() },
-                    // TODO : REVIEW UX
-                    // canExecute = { viewModel.canConfirmSelectedLanguage() }
                 )
             )
         )

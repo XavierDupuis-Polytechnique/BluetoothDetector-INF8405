@@ -1,5 +1,6 @@
 package com.example.bluetoothdetector.auth.model
 
+// Login or Signup state
 data class AuthState(
     val username: String = "",
     val password: String = "",

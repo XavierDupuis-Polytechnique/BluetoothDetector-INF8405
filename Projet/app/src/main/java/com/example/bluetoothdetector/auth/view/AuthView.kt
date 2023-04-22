@@ -21,6 +21,7 @@ import com.example.bluetoothdetector.common.view.containers.CenteredVerticalCont
 import com.example.bluetoothdetector.common.view.typography.Subtitle
 import com.example.bluetoothdetector.common.view.typography.Title
 
+// Custom view for Account, Login and Signup pages
 @Composable
 fun AuthView(
     page: Page,
@@ -57,7 +58,7 @@ fun ConfirmButton(value: Int, confirm: (Context) -> Unit) {
     }
 }
 
-
+// Page redirection message and button
 @Composable
 fun Redirect(
     navigate: (Page) -> Unit,

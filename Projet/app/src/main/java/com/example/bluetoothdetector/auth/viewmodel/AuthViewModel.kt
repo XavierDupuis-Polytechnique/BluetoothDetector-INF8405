@@ -21,38 +21,48 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val accountRepository: AccountRepository
 ) : ViewModel() {
+    // Holds the current logged in user
     val currentUser = accountRepository.currentUser
 
+    // Holds the current authentication state
     var authState by mutableStateOf(AuthState())
         private set
 
+    // Holds the current profile picture URI
     val profilePictureUri: MutableState<Uri?> = mutableStateOf(null)
 
+    // Clears auth state and profile picture URI
     private fun clearState() {
         authState = AuthState()
         profilePictureUri.value = null
     }
 
+    // Updates the username field in AuthState
     fun onUsernameChange(username: String) {
         authState = authState.copy(username = username)
     }
 
+    // Updates the password field in AuthState
     fun onPasswordChange(password: String) {
         authState = authState.copy(password = password)
     }
 
+    // Updates the usernameSignup field in AuthState
     fun onUsernameSignupChange(usernameSignup: String) {
         authState = authState.copy(usernameSignup = usernameSignup)
     }
 
+    // Updates the passwordSignUp field in AuthState
     fun onPasswordSignupChange(passwordSignUp: String) {
         authState = authState.copy(passwordSignUp = passwordSignUp)
     }
 
+    // Updates the confirmPassword field in AuthState
     fun onConfirmPasswordChange(confirmPassword: String) {
         authState = authState.copy(confirmPassword = confirmPassword)
     }
 
+    // Validates the Login form fields from specified rules
     private fun validateLoginForm(context: Context): String? {
         if (authState.username.isEmpty() || authState.username.isBlank()) {
             return context.getString(R.string.auth_username_content_error)
@@ -66,6 +76,7 @@ class AuthViewModel @Inject constructor(
         return null
     }
 
+    // Validates the Signup form fields from specified rules
     private fun validateSignupForm(context: Context): String? {
         if (authState.usernameSignup.isEmpty() || authState.usernameSignup.isBlank()) {
             return context.getString(R.string.auth_username_content_error)
@@ -85,6 +96,9 @@ class AuthViewModel @Inject constructor(
         return null
     }
 
+    // Process Signup request
+    //      If request successful, try to upload profile picture
+    //          If upload successful, navigate to Account page
     fun signup(
         context: Context,
         navigate: (Page) -> Unit
@@ -125,6 +139,9 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    // Process Login request
+    //      If request successful, try to retrieve profile picture URL
+    //          If retrieval successful, navigate to Account page
     fun login(
         context: Context,
         navigate: (Page) -> Unit
@@ -152,6 +169,8 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    // Executes Auth request (Login/Signup) safely
+    // Displays error message on failure
     private suspend fun executeAuthOperation(authOperation: suspend () -> Unit) {
         try {
             authOperation()
@@ -166,11 +185,14 @@ class AuthViewModel @Inject constructor(
         accountRepository.signOut()
     }
 
+    // Navigates to another page
+    //      Navigation should clear the current auth state
     fun navigate(navigate: (Page) -> Unit, page: Page) {
         clearState()
         navigate(page)
     }
 
+    // Retrieves the current logged in user profile picture URI
     fun getProfilePictureUri(
         currentUser: FirebaseUser,
         onComplete: (Uri?) -> Unit
@@ -185,6 +207,7 @@ class AuthViewModel @Inject constructor(
     }
 }
 
+// All Firebase Authentication usernames are part of the "@inf8405.com" domain
 private fun String.appendEmail(): String {
     return plus("@inf8405.com")
 }

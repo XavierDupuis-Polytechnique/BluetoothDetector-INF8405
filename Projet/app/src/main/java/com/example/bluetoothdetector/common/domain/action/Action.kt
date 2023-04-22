@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.bluetoothdetector.R
 
+// Generic Action attributes
 data class Action(
     val label: () -> Int = { R.string.no_string },
     val canExecute: () -> Boolean = { true },

@@ -10,11 +10,12 @@ import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.auth.viewmodel.removeEmail
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.domain.formatter.formatDate
-import com.example.bluetoothdetector.common.view.camera.ImageView
+import com.example.bluetoothdetector.common.view.camera.AsyncImageViewOrSpinner
 import com.example.bluetoothdetector.common.view.typography.Subtitle
 import com.google.firebase.auth.FirebaseUser
 import java.util.*
 
+// Displays the current logged in user information
 @Composable
 fun AccountScreen(
     navigate: (Page) -> Unit,
@@ -35,6 +36,7 @@ fun AccountScreen(
     }
 }
 
+// Displays the current logged in profile picture
 @Composable
 fun ProfilePictureView(
     authViewModel: AuthViewModel,
@@ -46,9 +48,10 @@ fun ProfilePictureView(
     authViewModel.getProfilePictureUri(currentUser) {
         uri = it
     }
-    ImageView(uri)
+    AsyncImageViewOrSpinner(uri)
 }
 
+// Displays the welcome back message
 @Composable
 fun WelcomeBackView(firebaseUser: FirebaseUser) {
     val username = firebaseUser.email?.removeEmail() ?: ""

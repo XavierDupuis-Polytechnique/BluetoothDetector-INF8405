@@ -19,11 +19,12 @@ import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalCo
 import com.example.bluetoothdetector.common.view.containers.CenteredVerticalContainer
 import com.example.bluetoothdetector.common.viewmodel.ImagePickerViewModel
 
+// Image selector (from camera or memory) view
 @Composable
 fun ImagePicker(
     displayedImageUri: MutableState<Uri?>,
     viewModel: ImagePickerViewModel = hiltViewModel(),
-    imageContent: @Composable (Uri?) -> Unit = { StaticImageView(it) }
+    imageContent: @Composable (Uri?) -> Unit = { AsyncImageViewOrPlaceholder(it) }
 ) {
     val pickImageLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),

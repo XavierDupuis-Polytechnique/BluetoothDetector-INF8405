@@ -31,8 +31,8 @@
     <string name="start_intent_could_not_share_device">Gerät konnte nicht freigegeben werden</string>
     <string name="splash_page_name">Laden</string>
     <string name="splash_page_description">Ladefenster</string>
-    <string name="main_page_name">Global</string>
-    <string name="main_page_description">Karten- und Geräteansicht</string>
+    <string name="global_page_name">Global</string>
+    <string name="global_page_description">Karten- und Geräteansicht</string>
     <string name="map_page_name">Karte</string>
     <string name="map_page_description">Karte der registrierten Geräte</string>
     <string name="devices_page_name">Geräte</string>

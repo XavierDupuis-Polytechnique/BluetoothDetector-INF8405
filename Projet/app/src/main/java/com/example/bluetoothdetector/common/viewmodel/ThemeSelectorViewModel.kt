@@ -9,7 +9,11 @@ import javax.inject.Inject
 class ThemeSelectorViewModel @Inject constructor(
     private val themeRepository: ThemeRepository
 ) : ViewModel() {
+
+    // Holds the current theme value (dark = true / light = false)
     var isDarkTheme = themeRepository.isDarkTheme
+
+    // Toggles the current theme
     fun toggleTheme() {
         themeRepository.toggleTheme()
     }

@@ -16,6 +16,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+// Manages all operations related to accounts
 class AccountRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firebaseFirestore: FirebaseFirestore,
@@ -25,12 +26,15 @@ class AccountRepository @Inject constructor(
         const val UserCollectionName = "USER_COLLECTION"
     }
 
+    // Holds the current Firebase user uid
     val currentUserId: String?
         get() = firebaseAuth.currentUser?.uid
 
+    // Holds the if a user is currently logged in
     val hasUser: Boolean
         get() = firebaseAuth.currentUser != null
 
+    // Observable on the current Firebase (none if null)
     val currentUser: Flow<FirebaseUser?>
         get() = callbackFlow {
             val listener =
@@ -41,15 +45,18 @@ class AccountRepository @Inject constructor(
             awaitClose { firebaseAuth.removeAuthStateListener(listener) }
         }
 
+    // Access the Firebase Firestore specified user collection
     fun getUserCollection(uid: String) =
         firebaseFirestore
             .collection(UserCollectionName)
             .document(uid)
 
+    // Sets the profile picture for the specified user
     fun setProfilePicture(path: Uri, username: String, onComplete: ((Boolean) -> Unit)?) {
         uploadImage(path, username, onComplete)
     }
 
+    // Uploads an image to the Firebase Storage
     private fun uploadImage(path: Uri, username: String, onComplete: ((Boolean) -> Unit)?) {
         val filename = username.lowercase()
         val imageReference = firebaseStorage.reference.child("images//${filename}.jpg")
@@ -63,6 +70,7 @@ class AccountRepository @Inject constructor(
             }
     }
 
+    // Retrieves an image URL from the Firebase Storage
     fun getProfilePicture(username: String, onComplete: (Uri?) -> Unit) {
         val filename = username.lowercase()
         val imageReference = firebaseStorage.reference.child("images//${filename}.jpg")
@@ -75,6 +83,7 @@ class AccountRepository @Inject constructor(
             }
     }
 
+    // Downloads an image from the specified filename
     private fun downloadImage(filename: String, context: Context, onComplete: (Uri?) -> Unit) {
         val imageReference = firebaseStorage.reference.child("images//${filename}.jpg")
         val downloadFile = ImageFileProvider.getImageFile(context)
@@ -88,6 +97,7 @@ class AccountRepository @Inject constructor(
             }
     }
 
+    // Sign up with credentials to Firebase Authentication
     suspend fun signup(
         email: String,
         password: String,
@@ -99,6 +109,7 @@ class AccountRepository @Inject constructor(
             .await()
     }
 
+    // Log in with credentials to Firebase Authentication
     suspend fun login(
         email: String,
         password: String,
@@ -110,6 +121,7 @@ class AccountRepository @Inject constructor(
             .await()
     }
 
+    // Sign out from account in Firebase Authentication
     /*suspend*/ fun signOut() /*: AuthResult = withContext(Dispatchers.IO)*/ {
         firebaseAuth.signOut()
         // firebaseAuth.signInAnonymously().await()

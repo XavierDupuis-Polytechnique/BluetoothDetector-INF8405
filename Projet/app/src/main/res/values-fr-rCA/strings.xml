@@ -32,8 +32,8 @@
     <string name="start_intent_could_not_share_device">Impossible de partager l\'appareil</string>
     <string name="splash_page_name">Chargement</string>
     <string name="splash_page_description">Fenêtre de chargement</string>
-    <string name="main_page_name">Globale</string>
-    <string name="main_page_description">Vue de la carte et des appareils</string>
+    <string name="global_page_name">Globale</string>
+    <string name="global_page_description">Vue de la carte et des appareils</string>
     <string name="map_page_name">Carte</string>
     <string name="map_page_description">Carte des appareils enregistrés</string>
     <string name="devices_page_name">Appareils</string>

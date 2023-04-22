@@ -134,7 +134,8 @@ open class SensorRepository(
             deviceRepository.share(selectedDevice)
         } else {
             val noDeviceMessage = context.getString(
-                R.string.no_device_selected)
+                R.string.no_device_selected
+            )
             Toast.makeText(context, noDeviceMessage, Toast.LENGTH_SHORT).show()
         }
     }

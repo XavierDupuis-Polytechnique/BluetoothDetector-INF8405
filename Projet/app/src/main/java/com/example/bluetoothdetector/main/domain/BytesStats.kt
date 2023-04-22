@@ -3,6 +3,7 @@ package com.example.bluetoothdetector.main.domain
 import android.net.TrafficStats
 import android.os.Process
 
+// Holds the BidirectionalBytes for all four types
 data class BytesStats(
     val mobile: BidirectionalBytes = BidirectionalBytes(
         Tx = TrafficStats.getMobileTxBytes(),

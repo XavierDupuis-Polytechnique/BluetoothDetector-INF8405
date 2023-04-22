@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 
+// Generic list item with selection callback
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SelectableListItem(

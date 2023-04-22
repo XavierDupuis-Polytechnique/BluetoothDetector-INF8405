@@ -16,33 +16,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.example.bluetoothdetector.common.view.SpinnerView
 
-@Composable
-fun ImageView(
-    source: Uri?,
-    size: Dp = 200.dp,
-    padding: Dp = 12.dp,
-) {
-    if (source == null) {
-        SpinnerView(
-            size = size,
-            padding = padding
-        )
-    } else {
-        SubcomposeAsyncImage(
-            model = source,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            loading = { SpinnerView() },
-            modifier = Modifier
-                .padding(padding)
-                .clip(CircleShape)
-                .size(size),
-        )
-    }
-}
 
+// Async image view from URI or placeholder
 @Composable
-fun StaticImageView(
+fun AsyncImageViewOrPlaceholder(
     source: Uri?,
     size: Dp = 200.dp,
     padding: Dp = 12.dp,
@@ -60,7 +37,41 @@ fun StaticImageView(
             }
         )
     } else {
-        ImageView(source, size, padding)
+        AsyncImageView(source, size, padding)
     }
 }
 
+// Async image view from URI or loading spinner
+@Composable
+fun AsyncImageViewOrSpinner(
+    source: Uri?,
+    size: Dp = 200.dp,
+    padding: Dp = 12.dp,
+) {
+    if (source == null) {
+        SpinnerView(
+            size = size,
+            padding = padding
+        )
+    } else {
+        AsyncImageView(source, padding, size)
+    }
+}
+
+@Composable
+private fun AsyncImageView(
+    source: Uri?,
+    padding: Dp,
+    size: Dp
+) {
+    SubcomposeAsyncImage(
+        model = source,
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        loading = { SpinnerView() },
+        modifier = Modifier
+            .padding(padding)
+            .clip(CircleShape)
+            .size(size),
+    )
+}

@@ -7,7 +7,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-
 // Theme module
 @Module
 @InstallIn(SingletonComponent::class)

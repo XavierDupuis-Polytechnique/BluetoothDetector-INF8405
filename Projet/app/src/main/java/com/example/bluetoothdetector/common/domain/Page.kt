@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.bluetoothdetector.R
 
+// Navigation elements with related attributes
 enum class Page(
     val denomination: Int,
     val route: String,
@@ -18,10 +19,10 @@ enum class Page(
         description = R.string.splash_page_description,
         inMenu = false
     ),
-    MAIN(
-        denomination = R.string.main_page_name,
-        route = "MAIN",
-        description = R.string.main_page_description,
+    GLOBAL(
+        denomination = R.string.global_page_name,
+        route = "GLOBAL",
+        description = R.string.global_page_description,
         icon = Icons.Default.TravelExplore
     ),
     MAP(
@@ -79,7 +80,7 @@ enum class Page(
         val Pages = Page.values()
         val MenuPages = Pages.filter { it.inMenu }
         val StartPage = SPLASH
-        val LoggedInPage = MAIN
+        val LoggedInPage = GLOBAL
         val LoggedOutPage = LOGIN
     }
 }

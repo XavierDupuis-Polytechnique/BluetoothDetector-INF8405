@@ -10,6 +10,7 @@ import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
 
 
+// Displays the Login page view
 @Composable
 fun LoginScreen(
     navigate: (Page) -> Unit,

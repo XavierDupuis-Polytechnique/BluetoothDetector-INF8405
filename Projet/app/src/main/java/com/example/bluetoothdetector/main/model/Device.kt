@@ -32,8 +32,6 @@ data class Device(
     var latitude: Double? = null,
     @ColumnInfo(name = "longitude")
     var longitude: Double? = null,
-    // @ColumnInfo(name = "parcel_uuids")
-    // var parcelUuids: List<ParcelUuid>? = null,
     @ColumnInfo(name = "is_favorite")
     var isFavorite: Boolean = false,
 ) {

@@ -14,16 +14,19 @@ import javax.inject.Inject
 class ImagePickerViewModel @Inject constructor(
 
 ) : ViewModel() {
-    val storedImageUri = mutableStateOf<Uri?>(null)
+    // Holds the current stored image URI
+    private val storedImageUri = mutableStateOf<Uri?>(null)
 
+    // Launches an image selection external activity (from camera)
     fun takePicture(
         context: Context,
         takePicture: ManagedActivityResultLauncher<Uri, Boolean>
     ) {
-        storedImageUri.value = ImageFileProvider.getImageUri(context)
+        storedImageUri.value = ImageFileProvider.getTempFileUri(context)
         takePicture.launch(storedImageUri.value)
     }
 
+    // Image selection (from Camera) callback
     fun onTakePictureResult(result: Boolean, displayedImageUri: MutableState<Uri?>) {
         if (!result) {
             return
@@ -31,10 +34,12 @@ class ImagePickerViewModel @Inject constructor(
         displayedImageUri.value = storedImageUri.value
     }
 
+    // Launches an image selection external activity (from Storage)
     fun pickImage(pickImageLauncher: ManagedActivityResultLauncher<String, Uri?>) {
         pickImageLauncher.launch("image/*")
     }
 
+    // Image selection (from Storage) callback
     fun onPickImageResult(uri: Uri?, displayedImageUri: MutableState<Uri?>) {
         storedImageUri.value = uri
         displayedImageUri.value = uri

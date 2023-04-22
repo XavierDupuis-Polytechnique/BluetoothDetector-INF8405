@@ -18,6 +18,7 @@ import com.example.bluetoothdetector.common.view.typography.Subtitle
 import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
 import kotlinx.coroutines.CoroutineScope
 
+// Display hamburger icon and current page
 @Composable
 fun MenuHeader(
     menuState: DrawerState,

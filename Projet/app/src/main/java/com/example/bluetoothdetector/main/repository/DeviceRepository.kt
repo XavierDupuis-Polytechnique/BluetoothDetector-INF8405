@@ -40,6 +40,7 @@ class DeviceRepository @Inject constructor(
         registerDeviceSourceChange()
     }
 
+    // Register a devices list / favorites change (from collectionSource)
     private fun registerDeviceSourceChange() {
         CoroutineScope(Dispatchers.IO).launch {
             collectionSource.onDeviceCollectionChange.collectLatest {
@@ -49,6 +50,7 @@ class DeviceRepository @Inject constructor(
         onDeviceSourceChange()
     }
 
+    // Clear and register new devices when source changes
     private fun onDeviceSourceChange() {
         devices.clear()
         favoriteDevices.value = setOf()

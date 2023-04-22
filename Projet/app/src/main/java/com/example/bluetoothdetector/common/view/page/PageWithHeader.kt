@@ -10,7 +10,7 @@ import com.example.bluetoothdetector.common.view.containers.CenteredVerticalCont
 import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
 import kotlinx.coroutines.CoroutineScope
 
-// Full page component for main views with theme selection
+// Generic Page view with header
 @Composable
 fun PageWithHeader(
     menuState: DrawerState,

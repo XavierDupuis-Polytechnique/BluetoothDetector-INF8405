@@ -15,7 +15,7 @@ import com.example.bluetoothdetector.common.domain.modal.ModalResult
 import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.typography.Title
 
-
+// Generic Modal View
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun Modal(

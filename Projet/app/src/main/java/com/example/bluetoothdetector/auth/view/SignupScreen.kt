@@ -10,6 +10,7 @@ import com.example.bluetoothdetector.auth.viewmodel.AuthViewModel
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.common.view.camera.ImagePicker
 
+// Displays the Signup page view
 @Composable
 fun SignupScreen(
     navigate: (Page) -> Unit,
