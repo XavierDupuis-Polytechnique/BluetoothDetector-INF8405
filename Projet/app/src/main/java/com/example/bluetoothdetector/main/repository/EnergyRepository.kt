@@ -49,8 +49,13 @@ class EnergyRepository @Inject constructor(
     val batteryPctSinceCreated = mutableStateOf(getBatteryPctFromCreated())
     val batteryPctSinceResumed = mutableStateOf(getBatteryPctFromResumed())
 
-    private fun getBatteryPctFromCreated() = batteryPct.value?.minus(activityCreatedBatteryPct)?.times(-1)
-    private fun getBatteryPctFromResumed() = batteryPct.value?.minus(activityResumedBatteryPct)?.times(-1)
+    private fun getBatteryPctFromCreated(): Float?{
+        return batteryPct.value?.let { activityCreatedBatteryPct.minus(it) }
+    }
+    private fun getBatteryPctFromResumed(): Float?{
+        return batteryPct.value?.let{ activityResumedBatteryPct.minus(it) }
+    }
+
 
     fun refresh() {
         batteryStatus = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
@@ -64,5 +69,4 @@ class EnergyRepository @Inject constructor(
         batteryPctSinceCreated.value = getBatteryPctFromCreated()
         batteryPctSinceResumed.value = getBatteryPctFromResumed()
     }
-
 }
