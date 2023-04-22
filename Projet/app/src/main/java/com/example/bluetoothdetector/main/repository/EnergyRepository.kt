@@ -11,7 +11,7 @@ import javax.inject.Inject
 class EnergyRepository @Inject constructor(
     @ApplicationContext private val context: Context,
 ){
-    private val batteryStatus: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
+    private var batteryStatus: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
         context.registerReceiver(null, ifilter)
     }
 
@@ -49,10 +49,13 @@ class EnergyRepository @Inject constructor(
     val batteryPctSinceCreated = mutableStateOf(getBatteryPctFromCreated())
     val batteryPctSinceResumed = mutableStateOf(getBatteryPctFromResumed())
 
-    private fun getBatteryPctFromCreated() = batteryPct.value?.minus(activityCreatedBatteryPct)
-    private fun getBatteryPctFromResumed() = batteryPct.value?.minus(activityResumedBatteryPct)
+    private fun getBatteryPctFromCreated() = batteryPct.value?.minus(activityCreatedBatteryPct)?.times(-1)
+    private fun getBatteryPctFromResumed() = batteryPct.value?.minus(activityResumedBatteryPct)?.times(-1)
 
     fun refresh() {
+        batteryStatus = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
+            context.registerReceiver(null, ifilter)
+        }
         batteryPct.value = batteryStatus?.let { intent ->
             val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
             val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
