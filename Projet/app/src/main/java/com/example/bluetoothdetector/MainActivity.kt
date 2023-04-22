@@ -13,7 +13,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.os.LocaleListCompat
 import com.example.bluetoothdetector.common.domain.LanguageStateSaver
@@ -25,7 +24,9 @@ import com.example.bluetoothdetector.main.repository.BluetoothRepository
 import com.example.bluetoothdetector.main.repository.EnergyRepository
 import com.example.bluetoothdetector.main.repository.LocationRepository
 import com.example.bluetoothdetector.main.repository.NetworkRepository
+import com.example.bluetoothdetector.main.repository.SensorRepository
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -51,7 +52,11 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var energyRepository: EnergyRepository
 
+    @Inject
+    lateinit var sensorRepository: SensorRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
         setContent {
             MainContent(themeRepository, languageRepository)
@@ -67,6 +72,8 @@ class MainActivity : AppCompatActivity() {
             }
         networkRepository.updateCreatedBytes()
         energyRepository.updateCreatedLevel()
+        // Start listening for sensors event when app is created
+        sensorRepository.sensorResume()
     }
 
     override fun onResume() {
@@ -77,6 +84,8 @@ class MainActivity : AppCompatActivity() {
         startBTScan()
         networkRepository.updateResumedBytes()
         energyRepository.updateResumedLevel()
+        // Start listening for sensors event when app is resumed
+        sensorRepository.sensorResume()
     }
 
     override fun onPause() {
@@ -87,6 +96,8 @@ class MainActivity : AppCompatActivity() {
             bluetoothRepository.stopDiscovery()
             bluetoothRepository.bluetoothStarted = false
         }
+        // Stop listening for sensors when app is paused
+        sensorRepository.sensorPause()
     }
 
     override fun onDestroy() {
@@ -99,6 +110,8 @@ class MainActivity : AppCompatActivity() {
         if (bluetoothRepository.bluetoothReceiver != null) {
             unregisterReceiver(bluetoothRepository.bluetoothReceiver)
         }
+        // Stop listening for sensors when app is destroyed
+        sensorRepository.sensorPause()
     }
 
     // Start bluetooth scan
@@ -147,7 +160,6 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(bluetoothRepository.bluetoothReceiver, filter)
         bluetoothRepository.startDiscovery()
     }
-
 }
 
 @Composable
@@ -175,10 +187,4 @@ fun MainContent(
             permissionsViewModel
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    BluetoothDetectorTheme {}
 }

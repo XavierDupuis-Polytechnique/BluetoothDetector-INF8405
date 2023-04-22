@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.bluetoothdetector.common.domain.action.Action
 
+// Modal action button
 @Composable
 fun ModalButton(
     closeModal: () -> Unit,

@@ -4,6 +4,7 @@ import androidx.compose.runtime.saveable.listSaver
 import com.example.bluetoothdetector.R
 import java.util.*
 
+// Generic Language attributes
 data class Language(
     val denomination: Int,
     val abbreviation: Int,
@@ -28,12 +29,14 @@ val German = Language(
     Locale.GERMAN
 )
 
+// All supported languages
 val Languages = listOf(
     English,
     French,
     German
 )
 
+// Language state saver
 val LanguageStateSaver = run {
     listSaver(
         save = {

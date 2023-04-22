@@ -7,6 +7,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bluetoothdetector.common.viewmodel.LanguageViewModel
 
+// Displays the current language and launches language selection
 @Composable
 fun LanguagesHeader(
     viewModel: LanguageViewModel = hiltViewModel()

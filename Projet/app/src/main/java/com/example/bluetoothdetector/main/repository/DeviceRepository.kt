@@ -10,10 +10,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat.startActivity
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.main.model.Device
-import com.example.bluetoothdetector.main.sources.DeviceSource
+import com.example.bluetoothdetector.main.sources.DistributedDeviceSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -22,13 +22,13 @@ import javax.inject.Singleton
 @Singleton
 class DeviceRepository @Inject constructor(
     private val context: Context,
-    private val deviceSource: DeviceSource
+    private val collectionSource: /*CollectionSource<Device, String>*/ DistributedDeviceSource
 ) {
-    // Holds the current device count
-    val deviceCount: Flow<Int> = deviceSource.observeDeviceCount()
-
     // Holds the current mac addresses mapped to the related device
     val devices: MutableMap<String, Device> = mutableStateMapOf()
+
+    // Holds the current device count
+    val deviceCount: Int = devices.size
 
     // Holds the favorite devices
     val favoriteDevices = mutableStateOf<Set<Device>>(setOf())
@@ -37,9 +37,30 @@ class DeviceRepository @Inject constructor(
     val highlightedDevice = mutableStateOf<Device?>(null)
 
     init {
-        deviceSource.populateDevices(devices, favoriteDevices)
+        registerDeviceSourceChange()
     }
 
+    // Register a devices list / favorites change (from collectionSource)
+    private fun registerDeviceSourceChange() {
+        CoroutineScope(Dispatchers.IO).launch {
+            collectionSource.onDeviceCollectionChange.collectLatest {
+                onDeviceSourceChange()
+            }
+        }
+        onDeviceSourceChange()
+    }
+
+    // Clear and register new devices when source changes
+    private fun onDeviceSourceChange() {
+        devices.clear()
+        favoriteDevices.value = setOf()
+        collectionSource.populate(
+            devices,
+            favoriteDevices,
+            { it.macAddress },
+            { it.isFavorite },
+        )
+    }
 
     // Launches an intent safely
     private fun safeLaunchIntent(
@@ -91,7 +112,7 @@ class DeviceRepository @Inject constructor(
     fun forgetDevice(device: Device) {
         devices -= device.macAddress
         CoroutineScope(Dispatchers.IO).launch {
-            deviceSource.delete(device)
+            collectionSource.delete(device)
         }
     }
 
@@ -99,7 +120,7 @@ class DeviceRepository @Inject constructor(
     fun forgetAll() {
         devices.clear()
         CoroutineScope(Dispatchers.IO).launch {
-            deviceSource.deleteAll()
+            collectionSource.deleteAll()
         }
     }
 
@@ -107,7 +128,7 @@ class DeviceRepository @Inject constructor(
     fun addDevice(device: Device) {
         devices += device.macAddress to device
         CoroutineScope(Dispatchers.IO).launch {
-            deviceSource.insert(device)
+            collectionSource.insert(device)
         }
     }
 

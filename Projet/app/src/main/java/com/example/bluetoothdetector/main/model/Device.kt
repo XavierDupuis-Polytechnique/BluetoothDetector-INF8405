@@ -1,21 +1,23 @@
 package com.example.bluetoothdetector.main.model
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
-import android.os.ParcelUuid
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.bluetoothdetector.R
-import java.text.SimpleDateFormat
+import com.example.bluetoothdetector.common.domain.formatter.formatDate
+import com.example.bluetoothdetector.common.domain.formatter.formatLocation
+import com.example.bluetoothdetector.main.viewmodel.toLocation
+import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.firestore.Exclude
 import java.util.*
 
 // Device with related/pertinent information
 @Entity(tableName = "devices")
 data class Device(
     @PrimaryKey
-    val macAddress: String,
+    var macAddress: String = "",
     @ColumnInfo(name = "name")
     var name: String = generateDeviceName(),
     @ColumnInfo(name = "date")
@@ -26,13 +28,73 @@ data class Device(
     var type: String? = null,
     @ColumnInfo(name = "bluetooth_bond_state")
     var bondState: String? = null,
-    @ColumnInfo(name = "location")
-    var location: Location? = null,
-    @ColumnInfo(name = "parcel_uuids")
-    var parcelUuids: List<ParcelUuid>? = null,
+    @ColumnInfo(name = "latitude")
+    var latitude: Double? = null,
+    @ColumnInfo(name = "longitude")
+    var longitude: Double? = null,
     @ColumnInfo(name = "is_favorite")
     var isFavorite: Boolean = false,
 ) {
+    constructor(
+        macAddress: String = "",
+        name: String = generateDeviceName(),
+        date: Date = Date(),
+        bluetoothClass: String? = null,
+        type: String? = null,
+        bondState: String? = null,
+        location: Location? = null,
+        isFavorite: Boolean = false,
+    ) : this(
+        macAddress,
+        name,
+        date,
+        bluetoothClass,
+        type,
+        bondState,
+        location?.latitude,
+        location?.longitude,
+        isFavorite
+    )
+
+    constructor(
+        macAddress: String = "",
+        name: String = generateDeviceName(),
+        date: Date = Date(),
+        bluetoothClass: String? = null,
+        type: String? = null,
+        bondState: String? = null,
+        latLng: LatLng? = null,
+        isFavorite: Boolean = false,
+    ) : this(
+        macAddress,
+        name,
+        date,
+        bluetoothClass,
+        type,
+        bondState,
+        latLng?.latitude,
+        latLng?.longitude,
+        isFavorite
+    )
+
+    @get:Exclude
+    val id: String get() = macAddress
+
+    @get:Exclude
+    val latLng: LatLng?
+        get() {
+            latitude?.let { lat ->
+                longitude?.let { lon ->
+                    return LatLng(lat, lon)
+                }
+            }
+            return null
+        }
+
+    @get:Exclude
+    val location: Location?
+        get() = latLng?.toLocation()
+
     fun toString(context: Context): String {
         return "${context.getString(R.string.device_name)} : $name\n" +
                 "${context.getString(R.string.device_mac_address)} : $macAddress\n" +
@@ -53,18 +115,13 @@ data class Device(
             return "${devicePrefix}${currentDeviceId++}"
         }
 
-        // Formats date (simplifies date & time)
-        @SuppressLint("SimpleDateFormat")
-        private val DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
         fun formatDate(device: Device): String {
-            return DateFormat.format(device.date)
+            return device.date.formatDate()
         }
 
         // Formats location (trims digits)
-        fun formatLocation(value: Double, digits: Int = 6): String {
-            return value.format(digits)
+        fun formatLocation(value: Double): String {
+            return value.formatLocation()
         }
     }
 }
-
-fun Double.format(digits: Int) = "%.${digits}f".format(this)

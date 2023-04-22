@@ -31,8 +31,8 @@
     <string name="start_intent_could_not_share_device">Gerät konnte nicht freigegeben werden</string>
     <string name="splash_page_name">Laden</string>
     <string name="splash_page_description">Ladefenster</string>
-    <string name="main_page_name">Global</string>
-    <string name="main_page_description">Karten- und Geräteansicht</string>
+    <string name="global_page_name">Global</string>
+    <string name="global_page_description">Karten- und Geräteansicht</string>
     <string name="map_page_name">Karte</string>
     <string name="map_page_description">Karte der registrierten Geräte</string>
     <string name="devices_page_name">Geräte</string>
@@ -58,4 +58,26 @@
     <string name="energy_title">Batterieverbrauch</string>
     <string name="battery_level_used">%.2f %% gebraucht</string>
     <string name="battery_level_current">Die tatsächliche Ladung der Batterie beträgt %.2f %% !</string>
+    <string name="auth_username">Benutzername</string>
+    <string name="auth_password">Passwort</string>
+    <string name="auth_confirm_password">Passwort bestätigen</string>
+    <string name="auth_change_account">Willst du das Konto wechseln?</string>
+    <string name="auth_account">Konto</string>
+    <string name="auth_signup">Anmeldung</string>
+    <string name="auth_already_have_an_account">Du hast bereits ein Konto?</string>
+    <string name="auth_login">Anmelden</string>
+    <string name="auth_dont_have_an_account">Du hast kein Konto?</string>
+    <string name="auth_signup_description">Anmeldung</string>
+    <string name="auth_login_description">Anmelden</string>
+    <string name="auth_welcome_back">Willkommen zurück %s !</string>
+    <string name="auth_account_created">Konto erstellt : %s</string>
+    <string name="auth_last_sign_in">Letztes Verbindung : %s</string>
+    <string name="auth_username_content_error">Benutzername darf nicht leer sein</string>
+    <string name="auth_password_content_error">Passwort darf nicht leer sein</string>
+    <string name="auth_password_size_error">Das Passwort darf nicht weniger als %1$d Zeichen lang sein</string>
+    <string name="auth_password_match_error">Passwörter stimmen nicht überein</string>
+    <string name="auth_image_content_error">Kein Profilbild ausgewählt</string>
+    <string name="select_image">Bild auswählen</string>
+    <string name="take_picture">Foto machen</string>
+    <string name="no_device_selected">Kein Gerät ausgewählt</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.bluetoothdetector.common.viewmodel
 import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.bluetoothdetector.common.sources.ImageFileProvider
@@ -13,29 +14,33 @@ import javax.inject.Inject
 class ImagePickerViewModel @Inject constructor(
 
 ) : ViewModel() {
-    val storedImageUri = mutableStateOf<Uri?>(null)
-    val displayedImageUri = mutableStateOf<Uri?>(null)
+    // Holds the current stored image URI
+    private val storedImageUri = mutableStateOf<Uri?>(null)
 
+    // Launches an image selection external activity (from camera)
     fun takePicture(
         context: Context,
         takePicture: ManagedActivityResultLauncher<Uri, Boolean>
     ) {
-        storedImageUri.value = ImageFileProvider.getImageUri(context)
+        storedImageUri.value = ImageFileProvider.getTempFileUri(context)
         takePicture.launch(storedImageUri.value)
     }
 
-    fun onTakePictureResult(result: Boolean) {
+    // Image selection (from Camera) callback
+    fun onTakePictureResult(result: Boolean, displayedImageUri: MutableState<Uri?>) {
         if (!result) {
             return
         }
         displayedImageUri.value = storedImageUri.value
     }
 
+    // Launches an image selection external activity (from Storage)
     fun pickImage(pickImageLauncher: ManagedActivityResultLauncher<String, Uri?>) {
         pickImageLauncher.launch("image/*")
     }
 
-    fun onPickImageResult(uri: Uri?) {
+    // Image selection (from Storage) callback
+    fun onPickImageResult(uri: Uri?, displayedImageUri: MutableState<Uri?>) {
         storedImageUri.value = uri
         displayedImageUri.value = uri
     }

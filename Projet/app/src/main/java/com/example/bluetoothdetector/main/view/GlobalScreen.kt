@@ -8,19 +8,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bluetoothdetector.common.view.containers.CardContainer
 import com.example.bluetoothdetector.common.view.containers.CenteredHorizontalContainer
-import com.example.bluetoothdetector.main.viewmodel.MainViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 
 const val RightWeight = 1f
 const val LeftWeight = RightWeight * 2
 
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel = viewModel(),
-) {
+fun GlobalScreen() {
     CenteredHorizontalContainer(
         modifier = Modifier
             .fillMaxSize()
@@ -45,15 +41,15 @@ fun MainScreen(
 @SuppressLint("VisibleForTests")
 @Preview(showBackground = true, device = Devices.PIXEL_C)
 @Composable
-fun MainPreview() {
-    MainScreen()
+fun GlobalPreview() {
+    GlobalScreen()
 }
 
 @SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true, device = Devices.PIXEL_C)
 @Composable
-fun MainDarkPreview() {
+fun GlobalDarkPreview() {
     BluetoothDetectorTheme(mutableStateOf(true)) {
-        MainPreview()
+        GlobalPreview()
     }
 }

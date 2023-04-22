@@ -24,22 +24,14 @@ import com.example.bluetoothdetector.main.domain.BidirectionalBytes
 import com.example.bluetoothdetector.main.domain.BytesStats
 import com.example.bluetoothdetector.main.viewmodel.NetworkViewModel
 
-
+// Displays network bytes stats
 @Composable
 fun NetworkView(
     viewModel: NetworkViewModel = hiltViewModel()
 ) {
     CenteredVerticalContainer {
 
-        Title(R.string.network_since_application_was)
-        CenteredHorizontalContainer {
-            Subtitle(R.string.resumed)
-            Switch(
-                checked = viewModel.isStatsSinceCreatedDisplayed.value,
-                onCheckedChange = { viewModel.toggleStatsDisplayed() }
-            )
-            Subtitle(R.string.launched)
-        }
+        CreatedOrResumedSwitch(viewModel)
 
         val bytesStats = if (viewModel.isStatsSinceCreatedDisplayed.value)
             viewModel.networkRepository.bytesSinceCreated
@@ -56,6 +48,19 @@ fun NetworkView(
             Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
             Text(stringResource(R.string.refresh))
         }
+    }
+}
+
+@Composable
+private fun CreatedOrResumedSwitch(viewModel: NetworkViewModel) {
+    Title(R.string.network_since_application_was)
+    CenteredHorizontalContainer {
+        Subtitle(R.string.resumed)
+        Switch(
+            checked = viewModel.isStatsSinceCreatedDisplayed.value,
+            onCheckedChange = { viewModel.toggleStatsDisplayed() }
+        )
+        Subtitle(R.string.launched)
     }
 }
 

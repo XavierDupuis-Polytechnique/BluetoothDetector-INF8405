@@ -1,5 +1,6 @@
 package com.example.bluetoothdetector.main.domain
 
+// Holds a (T)ransfered and (R)eceived bytes value
 data class BidirectionalBytes(
     val Tx: Long,
     val Rx: Long,

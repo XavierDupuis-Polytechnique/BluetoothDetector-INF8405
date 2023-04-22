@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
-// Full page component for main views
+// Generic Page view
 @Composable
 fun Page(content: @Composable () -> Unit) {
     Box(

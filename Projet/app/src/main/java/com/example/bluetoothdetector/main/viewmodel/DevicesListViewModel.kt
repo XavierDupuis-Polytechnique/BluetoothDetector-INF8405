@@ -15,7 +15,6 @@ class DevicesListViewModel @Inject constructor(
     private val deviceRepository: DeviceRepository
 ) : ViewModel() {
     val devices = deviceRepository.devices
-    val deviceCount = deviceRepository.deviceCount
     val highlightedDevice = deviceRepository.highlightedDevice
     val favoriteDevices = deviceRepository.favoriteDevices
     var expandedDevice = mutableStateOf<Device?>(null)

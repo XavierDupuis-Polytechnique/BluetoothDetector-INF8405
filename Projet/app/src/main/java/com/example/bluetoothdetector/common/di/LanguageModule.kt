@@ -9,14 +9,15 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+// Language Module
 @Module
 @InstallIn(SingletonComponent::class)
 object CommonModule {
 
+    // Provides a single instance of the LanguageRepository
     @Singleton
     @Provides
     fun provideLanguageRepository(
         @ApplicationContext context: Context
     ) = LanguageRepository(context)
-
 }

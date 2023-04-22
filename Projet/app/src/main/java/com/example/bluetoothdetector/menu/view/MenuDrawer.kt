@@ -2,33 +2,34 @@ package com.example.bluetoothdetector.menu.view
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bluetoothdetector.common.domain.Page
 import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
-import kotlinx.coroutines.CoroutineScope
 
+// Displays the menu drawer with page selection
 @Composable
 fun MenuDrawer(
     menuState: DrawerState,
-    menuScope: CoroutineScope,
-    navController: NavHostController,
-    viewModel: MenuViewModel = viewModel(),
+    navigate: (Page) -> Unit,
+    viewModel: MenuViewModel,
     content: @Composable () -> Unit
 ) {
     ModalDrawer(
         drawerState = menuState,
         gesturesEnabled = false,
         drawerContent = {
-            Page.MenuPages.forEach {
-                MenuTabView(viewModel, navController, menuState, menuScope, it)
-                Divider()
+            LazyColumn {
+                items(Page.MenuPages) {
+                    MenuTabView(viewModel, navigate, it)
+                    Divider()
+                }
             }
         },
         content = content
@@ -41,8 +42,8 @@ fun MenuDrawer(
 fun MenuDrawerPreview() {
     MenuDrawer(
         rememberDrawerState(DrawerValue.Closed),
-        rememberCoroutineScope(),
-        rememberNavController(),
+        {},
+        hiltViewModel()
     ) {}
 }
 
