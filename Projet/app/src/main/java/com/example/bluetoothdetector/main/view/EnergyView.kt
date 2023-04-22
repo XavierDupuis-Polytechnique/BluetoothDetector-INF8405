@@ -58,7 +58,7 @@ fun EnergyView(
             }
         }
 
-        actualState(viewModel.energyRepository.batteryPct)
+        actualState(viewModel.energyRepository.batteryPct.value)
 
         refreshButton(viewModel)
 
