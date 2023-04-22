@@ -1,8 +1,10 @@
 package com.example.bluetoothdetector.main.view
 
 import android.os.BatteryManager
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Switch
@@ -12,8 +14,12 @@ import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bluetoothdetector.R
 import com.example.bluetoothdetector.common.view.containers.CardContainer
@@ -27,25 +33,45 @@ import com.example.bluetoothdetector.main.viewmodel.EnergyViewModel
 import com.example.bluetoothdetector.main.viewmodel.NetworkViewModel
 
 
-
 @Composable
 fun EnergyView(
     viewModel: EnergyViewModel = hiltViewModel(),
 ){
-    CenteredVerticalContainer() {
-        Title("allo")
-        val bpc = viewModel.energyRepository.batteryPct
-        Subtitle(subtitle = bpc.toString() )
+    CenteredVerticalContainer(content = {
 
-        val lev: Int = viewModel.energyRepository.lev?.toInt() ?: 0
-        val sca: Int = viewModel.energyRepository.sca?.toInt() ?: 0
+        val text: String = stringResource(id = R.string.energy_title)
+        Text(text, fontWeight = FontWeight.Bold, fontSize = 30.sp)
 
-        Text(lev.toString())
-        Text(sca.toString())
+        ResumedOrLaunchedView(viewModel)
 
-        viewModel.energyRepository.batteryPct
+        val batteryPercentage = if( viewModel.isStatsSinceCreatedDisplayed.value)
+            viewModel.energyRepository.batteryPctSinceCreated.value
+        else
+            viewModel.energyRepository.batteryPct  //SinceResumed
 
+        CardContainer(Modifier.defaultMinSize(200.dp,200.dp )) {
+            if(batteryPercentage != null)
+            BatteryPercentageView(batteryPercentage as Float)
+            else BatteryPercentageView(batteryPercentage = 0.00F)
+        }
+    })
 
+}
+
+@Composable
+fun BatteryPercentageView(batteryPercentage:Float) {    
+    Text(batteryPercentage.toString())
+}
+
+@Composable
+fun ResumedOrLaunchedView(viewModel: EnergyViewModel) {
+    Title(R.string.network_since_application_was)
+    CenteredHorizontalContainer  {
+        Subtitle(R.string.resumed)
+        Switch(
+            checked = viewModel.isStatsSinceCreatedDisplayed.value,
+            onCheckedChange = { viewModel.toggleStatsDisplayed() }
+        )
+        Subtitle(R.string.launched)
     }
-
 }

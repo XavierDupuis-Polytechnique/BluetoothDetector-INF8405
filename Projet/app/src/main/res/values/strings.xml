@@ -61,4 +61,6 @@
     <string name="resumed">Resumed</string>
     <string name="network_percent_was_used_for_process">The process consumed %.2f %% of the device\'s total network usage</string>
     <string name="refresh">Refresh</string>
+    <string name="energy_title">Battery Usage</string>
+    <string name="used_string">used</string>
 </resources>

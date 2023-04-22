@@ -5,12 +5,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import androidx.compose.runtime.mutableStateOf
-import com.example.bluetoothdetector.main.domain.BytesStats
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class EnergyRepository @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ){
 
     private val batteryStatus: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
@@ -23,34 +22,21 @@ class EnergyRepository @Inject constructor(
         level * 100 / scale.toFloat()
     }
 
-    val lev = batteryStatus?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-    val sca = batteryStatus?.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-    val count = BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER
+    private var activityCreatedBatteryPct: Float = 0.0f
+    private var activityResumedBatteryPct: Float = 0.0f
 
-    var activityCreatedBatteryPct: Float = 0.0f
-    var activityResumedBatteryPct: Float = 0.0f
-
-
-    /*fun updateResumedBytes(bytesStats: BytesStats = BytesStats()) {
-        activityResumedBytes = bytesStats
+    fun updateResumedPct(){
+        activityResumedBatteryPct = batteryPct?: 0.0f
+    }
+    fun updateCreatedPct(){
+        activityCreatedBatteryPct = batteryPct?: 0.0f
     }
 
-    fun updateCreatedBytes(bytesStats: BytesStats = BytesStats()) {
-        activityCreatedBytes = bytesStats
-    }
+    val batteryPctSinceCreated = mutableStateOf(getBatteryPctFromCreated())
+    val batteryPctSinceResumed = mutableStateOf(getBatteryPctFromResumed())
 
-    private var activityCreatedBytes: BytesStats = BytesStats()
-    private var activityResumedBytes: BytesStats = BytesStats()
+    private fun getBatteryPctFromCreated() = batteryPct?.minus(activityCreatedBatteryPct)
+    private fun getBatteryPctFromResumed() = batteryPct?.minus(activityResumedBatteryPct)
 
-    val bytesSinceCreated = mutableStateOf(getBytesStatsFromCreated())
-    val bytesSinceResumed = mutableStateOf(getBytesStatsFromResumed())
-
-    private fun getBytesStatsFromCreated() = BytesStats() - activityCreatedBytes
-    private fun getBytesStatsFromResumed() = BytesStats() - activityResumedBytes
-
-    fun refresh() {
-        bytesSinceCreated.value = getBytesStatsFromCreated()
-        bytesSinceResumed.value = getBytesStatsFromResumed()
-    }*/
 
 }

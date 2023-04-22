@@ -56,4 +56,6 @@
     <string name="resumed">Reprise</string>
     <string name="network_percent_was_used_for_process">Le processus a consommé %.2f %% de l\'utilisation totale du réseau de l\'appareil</string>
     <string name="refresh">Rafraîchir</string>
+    <string name="energy_title">utilisation de la batterie</string>
+    <string name="used_string">utilisé</string>
 </resources>
