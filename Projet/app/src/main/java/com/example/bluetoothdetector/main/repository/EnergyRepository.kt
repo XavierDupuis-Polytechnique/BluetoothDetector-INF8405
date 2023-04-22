@@ -22,14 +22,34 @@ class EnergyRepository @Inject constructor(
         level * 100 / scale.toFloat()
     }
 
-    private var activityCreatedBatteryPct: Float = 0.0f
-    private var activityResumedBatteryPct: Float = 0.0f
+    private var activityCreatedBatteryPct: Float = batteryStatus?.let { intent ->
+        val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+        val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+        level * 100 / scale.toFloat()}?: 0.0f
+
+    private var activityResumedBatteryPct: Float = batteryStatus?.let { intent ->
+        val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+        val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+        level * 100 / scale.toFloat()}?: 0.0f
+
 
     fun updateResumedPct(){
-        activityResumedBatteryPct = batteryPct?: 0.0f
+        println("updateResumePct")
+        activityResumedBatteryPct = batteryStatus?.let { intent ->
+            val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+            val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+            level * 100 / scale.toFloat()
+        }?: 0.0f
     }
     fun updateCreatedPct(){
-        activityCreatedBatteryPct = batteryPct?: 0.0f
+        println("updateCreatedPct")
+        activityCreatedBatteryPct = batteryStatus?.let { intent ->
+            val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+            val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+            level * 100 / scale.toFloat()
+        }?: 0.0f
+        println("activityCreatedBatteryPct =  $activityCreatedBatteryPct")
+        println("batteryPct = $batteryPct")
     }
 
     val batteryPctSinceCreated = mutableStateOf(getBatteryPctFromCreated())
@@ -38,5 +58,10 @@ class EnergyRepository @Inject constructor(
     private fun getBatteryPctFromCreated() = batteryPct?.minus(activityCreatedBatteryPct)
     private fun getBatteryPctFromResumed() = batteryPct?.minus(activityResumedBatteryPct)
 
+    //fun getBatteryPct() =
+    fun refresh() {
+        batteryPctSinceCreated.value = getBatteryPctFromCreated()
+        batteryPctSinceResumed.value = getBatteryPctFromResumed()
+    }
 
 }

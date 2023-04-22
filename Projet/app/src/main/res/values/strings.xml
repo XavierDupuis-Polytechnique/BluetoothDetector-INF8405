@@ -63,4 +63,6 @@
     <string name="refresh">Refresh</string>
     <string name="energy_title">Battery Usage</string>
     <string name="used_string">used</string>
+    <string name="battery_actual_state_string">The actual charge of the battery is: </string>
+
 </resources>

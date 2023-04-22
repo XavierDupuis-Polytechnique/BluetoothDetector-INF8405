@@ -19,21 +19,12 @@ class EnergyViewModel @Inject constructor(
     fun toggleStatsDisplayed() {
         isStatsSinceCreatedDisplayed.value = !isStatsSinceCreatedDisplayed.value
     }
-
-
-    /* val isStatsSinceCreatedDisplayed = mutableStateOf(false)
-
-     fun toggleStatsDisplayed() {
-         isStatsSinceCreatedDisplayed.value = !isStatsSinceCreatedDisplayed.value
-     }
-
      init {
          refresh()
      }
-
      fun refresh() {
-         networkRepository.refresh()
-     }*/
+         energyRepository.refresh()
+     }
 
 
 

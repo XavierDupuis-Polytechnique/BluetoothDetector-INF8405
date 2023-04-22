@@ -58,4 +58,5 @@
     <string name="refresh">Rafraîchir</string>
     <string name="energy_title">utilisation de la batterie</string>
     <string name="used_string">utilisé</string>
+    <string name="battery_actual_state_string">La charge actuelle de la batterie est: </string>
 </resources>

@@ -57,4 +57,5 @@
     <string name="refresh">Aktualisierung</string>
     <string name="energy_title">Batterieverbrauch</string>
     <string name="used_string">gebraucht</string>
+    <string name="battery_actual_state_string">Die tatsächliche Ladung der Batterie beträgt: </string>
 </resources>

@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Switch
@@ -40,27 +41,49 @@ fun EnergyView(
     CenteredVerticalContainer(content = {
 
         val text: String = stringResource(id = R.string.energy_title)
-        Text(text, fontWeight = FontWeight.Bold, fontSize = 30.sp)
+        Text(text, fontWeight = FontWeight.Bold, fontSize = 30.sp, modifier = Modifier.padding(20.dp))
 
         ResumedOrLaunchedView(viewModel)
 
         val batteryPercentage = if( viewModel.isStatsSinceCreatedDisplayed.value)
             viewModel.energyRepository.batteryPctSinceCreated.value
         else
-            viewModel.energyRepository.batteryPct  //SinceResumed
+            viewModel.energyRepository.batteryPctSinceResumed.value
 
-        CardContainer(Modifier.defaultMinSize(200.dp,200.dp )) {
-            if(batteryPercentage != null)
-            BatteryPercentageView(batteryPercentage as Float)
-            else BatteryPercentageView(batteryPercentage = 0.00F)
+        CardContainer(Modifier.defaultMinSize(200.dp,100.dp )) {
+            CenteredHorizontalContainer() {
+                if(batteryPercentage != null)
+                    BatteryPercentageView(batteryPercentage as Float)
+                else BatteryPercentageView(batteryPercentage = 0.00F)
+            }
         }
+
+        actualState(viewModel.energyRepository.batteryPct)
+
+        refreshButton(viewModel)
+
     })
 
 }
+@Composable
+fun actualState(batteryPct: Float?) {
+    if(batteryPct == null) return
+    val text: String = stringResource(id = R.string.battery_actual_state_string) +" "+ batteryPct + "% !"
+    Text(text, fontWeight = FontWeight.Bold, modifier = Modifier.padding(20.dp) )
+}
 
 @Composable
-fun BatteryPercentageView(batteryPercentage:Float) {    
-    Text(batteryPercentage.toString())
+fun refreshButton(viewModel: EnergyViewModel) {
+    Button(onClick = { viewModel.refresh() }) {
+        Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
+        Text(stringResource(R.string.refresh))
+    }
+}
+
+@Composable
+fun BatteryPercentageView(batteryPercentage:Float) {
+    val text: String = batteryPercentage.toString()+ "% " + stringResource(id = R.string.used_string)
+    Text(text)
 }
 
 @Composable
