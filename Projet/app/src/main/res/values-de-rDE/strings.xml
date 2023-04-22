@@ -56,6 +56,6 @@
     <string name="network_percent_was_used_for_process">Der Prozess verbrauchte %.2f %% der gesamten Netzwerknutzung des Geräts</string>
     <string name="refresh">Aktualisierung</string>
     <string name="energy_title">Batterieverbrauch</string>
-    <string name="used_string">gebraucht</string>
-    <string name="battery_actual_state_string">Die tatsächliche Ladung der Batterie beträgt: </string>
+    <string name="battery_level_used">%.2f %% gebraucht</string>
+    <string name="battery_level_current">Die tatsächliche Ladung der Batterie beträgt %.2f %% !</string>
 </resources>

@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         networkRepository.updateCreatedBytes()
-        energyRepository.updateCreatedPct()
+        energyRepository.updateCreatedLevel()
     }
 
     override fun onResume() {
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         // Start bluetooth scan when app is resumed
         startBTScan()
         networkRepository.updateResumedBytes()
-        energyRepository.updateResumedPct()
+        energyRepository.updateResumedLevel()
     }
 
     override fun onPause() {

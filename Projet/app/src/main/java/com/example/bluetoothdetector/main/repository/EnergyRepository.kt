@@ -1,5 +1,6 @@
 package com.example.bluetoothdetector.main.repository
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -10,63 +11,43 @@ import javax.inject.Inject
 
 class EnergyRepository @Inject constructor(
     @ApplicationContext private val context: Context,
-){
-    private var batteryStatus: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
-        context.registerReceiver(null, ifilter)
+) {
+    private val batteryStatus: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let {
+        context.registerReceiver(object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                extractBatteryLevel(intent)?.let { newBatteryLevel ->
+                    currentBatteryLevel.value = newBatteryLevel
+                }
+            }
+        }, it)
     }
 
-    var batteryPct= mutableStateOf( batteryStatus?.let { intent ->
-        val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-        val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-        level * 100 / scale.toFloat()
-    })
-
-    private var activityCreatedBatteryPct: Float = batteryStatus?.let { intent ->
-        val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-        val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-        level * 100 / scale.toFloat()}?: 0.0f
-
-    private var activityResumedBatteryPct: Float = batteryStatus?.let { intent ->
-        val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-        val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-        level * 100 / scale.toFloat()}?: 0.0f
-
-    fun updateResumedPct(){
-        activityResumedBatteryPct = batteryStatus?.let { intent ->
-            val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-            val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-            level * 100 / scale.toFloat()
-        }?: 0.0f
-    }
-    fun updateCreatedPct(){
-        activityCreatedBatteryPct = batteryStatus?.let { intent ->
-            val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-            val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-            level * 100 / scale.toFloat()
-        }?: 0.0f
-    }
-
-    val batteryPctSinceCreated = mutableStateOf(getBatteryPctFromCreated())
-    val batteryPctSinceResumed = mutableStateOf(getBatteryPctFromResumed())
-
-    private fun getBatteryPctFromCreated(): Float?{
-        return batteryPct.value?.let { activityCreatedBatteryPct.minus(it) }
-    }
-    private fun getBatteryPctFromResumed(): Float?{
-        return batteryPct.value?.let{ activityResumedBatteryPct.minus(it) }
-    }
-
-
-    fun refresh() {
-        batteryStatus = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
-            context.registerReceiver(null, ifilter)
+    private fun extractBatteryLevel(intent: Intent? = batteryStatus): Float? {
+        val level = intent?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+        val scale = intent?.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+        if (scale == null || level == null) {
+            return null
         }
-        batteryPct.value = batteryStatus?.let { intent ->
-            val level: Int = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-            val scale: Int = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-            level * 100 / scale.toFloat()
-        }?: 0.0f
-        batteryPctSinceCreated.value = getBatteryPctFromCreated()
-        batteryPctSinceResumed.value = getBatteryPctFromResumed()
+        return level * 100 / scale.toFloat()
+    }
+
+    val currentBatteryLevel = mutableStateOf(extractBatteryLevel() ?: 100.0f)
+    private var activityCreatedBatteryLevel: Float = currentBatteryLevel.value
+    private var activityResumedBatteryLevel: Float = currentBatteryLevel.value
+
+    fun updateResumedLevel() {
+        activityResumedBatteryLevel = currentBatteryLevel.value
+    }
+
+    fun updateCreatedLevel() {
+        activityCreatedBatteryLevel = extractBatteryLevel() ?: 100.0f
+    }
+
+    fun getBatteryLevelSinceCreated(): Float {
+        return activityCreatedBatteryLevel - currentBatteryLevel.value
+    }
+
+    fun getBatteryLevelSinceResumed(): Float {
+        return activityResumedBatteryLevel - currentBatteryLevel.value
     }
 }
