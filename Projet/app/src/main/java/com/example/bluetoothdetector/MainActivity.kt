@@ -20,11 +20,7 @@ import com.example.bluetoothdetector.common.repository.LanguageRepository
 import com.example.bluetoothdetector.common.repository.ThemeRepository
 import com.example.bluetoothdetector.common.view.Navigation
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
-import com.example.bluetoothdetector.main.repository.BluetoothRepository
-import com.example.bluetoothdetector.main.repository.EnergyRepository
-import com.example.bluetoothdetector.main.repository.LocationRepository
-import com.example.bluetoothdetector.main.repository.NetworkRepository
-import com.example.bluetoothdetector.main.repository.SensorRepository
+import com.example.bluetoothdetector.main.repository.*
 import com.example.bluetoothdetector.ui.theme.BluetoothDetectorTheme
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint

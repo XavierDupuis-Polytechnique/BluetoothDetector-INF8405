@@ -27,7 +27,12 @@ fun EnergyView(
     CenteredVerticalContainer {
 
         val text: String = stringResource(id = R.string.energy_title)
-        Text(text, fontWeight = FontWeight.Bold, fontSize = 30.sp, modifier = Modifier.padding(20.dp))
+        Text(
+            text,
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+            modifier = Modifier.padding(20.dp)
+        )
 
         ResumedOrLaunchedView(viewModel)
         val usedBatteryLevel = if (viewModel.isStatsSinceCreatedDisplayed.value)

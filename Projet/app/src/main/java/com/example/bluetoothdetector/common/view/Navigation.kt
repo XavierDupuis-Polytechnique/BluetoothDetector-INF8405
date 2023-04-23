@@ -1,7 +1,6 @@
 package com.example.bluetoothdetector.common.view
 
 import androidx.compose.material.DrawerValue
-import androidx.compose.material.Text
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -22,10 +21,6 @@ import com.example.bluetoothdetector.common.view.page.PageWithHeader
 import com.example.bluetoothdetector.common.view.permissions.PermissionsView
 import com.example.bluetoothdetector.common.viewmodel.PermissionsViewModel
 import com.example.bluetoothdetector.main.view.*
-import com.example.bluetoothdetector.main.view.DevicesListView
-import com.example.bluetoothdetector.main.view.GlobalScreen
-import com.example.bluetoothdetector.main.view.MapView
-import com.example.bluetoothdetector.main.view.NetworkView
 import com.example.bluetoothdetector.menu.view.MenuDrawer
 import com.example.bluetoothdetector.menu.viewmodel.MenuViewModel
 import com.example.bluetoothdetector.splash.view.SplashScreen
