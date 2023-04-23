@@ -40,7 +40,7 @@ class EnergyRepository @Inject constructor(
     }
 
     fun updateCreatedLevel() {
-        activityCreatedBatteryLevel = extractBatteryLevel() ?: 100.0f
+        activityCreatedBatteryLevel = currentBatteryLevel.value
     }
 
     fun getBatteryLevelSinceCreated(): Float {
