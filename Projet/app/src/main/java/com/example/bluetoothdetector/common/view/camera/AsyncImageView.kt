@@ -54,15 +54,15 @@ fun AsyncImageViewOrSpinner(
             padding = padding
         )
     } else {
-        AsyncImageView(source, padding, size)
+        AsyncImageView(source, size, padding)
     }
 }
 
 @Composable
 private fun AsyncImageView(
     source: Uri?,
+    size: Dp,
     padding: Dp,
-    size: Dp
 ) {
     SubcomposeAsyncImage(
         model = source,
