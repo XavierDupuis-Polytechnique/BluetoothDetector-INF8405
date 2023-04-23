@@ -29,6 +29,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    init {
+        FirebaseApp.initializeApp(this)
+    }
+
 
     @Inject
     lateinit var locationRepository: LocationRepository
@@ -52,7 +56,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var sensorRepository: SensorRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
         setContent {
             MainContent(themeRepository, languageRepository)
