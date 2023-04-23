@@ -11,6 +11,7 @@ class EnergyViewModel @Inject constructor(
     val energyRepository: EnergyRepository
 ) : ViewModel() {
 
+    //bool to indicate if battery percentage is for app since created else since app resumed
     val isStatsSinceCreatedDisplayed = mutableStateOf(false)
     fun toggleStatsDisplayed() {
         isStatsSinceCreatedDisplayed.value = !isStatsSinceCreatedDisplayed.value
